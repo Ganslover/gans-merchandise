@@ -365,7 +365,7 @@ async function saveProduct() {
     if (uploadError) {
 
       document.getElementById("message").innerText =
-        "Photo upload is not ready yet. We need to set up Storage.";
+  "Photo upload error: " + uploadError.message;
 
       return;
     }
