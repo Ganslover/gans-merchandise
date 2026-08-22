@@ -106,5 +106,43 @@ function showAdmin(){store.style.display="none";admin.style.display="block";wind
 function hideAdmin(){admin.style.display="none";store.style.display="block";window.scrollTo(0,0)}
 render();
 </script>
+<script>
+const SUPABASE_URL = "https://elwrivtrnymkxmdvffyd.supabase.co";
+const SUPABASE_KEY = "sb_publishable_zLn1w_RtuBH1tQt58kcQlA_I6VFi4jb";
+
+async function loadSupabaseProducts() {
+  try {
+    const response = await fetch(
+      SUPABASE_URL + "/rest/v1/products?select=*&order=created_at.desc",
+      {
+        headers: {
+          apikey: SUPABASE_KEY
+        }
+      }
+    );
+
+    if (!response.ok) {
+      throw new Error("Could not load products");
+    }
+
+    const data = await response.json();
+
+    products = data.map(p => ({
+      name: p.name || "",
+      category: p.category || "",
+      price: p.price || 0,
+      desc: p.description || "",
+      photo: p.image_url || "",
+      moq: "Wholesale quantities available"
+    }));
+
+    render();
+  } catch (error) {
+    console.error("Supabase error:", error);
+  }
+}
+
+loadSupabaseProducts();
+</script>
 </body>
 </html>
