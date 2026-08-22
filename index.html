@@ -1,0 +1,110 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Gans Merchandise | Wholesale</title>
+<style>
+:root{--ink:#111827;--muted:#6b7280;--line:#e5e7eb;--bg:#f7f7f8;--card:#fff;--accent:#111827}
+*{box-sizing:border-box}body{margin:0;font-family:Inter,Arial,sans-serif;color:var(--ink);background:var(--bg)}
+header{background:#111827;color:#fff;position:sticky;top:0;z-index:10}.nav{max-width:1180px;margin:auto;padding:18px 22px;display:flex;align-items:center;justify-content:space-between;gap:16px}.brand{font-weight:800;font-size:21px}.nav small{opacity:.7}
+.hero{background:#111827;color:#fff;padding:70px 22px 78px}.hero-in{max-width:1180px;margin:auto}.eyebrow{text-transform:uppercase;letter-spacing:2px;font-size:12px;opacity:.65}.hero h1{font-size:clamp(38px,6vw,68px);line-height:1;margin:12px 0 18px;max-width:800px}.hero p{font-size:18px;color:#d1d5db;max-width:650px}.btn{border:0;border-radius:10px;padding:12px 17px;font-weight:700;cursor:pointer}.btn-light{background:#fff;color:#111827}.btn-dark{background:#111827;color:#fff}.btn-outline{background:#fff;border:1px solid var(--line)}
+.wrap{max-width:1180px;margin:auto;padding:34px 22px}.toolbar{display:flex;gap:12px;flex-wrap:wrap;align-items:center;margin-bottom:22px}.search{flex:1;min-width:220px;padding:13px 14px;border:1px solid var(--line);border-radius:10px}.cats{display:flex;gap:8px;flex-wrap:wrap}.cat{padding:9px 12px;border:1px solid var(--line);background:#fff;border-radius:999px;cursor:pointer}.cat.active{background:#111827;color:#fff}
+.grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(235px,1fr));gap:18px}.card{background:var(--card);border:1px solid var(--line);border-radius:16px;overflow:hidden}.photo{height:185px;background:#eceff1;display:flex;align-items:center;justify-content:center;color:#9ca3af;font-weight:700}.photo img{width:100%;height:100%;object-fit:cover}.body{padding:17px}.tag{font-size:11px;text-transform:uppercase;letter-spacing:1px;color:var(--muted)}.body h3{margin:6px 0}.price{font-size:18px;font-weight:800}.desc{color:var(--muted);font-size:13px;min-height:34px}.stock{font-size:12px;color:#166534;margin:8px 0 14px}
+section.info{background:#fff;border-top:1px solid var(--line);border-bottom:1px solid var(--line)}.info-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:25px}.info h3{margin-bottom:7px}.info p{color:var(--muted);font-size:14px;line-height:1.6}
+footer{background:#111827;color:#fff;padding:35px 22px}.foot{max-width:1180px;margin:auto;display:flex;justify-content:space-between;gap:20px;flex-wrap:wrap}.foot p{color:#9ca3af}
+#admin{display:none}.panel{background:#fff;border:1px solid var(--line);border-radius:16px;padding:22px;margin-bottom:18px}.formgrid{display:grid;grid-template-columns:repeat(2,1fr);gap:12px}.formgrid .full{grid-column:1/-1}label{font-size:12px;font-weight:700;display:block;margin-bottom:5px}input,select,textarea{width:100%;padding:11px;border:1px solid var(--line);border-radius:9px;font:inherit}textarea{min-height:90px}
+.admin-list{width:100%;border-collapse:collapse}.admin-list th,.admin-list td{text-align:left;padding:10px;border-bottom:1px solid var(--line);font-size:13px}
+.note{background:#fff8e1;border:1px solid #f1df9c;border-radius:10px;padding:12px;color:#6b5500;font-size:13px;margin-bottom:16px}
+@media(max-width:700px){.info-grid,.formgrid{grid-template-columns:1fr}.hero{padding-top:50px}.nav small{display:none}}
+</style>
+</head>
+<body>
+<header><div class="nav"><div class="brand">GANS MERCHANDISE</div><small>WHOLESALE SUPPLY</small><button class="btn btn-light" onclick="showAdmin()">Manage Products</button></div></header>
+
+<div id="store">
+<section class="hero"><div class="hero-in">
+<div class="eyebrow">Wholesale • Albany, New York</div>
+<h1>Wholesale merchandise, made simple.</h1>
+<p>Browse our wholesale catalog and contact us for business pricing, availability and ordering information.</p>
+<button class="btn btn-light" onclick="document.getElementById('catalog').scrollIntoView({behavior:'smooth'})">View Catalog</button>
+</div></section>
+
+<main class="wrap" id="catalog">
+<div class="toolbar">
+<input id="search" class="search" placeholder="Search products…" oninput="render()">
+<div id="cats" class="cats"></div>
+</div>
+<div id="products" class="grid"></div>
+</main>
+
+<section class="info"><div class="wrap info-grid">
+<div><h3>Wholesale focused</h3><p>Catalog-style browsing for retailers and business customers.</p></div>
+<div><h3>Easy product management</h3><p>Add products, prices, categories, descriptions and photos from the built-in manager.</p></div>
+<div><h3>Contact to order</h3><p>Use your business contact details to request availability and wholesale terms.</p></div>
+</div></section>
+</div>
+
+<div id="admin" class="wrap">
+<div class="panel">
+<h2>Product Manager</h2>
+<p class="note">This starter site stores product changes in this browser using local storage. For a live multi-user store, connect the catalog to a secure database/e-commerce platform.</p>
+<button class="btn btn-outline" onclick="hideAdmin()">← Back to Store</button>
+</div>
+<div class="panel">
+<h3>Add / Update Product</h3>
+<form id="form" onsubmit="saveProduct(event)">
+<div class="formgrid">
+<div><label>Product name</label><input id="name" required></div>
+<div><label>Category</label><input id="category" placeholder="e.g. Apparel, Candy, Smoking Accessories" required></div>
+<div><label>Wholesale price</label><input id="price" type="number" step="0.01" min="0" required></div>
+<div><label>Minimum order</label><input id="moq" placeholder="e.g. 1 case"></div>
+<div class="full"><label>Product photo</label><input id="photo" type="file" accept="image/*"></div>
+<div class="full"><label>Description</label><textarea id="desc"></textarea></div>
+</div><br>
+<button class="btn btn-dark" type="submit">Save Product</button>
+<button class="btn btn-outline" type="button" onclick="resetForm()">Clear</button>
+</form>
+</div>
+<div class="panel"><h3>Current Products</h3><table class="admin-list"><thead><tr><th>Product</th><th>Category</th><th>Price</th><th></th></tr></thead><tbody id="adminRows"></tbody></table></div>
+</div>
+
+<footer><div class="foot"><div><strong>Gans Merchandise Entreprises LLC</strong><p>Wholesale merchandise supplier</p></div><div><p>14 N Manning Blvd, Albany, NY 12206<br>518-879-7114<br>gansmerchandise2002@gmail.com</p></div></div></footer>
+
+<script>
+const defaultProducts=[
+{name:"T-Shirts",category:"Apparel",price:0,moq:"Contact for MOQ",desc:"Wholesale apparel selection.",photo:""},
+{name:"Rolling Paper",category:"Smoking Accessories",price:0,moq:"Contact for MOQ",desc:"Wholesale rolling paper selection.",photo:""},
+{name:"Gums",category:"Candy & Snacks",price:0,moq:"Contact for MOQ",desc:"Wholesale gum selection.",photo:""},
+{name:"Chocolates",category:"Candy & Snacks",price:0,moq:"Contact for MOQ",desc:"Wholesale chocolate selection.",photo:""}
+];
+let products=JSON.parse(localStorage.getItem("gans_products")||"null")||defaultProducts;
+let editing=-1, activeCat="All";
+function money(v){return Number(v)>0?"$"+Number(v).toFixed(2):"Contact"}
+function render(){
+ const q=document.getElementById("search").value.toLowerCase();
+ const cats=["All",...new Set(products.map(p=>p.category))];
+ document.getElementById("cats").innerHTML=cats.map(c=>`<button class="cat ${c===activeCat?"active":""}" onclick="activeCat=${JSON.stringify(c)};render()">${c}</button>`).join("");
+ const list=products.filter(p=>(activeCat==="All"||p.category===activeCat)&&(!q||p.name.toLowerCase().includes(q)||p.category.toLowerCase().includes(q)));
+ document.getElementById("products").innerHTML=list.map(p=>`<article class="card"><div class="photo">${p.photo?`<img src="${p.photo}">`:"PRODUCT PHOTO"}</div><div class="body"><div class="tag">${p.category}</div><h3>${p.name}</h3><div class="price">${money(p.price)}</div><div class="desc">${p.desc||""}</div><div class="stock">${p.moq||"Wholesale quantities available"}</div><button class="btn btn-dark" onclick="contact('${escapeHtml(p.name)}')">Request Pricing</button></div></article>`).join("");
+ renderAdmin();
+}
+function escapeHtml(s){return String(s).replace(/'/g,"&#39;").replace(/"/g,"&quot;")}
+function contact(n){location.href="mailto:gansmerchandise2002@gmail.com?subject=Wholesale inquiry: "+encodeURIComponent(n)}
+function persist(){localStorage.setItem("gans_products",JSON.stringify(products));render()}
+function saveProduct(e){
+ e.preventDefault();
+ const file=document.getElementById("photo").files[0];
+ const finish=(photo)=>{const p={name:name.value,category:category.value,price:price.value,moq:moq.value,desc:desc.value,photo:photo||""};if(editing<0)products.push(p);else products[editing]=p;editing=-1;form.reset();persist()};
+ if(file){const r=new FileReader();r.onload=()=>finish(r.result);r.readAsDataURL(file)}else finish(editing>=0?products[editing].photo:"");
+}
+function editProduct(i){const p=products[i];editing=i;name.value=p.name;category.value=p.category;price.value=p.price;moq.value=p.moq||"";desc.value=p.desc||"";document.getElementById("form").scrollIntoView({behavior:"smooth"})}
+function deleteProduct(i){if(confirm("Delete this product?")){products.splice(i,1);persist()}}
+function resetForm(){editing=-1;form.reset()}
+function renderAdmin(){document.getElementById("adminRows").innerHTML=products.map((p,i)=>`<tr><td>${p.name}</td><td>${p.category}</td><td>${money(p.price)}</td><td><button class="btn btn-outline" onclick="editProduct(${i})">Edit</button> <button class="btn btn-outline" onclick="deleteProduct(${i})">Delete</button></td></tr>`).join("")}
+function showAdmin(){store.style.display="none";admin.style.display="block";window.scrollTo(0,0)}
+function hideAdmin(){admin.style.display="none";store.style.display="block";window.scrollTo(0,0)}
+render();
+</script>
+</body>
+</html>
