@@ -186,6 +186,7 @@
 
       <div class="card">
         <h2>Your Products</h2>
+        <input type="text" id="productSearch" placeholder="Search products..." oninput="searchProducts()">
         <div id="products"></div>
       </div>
 
@@ -315,6 +316,15 @@ async function loadProducts() {
     `;
 
     container.appendChild(item);
+  });
+}
+  function searchProducts() {
+  const search = document.getElementById("productSearch").value.toLowerCase();
+  const products = document.querySelectorAll("#products .product");
+
+  products.forEach(product => {
+    const text = product.innerText.toLowerCase();
+    product.style.display = text.includes(search) ? "block" : "none";
   });
 }
 
