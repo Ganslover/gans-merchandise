@@ -1,34 +1,521 @@
-<!doctype html>
+<!DOCTYPE html>
 <html lang="en">
 <head>
-  <!-- HTML settings and Supabase library -->
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Gans Merchandise Admin</title>
+
+  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+
   <style>
-    /* Complete website design and responsive CSS */
+    * { box-sizing: border-box; }
+
+    body {
+      margin: 0;
+      font-family: Arial, sans-serif;
+      background: #0d0d0d;
+      color: white;
+    }
+
+    .header {
+      background: #050505;
+      padding: 20px;
+      text-align: center;
+      border-bottom: 1px solid #333;
+    }
+
+    .header h1 {
+      margin: 0;
+      color: #f1c232;
+    }
+
+    .container {
+      max-width: 750px;
+      margin: auto;
+      padding: 20px;
+    }
+
+    .card {
+      background: #181818;
+      padding: 20px;
+      margin-bottom: 20px;
+      border-radius: 12px;
+      border: 1px solid #333;
+    }
+
+    h2 {
+      color: #f1c232;
+    }
+
+    input, textarea, select {
+      width: 100%;
+      padding: 13px;
+      margin: 7px 0 15px;
+      border-radius: 8px;
+      border: 1px solid #555;
+      background: #222;
+      color: white;
+      font-size: 16px;
+    }
+
+    textarea {
+      min-height: 90px;
+    }
+
+    button {
+      border: 0;
+      padding: 12px 18px;
+      border-radius: 8px;
+      font-size: 16px;
+      cursor: pointer;
+    }
+
+    .primary {
+      background: #f1c232;
+      color: black;
+      width: 100%;
+      font-weight: bold;
+    }
+
+    .danger {
+      background: #c62828;
+      color: white;
+    }
+
+    .edit {
+      background: #1976d2;
+      color: white;
+    }
+
+    .logout {
+      background: #555;
+      color: white;
+      float: right;
+    }
+
+    .product {
+      border-top: 1px solid #444;
+      padding: 15px 0;
+    }
+
+    .product img {
+      max-width: 150px;
+      border-radius: 8px;
+      display: block;
+      margin-bottom: 10px;
+    }
+
+    .actions {
+      display: flex;
+      gap: 10px;
+      margin-top: 10px;
+    }
+
+    #adminArea {
+      display: none;
+    }
+
+    #message {
+      padding: 10px 0;
+      color: #f1c232;
+    }
+
+    small {
+      color: #aaa;
+    }
   </style>
 </head>
 
 <body>
-  <!-- Login -->
-  <!-- Dashboard -->
-  <!-- Products -->
-  <!-- Orders -->
-  <!-- Customers -->
-  <!-- Discounts -->
-  <!-- Staff -->
-  <!-- Settings -->
-  <!-- Product and record forms -->
 
-  <script>
-    // Supabase connection
-    // Authentication
-    // Product management
-    // Stock management
-    // Multiple-photo uploads
-    // Orders and customers
-    // Discounts
-    // Staff invitations
-    // Dashboard calculations
-    // CSV import/export
-  </script>
+  <div class="header">
+    <h1>Gans Merchandise</h1>
+    <p>Admin Dashboard</p>
+  </div>
+
+  <div class="container">
+
+    <!-- LOGIN -->
+    <div id="loginArea" class="card">
+      <h2>Admin Login</h2>
+
+      <label>Email</label>
+      <input type="email" id="email" placeholder="Admin email">
+
+      <label>Password</label>
+      <input type="password" id="password" placeholder="Password">
+
+      <button class="primary" onclick="login()">Login</button>
+
+      <div id="loginMessage"></div>
+    </div>
+
+    <!-- ADMIN -->
+    <div id="adminArea">
+
+      <div class="card">
+        <button class="logout" onclick="logout()">Logout</button>
+
+        <h2>Add Product</h2>
+
+        <input type="hidden" id="productId">
+
+        <label>Product Name</label>
+        <input type="text" id="name" placeholder="Product name">
+
+        <label>Price</label>
+        <input type="number" id="price" step="0.01" placeholder="0.00">
+
+        <label>Category</label>
+        <input type="text" id="category" placeholder="Category">
+
+        <label>Description</label>
+        <textarea id="description" placeholder="Product description"></textarea>
+
+        <label>Product Photo</label>
+        <input type="file" id="photo" accept="image/*">
+
+        <small>You can add the photo after we finish setting up Supabase Storage.</small>
+
+        <div id="message"></div>
+
+        <button class="primary" onclick="saveProduct()">
+          Save Product
+        </button>
+      </div>
+
+      <div class="card">
+        <h2>Your Products</h2>
+        <input type="text" id="productSearch" placeholder="Search products..." oninput="searchProducts()">
+        <div id="products"></div>
+      </div>
+
+    </div>
+
+  </div>
+
+<script>
+
+const SUPABASE_URL =
+  "https://elwrivtrnymkxmdvffyd.supabase.co";
+
+const SUPABASE_KEY =
+  "sb_publishable_zLn1w_RtuBH1tQt58kcQlA_I6VFi4jb";
+
+const supabaseClient =
+  supabase.createClient(SUPABASE_URL, SUPABASE_KEY);
+
+
+/* LOGIN */
+
+async function login() {
+
+  const email =
+    document.getElementById("email").value.trim();
+
+  const password =
+    document.getElementById("password").value;
+
+  const { data, error } =
+    await supabaseClient.auth.signInWithPassword({
+      email,
+      password
+    });
+
+  if (error) {
+    document.getElementById("loginMessage").innerText =
+      error.message;
+    return;
+  }
+
+  showAdmin();
+}
+
+
+/* LOGOUT */
+
+async function logout() {
+
+  await supabaseClient.auth.signOut();
+
+  document.getElementById("adminArea").style.display =
+    "none";
+
+  document.getElementById("loginArea").style.display =
+    "block";
+}
+
+
+/* SHOW ADMIN */
+
+function showAdmin() {
+
+  document.getElementById("loginArea").style.display =
+    "none";
+
+  document.getElementById("adminArea").style.display =
+    "block";
+
+  loadProducts();
+}
+
+
+/* LOAD PRODUCTS */
+
+async function loadProducts() {
+
+  const { data, error } =
+    await supabaseClient
+      .from("products")
+      .select("*")
+      .order("created_at", { ascending: false });
+
+  if (error) {
+    document.getElementById("products").innerText =
+      error.message;
+    return;
+  }
+
+  const container =
+    document.getElementById("products");
+
+  container.innerHTML = "";
+
+  data.forEach(product => {
+
+    const item =
+      document.createElement("div");
+
+    item.className = "product";
+
+    item.innerHTML = `
+      ${product.image_url
+        ? `<img src="${product.image_url}">`
+        : ""}
+      
+      <strong>${product.name || ""}</strong>
+      <br>
+      $${Number(product.price || 0).toFixed(2)}
+      <br>
+      ${product.category || ""}
+      <p>${product.description || ""}</p>
+
+      <div class="actions">
+
+        <button class="edit"
+          onclick='editProduct(${JSON.stringify(product)})'>
+          Edit
+        </button>
+
+        <button class="danger"
+          onclick="deleteProduct(${product.id})">
+          Delete
+        </button>
+
+      </div>
+    `;
+
+    container.appendChild(item);
+  });
+}
+  function searchProducts() {
+  const search = document.getElementById("productSearch").value.toLowerCase();
+  const products = document.querySelectorAll("#products .product");
+
+  products.forEach(product => {
+    const text = product.innerText.toLowerCase();
+    product.style.display = text.includes(search) ? "block" : "none";
+  });
+}
+
+
+/* SAVE PRODUCT */
+
+async function saveProduct() {
+
+  const id =
+    document.getElementById("productId").value;
+
+  const name =
+    document.getElementById("name").value.trim();
+
+  const price =
+    document.getElementById("price").value;
+
+  const category =
+    document.getElementById("category").value.trim();
+
+  const description =
+    document.getElementById("description").value.trim();
+
+  const photo =
+    document.getElementById("photo").files[0];
+
+  if (!name || !price) {
+
+    document.getElementById("message").innerText =
+      "Please enter product name and price.";
+
+    return;
+  }
+
+  let image_url = "";
+
+  if (photo) {
+
+    const filename =
+      Date.now() + "-" +
+      photo.name.replace(/\s+/g, "-");
+
+    const { error: uploadError } =
+      await supabaseClient.storage
+        .from("product-images")
+        .upload(filename, photo);
+
+    if (uploadError) {
+
+      document.getElementById("message").innerText =
+  "Photo upload error: " + uploadError.message;
+
+      return;
+    }
+
+    const { data } =
+      supabaseClient.storage
+        .from("product-images")
+        .getPublicUrl(filename);
+
+    image_url = data.publicUrl;
+  }
+
+  const productData = {
+    name,
+    price: Number(price),
+    category,
+    description
+  };
+
+  if (image_url) {
+    productData.image_url = image_url;
+  }
+
+  let result;
+
+  if (id) {
+
+    result =
+      await supabaseClient
+        .from("products")
+        .update(productData)
+        .eq("id", id);
+
+  } else {
+
+    result =
+      await supabaseClient
+        .from("products")
+        .insert([productData]);
+  }
+
+  if (result.error) {
+
+    document.getElementById("message").innerText =
+      result.error.message;
+
+    return;
+  }
+
+  document.getElementById("message").innerText =
+    "Product saved successfully!";
+
+  clearForm();
+
+  loadProducts();
+}
+
+
+/* EDIT PRODUCT */
+
+function editProduct(product) {
+
+  document.getElementById("productId").value =
+    product.id;
+
+  document.getElementById("name").value =
+    product.name || "";
+
+  document.getElementById("price").value =
+    product.price || "";
+
+  document.getElementById("category").value =
+    product.category || "";
+
+  document.getElementById("description").value =
+    product.description || "";
+
+  window.scrollTo({
+    top: 0,
+    behavior: "smooth"
+  });
+}
+
+
+/* DELETE PRODUCT */
+
+async function deleteProduct(id) {
+
+  const confirmed =
+    confirm("Delete this product?");
+
+  if (!confirmed) return;
+
+  const { error } =
+    await supabaseClient
+      .from("products")
+      .delete()
+      .eq("id", id);
+
+  if (error) {
+
+    alert(error.message);
+    return;
+  }
+
+  loadProducts();
+}
+
+
+/* CLEAR FORM */
+
+function clearForm() {
+
+  document.getElementById("productId").value = "";
+  document.getElementById("name").value = "";
+  document.getElementById("price").value = "";
+  document.getElementById("category").value = "";
+  document.getElementById("description").value = "";
+  document.getElementById("photo").value = "";
+}
+
+
+/* CHECK LOGIN */
+
+async function checkLogin() {
+
+  const {
+    data: { session }
+  } =
+    await supabaseClient.auth.getSession();
+
+  if (session) {
+    showAdmin();
+  }
+}
+
+checkLogin();
+
+</script>
+
 </body>
 </html>
+
