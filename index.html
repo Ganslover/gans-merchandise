@@ -139,10 +139,10 @@ footer{background:#111827;color:#fff;padding:35px 22px}.foot{max-width:1180px;ma
 
 <script>
 const defaultProducts=[
-{name:"T-Shirts",category:"Apparel",price:0,moq:"Contact for MOQ",desc:"Wholesale apparel selection.",photo:""},
-{name:"Rolling Paper",category:"Smoking Accessories",price:0,moq:"Contact for MOQ",desc:"Wholesale rolling paper selection.",photo:""},
-{name:"Gums",category:"Candy & Snacks",price:0,moq:"Contact for MOQ",desc:"Wholesale gum selection.",photo:""},
-{name:"Chocolates",category:"Candy & Snacks",price:0,moq:"Contact for MOQ",desc:"Wholesale chocolate selection.",photo:""}
+{name:"T-Shirts",category:"Apparel",price:0,moq:"Minimum quantity: 1 box",desc:"Wholesale apparel selection.",photo:""},
+{name:"Rolling Paper",category:"Smoking Accessories",price:0,moq:"Minimum quantity: 1 box",desc:"Wholesale rolling paper selection.",photo:""},
+{name:"Gums",category:"Candy & Snacks",price:0,moq:"Minimum quantity: 1 box",desc:"Wholesale gum selection.",photo:""},
+{name:"Chocolates",category:"Candy & Snacks",price:0,moq:"Minimum quantity: 1 box",desc:"Wholesale chocolate selection.",photo:""}
 ];
 let products=JSON.parse(localStorage.getItem("gans_products")||"null")||defaultProducts;
 let editing=-1, activeCat="All";
@@ -165,7 +165,7 @@ function render(){
    catsContainer.appendChild(button);
  });
  const list=products.filter(p=>(activeCat==="All"||p.category===activeCat)&&(!q||p.name.toLowerCase().includes(q)||p.category.toLowerCase().includes(q)));
- document.getElementById("products").innerHTML=list.map(p=>{const i=products.indexOf(p);return `<article class="card" tabindex="0" role="button" aria-label="View ${escapeHtml(p.name)}" onclick="openProduct(${i})" onkeydown="if(event.key==='Enter'||event.key===' '){event.preventDefault();openProduct(${i})}"><div class="photo">${p.photo?`<img src="${p.photo}" alt="${escapeHtml(p.name)}">`:"PRODUCT PHOTO"}</div><div class="body"><div class="tag">${p.category}</div><h3>${p.name}</h3><div class="price">${money(p.price)}</div><div class="desc">${p.desc||""}</div><div class="stock">${p.moq||"Wholesale quantities available"}</div><div class="product-actions"><button class="btn btn-dark" onclick="event.stopPropagation();addToCart(${i})">Add to Cart</button><button class="btn btn-outline" onclick="event.stopPropagation();contact('${escapeHtml(p.name)}')">Request Pricing</button></div></div></article>`}).join("");
+ document.getElementById("products").innerHTML=list.map(p=>{const i=products.indexOf(p);return `<article class="card" tabindex="0" role="button" aria-label="View ${escapeHtml(p.name)}" onclick="openProduct(${i})" onkeydown="if(event.key==='Enter'||event.key===' '){event.preventDefault();openProduct(${i})}"><div class="photo">${p.photo?`<img src="${p.photo}" alt="${escapeHtml(p.name)}">`:"PRODUCT PHOTO"}</div><div class="body"><div class="tag">${p.category}</div><h3>${p.name}</h3><div class="price">${money(p.price)} per box</div><div class="desc">${p.desc||""}</div><div class="stock">${p.moq||"Minimum quantity: 1 box"}</div><div class="product-actions"><button class="btn btn-dark" onclick="event.stopPropagation();addToCart(${i})">Add 1 Box to Cart</button><button class="btn btn-outline" onclick="event.stopPropagation();contact('${escapeHtml(p.name)}')">Request Pricing</button></div></div></article>`}).join("");
  renderAdmin();
 }
 function escapeHtml(s){return String(s).replace(/'/g,"&#39;").replace(/"/g,"&quot;")}
@@ -175,9 +175,9 @@ function openProduct(i){
  if(!p)return;
  document.getElementById("detailCategory").textContent=p.category||"";
  document.getElementById("detailName").textContent=p.name||"Product";
- document.getElementById("detailPrice").textContent=money(p.price);
+ document.getElementById("detailPrice").textContent=money(p.price)+" per box";
  document.getElementById("detailDescription").textContent=p.desc||"Contact us for product details and wholesale availability.";
- document.getElementById("detailStock").textContent=p.moq||"Wholesale quantities available";
+ document.getElementById("detailStock").textContent=p.moq||"Minimum quantity: 1 box";
  document.getElementById("detailPhoto").innerHTML=p.photo?`<img src="${p.photo}" alt="${escapeHtml(p.name)}">`:"PRODUCT PHOTO";
  document.getElementById("detailContact").onclick=()=>contact(p.name);
  document.getElementById("detailAdd").onclick=()=>addToCart(i);
@@ -204,7 +204,7 @@ function renderCart(){
  const count=cart.reduce((sum,item)=>sum+item.qty,0);
  const total=cartTotal();
  document.getElementById("cartCount").textContent=count;
- container.innerHTML=cart.length?cart.map(item=>`<div class="cart-row"><div><div class="cart-name">${escapeHtml(item.name)}</div><div class="cart-price">$${Number(item.price).toFixed(2)} each</div></div><div class="quantity"><button onclick='changeQuantity(${JSON.stringify(item.key)},-1)' aria-label="Decrease quantity">−</button><strong>${item.qty}</strong><button onclick='changeQuantity(${JSON.stringify(item.key)},1)' aria-label="Increase quantity">+</button></div><strong>$${(item.price*item.qty).toFixed(2)}</strong><button class="remove-item" onclick='removeFromCart(${JSON.stringify(item.key)})'>Remove</button></div>`).join(""):`<div class="cart-empty">Your cart is empty.</div>`;
+ container.innerHTML=cart.length?cart.map(item=>`<div class="cart-row"><div><div class="cart-name">${escapeHtml(item.name)}</div><div class="cart-price">$${Number(item.price).toFixed(2)} per box · Minimum 1 box</div></div><div class="quantity"><button onclick='changeQuantity(${JSON.stringify(item.key)},-1)' aria-label="Decrease box quantity">−</button><strong>${item.qty} ${item.qty===1?"box":"boxes"}</strong><button onclick='changeQuantity(${JSON.stringify(item.key)},1)' aria-label="Increase box quantity">+</button></div><strong>$${(item.price*item.qty).toFixed(2)}</strong><button class="remove-item" onclick='removeFromCart(${JSON.stringify(item.key)})'>Remove</button></div>`).join(""):`<div class="cart-empty">Your cart is empty.</div>`;
  document.getElementById("cartTotal").textContent="$"+total.toFixed(2);
  const remaining=Math.max(0,100-total);
  const message=document.getElementById("minimumMessage");
@@ -218,7 +218,7 @@ function closeCartFromBackdrop(event){if(event.target.id==="cartModal")closeCart
 function checkoutCart(){
  const total=cartTotal();
  if(total<100){alert("The minimum wholesale order is $100 USD.");return}
- const lines=cart.map(item=>`${item.name} — ${item.qty} × $${item.price.toFixed(2)} = $${(item.qty*item.price).toFixed(2)}`).join("\n");
+ const lines=cart.map(item=>`${item.name} — ${item.qty} ${item.qty===1?"box":"boxes"} × $${item.price.toFixed(2)} = $${(item.qty*item.price).toFixed(2)}`).join("\n");
  const subject=encodeURIComponent("Wholesale order request — $"+total.toFixed(2));
  const body=encodeURIComponent(`Hello Gans Merchandise,\n\nI would like to place this wholesale order:\n\n${lines}\n\nTotal: $${total.toFixed(2)}\n\nPlease contact me to confirm availability and payment.`);
  location.href=`mailto:gansmerchandise2002@gmail.com?subject=${subject}&body=${body}`;
@@ -356,7 +356,7 @@ async function loadSupabaseProducts() {
       price: p.price || 0,
       desc: p.description || "",
       photo: p.image_url || "",
-      moq: "Wholesale quantities available"
+      moq: "Minimum quantity: 1 box"
     }));
 
     render();
