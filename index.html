@@ -150,7 +150,7 @@ let products=JSON.parse(localStorage.getItem("gans_products")||"null")||defaultP
 let editing=-1, activeCat="All";
 let cart=JSON.parse(localStorage.getItem("gans_cart")||"[]");
 function money(v){return Number(v)>0?"$"+Number(v).toFixed(2):"Contact"}
-function normalizeStockStatus(value){const status=String(value||"In Stock").trim().toLowerCase();if(status==="out of stock")return "Out of Stock";if(status==="low stock")return "Low Stock";return "In Stock"}
+function normalizeStockStatus(value){const status=String(value||"In Stock").trim().toLowerCase();if(status==="out of stock")return "Out of Stock";if(status==="low stock"||status==="low in stock")return "Low in Stock";return "In Stock"}
 function render(){
  const q=document.getElementById("search").value.toLowerCase();
  const cats=["All",...new Set(products.map(p=>p.category).filter(Boolean))];
@@ -168,7 +168,7 @@ function render(){
    catsContainer.appendChild(button);
  });
  const list=products.filter(p=>(activeCat==="All"||p.category===activeCat)&&(!q||p.name.toLowerCase().includes(q)||p.category.toLowerCase().includes(q)));
- document.getElementById("products").innerHTML=list.map(p=>{const i=products.indexOf(p);const status=normalizeStockStatus(p.stock_status);const statusClass=status==="Out of Stock"?"stock-out":status==="Low Stock"?"stock-low":"stock-in";return `<article class="card" tabindex="0" role="button" aria-label="View ${escapeHtml(p.name)}" onclick="openProduct(${i})" onkeydown="if(event.key==='Enter'||event.key===' '){event.preventDefault();openProduct(${i})}"><div class="photo">${p.photo?`<img src="${p.photo}" alt="${escapeHtml(p.name)}">`:"PRODUCT PHOTO"}</div><div class="body"><div class="tag">${p.category}</div><h3>${p.name}</h3><div class="price">${money(p.price)} per box</div><div class="stock-badge ${statusClass}">${status}</div><div class="desc">${p.desc||""}</div><div class="stock">${p.moq||"Minimum quantity: 1 box"}</div><div class="product-actions"><button class="btn btn-dark" onclick="event.stopPropagation();addToCart(${i})" ${status==="Out of Stock"?"disabled":""}>${status==="Out of Stock"?"Out of Stock":"Add 1 Box to Cart"}</button><button class="btn btn-outline" onclick="event.stopPropagation();contact('${escapeHtml(p.name)}')">Request Pricing</button></div></div></article>`}).join("");
+ document.getElementById("products").innerHTML=list.map(p=>{const i=products.indexOf(p);const status=normalizeStockStatus(p.stock_status);const statusClass=status==="Out of Stock"?"stock-out":status==="Low in Stock"?"stock-low":"stock-in";return `<article class="card" tabindex="0" role="button" aria-label="View ${escapeHtml(p.name)}" onclick="openProduct(${i})" onkeydown="if(event.key==='Enter'||event.key===' '){event.preventDefault();openProduct(${i})}"><div class="photo">${p.photo?`<img src="${p.photo}" alt="${escapeHtml(p.name)}">`:"PRODUCT PHOTO"}</div><div class="body"><div class="tag">${p.category}</div><h3>${p.name}</h3><div class="price">${money(p.price)} per box</div><div class="stock-badge ${statusClass}">${status}</div><div class="desc">${p.desc||""}</div><div class="stock">${p.moq||"Minimum quantity: 1 box"}</div><div class="product-actions"><button class="btn btn-dark" onclick="event.stopPropagation();addToCart(${i})" ${status==="Out of Stock"?"disabled":""}>${status==="Out of Stock"?"Out of Stock":"Add 1 Box to Cart"}</button><button class="btn btn-outline" onclick="event.stopPropagation();contact('${escapeHtml(p.name)}')">Request Pricing</button></div></div></article>`}).join("");
  renderAdmin();
 }
 function escapeHtml(s){return String(s).replace(/'/g,"&#39;").replace(/"/g,"&quot;")}
@@ -182,7 +182,7 @@ function openProduct(i){
  const status=normalizeStockStatus(p.stock_status);
  const availability=document.getElementById("detailAvailability");
  availability.textContent=status;
- availability.className="stock-badge "+(status==="Out of Stock"?"stock-out":status==="Low Stock"?"stock-low":"stock-in");
+ availability.className="stock-badge "+(status==="Out of Stock"?"stock-out":status==="Low in Stock"?"stock-low":"stock-in");
  document.getElementById("detailDescription").textContent=p.desc||"Contact us for product details and wholesale availability.";
  document.getElementById("detailStock").textContent=p.moq||"Minimum quantity: 1 box";
  document.getElementById("detailPhoto").innerHTML=p.photo?`<img src="${p.photo}" alt="${escapeHtml(p.name)}">`:"PRODUCT PHOTO";
