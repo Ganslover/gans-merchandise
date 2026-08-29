@@ -30,7 +30,20 @@ body{background:#fff;color:#10284a}header{background:#fff;color:var(--navy);box-
 .special{background:linear-gradient(90deg,#fff1b6,#ffd05c,#fff1b6);padding:28px 22px;text-align:center;border-block:1px solid #f0c34c}.special h2{color:#294d76;margin:0 0 14px;font-size:30px}.trust{background:#f3f6fb}.trust-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:12px}.trust-item{background:#fff;border:1px solid #dce5f0;border-radius:8px;padding:17px;text-align:center;color:var(--navy);font-weight:800;box-shadow:0 2px 8px rgba(15,50,90,.07)}.trust-item span{font-size:25px;vertical-align:middle;margin-right:8px}section.info{border:0}.info h3{color:var(--navy)}footer{background:#062e67}
 @media(max-width:900px){.category-grid,.grid{grid-template-columns:repeat(2,1fr)}}
 @media(max-width:600px){.nav{align-items:flex-start;flex-wrap:wrap}.nav-actions{width:100%}.hero{padding:55px 18px}.category-grid,.grid{grid-template-columns:1fr 1fr}.trust-grid{grid-template-columns:1fr}.photo{height:155px}}
+<div class="category-card" onclick="chooseCategory('Smoking Accessories')">
+ <img
+  class="category-picture"
+  src="https://raw.githubusercontent.com/Ganslover/gans-merchandise/f8d1cc8064dbdf7e6d8c01f5fd96872d31916d92/Copilot_20260829_104756.png"
+  alt="Smoking products and accessories"
+>
 </style>
+ .category-picture {
+  width: 100%;
+  aspect-ratio: 1 / 1;
+  display: block;
+  object-fit: cover;
+  object-position: center;
+}
 </head>
 <body>
 <header><div class="nav"><div class="brand">GANS MERCHANDISE</div><small>WHOLESALE SUPPLY</small><div class="nav-actions"><span id="userEmail" class="user-email"></span><button id="signInButton" class="btn btn-light" onclick="openAuth('signin')">Sign In</button><button id="signUpButton" class="btn btn-outline" onclick="openAuth('signup')">Sign Up</button><button id="emailCompanyButton" class="btn btn-outline" style="display:none" onclick="emailCompany()">Email Company</button><button id="signOutButton" class="btn btn-light" style="display:none" onclick="signOut()">Sign Out</button><button style="display:none" class="btn btn-light" onclick="showAdmin()">Manage Products</button></div></div></header>
