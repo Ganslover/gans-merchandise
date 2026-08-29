@@ -29,10 +29,11 @@ footer{background:#111827;color:#fff;padding:35px 22px}.foot{max-width:1180px;ma
 @media(max-width:600px){.cart-row{grid-template-columns:1fr auto}.cart-row .quantity{grid-column:1/2}.cart-row .remove-item{grid-column:2/3}.product-actions{flex-direction:column}}
 .whatsapp-button{position:fixed;right:20px;bottom:20px;z-index:90;display:flex;align-items:center;gap:9px;background:#25d366;color:#fff;text-decoration:none;font-weight:800;padding:14px 18px;border-radius:999px;box-shadow:0 8px 24px rgba(0,0,0,.25);transition:transform .2s,background .2s}.whatsapp-button:hover,.whatsapp-button:focus{background:#1fb858;transform:translateY(-2px);outline:3px solid rgba(37,211,102,.3);outline-offset:3px}.whatsapp-icon{font-size:21px}@media(max-width:560px){.whatsapp-button{right:14px;bottom:14px;padding:13px 16px}.whatsapp-label{font-size:14px}}
 .stock-badge{display:inline-block;margin:8px 0;padding:6px 10px;border-radius:999px;font-size:12px;font-weight:800}.stock-in{background:#dcfce7;color:#166534}.stock-low{background:#fef3c7;color:#92400e}.stock-out{background:#fee2e2;color:#991b1b}.btn[disabled]{opacity:.45;cursor:not-allowed}
+.orders-box{position:relative;background:#fff;color:var(--ink);width:min(820px,100%);max-height:90vh;overflow:auto;padding:28px;border-radius:16px;box-shadow:0 20px 60px rgba(0,0,0,.35)}.orders-box h2{margin-top:0}.order-card{border:1px solid var(--line);border-radius:12px;padding:16px;margin:12px 0}.order-head{display:flex;justify-content:space-between;gap:14px;align-items:flex-start;flex-wrap:wrap}.order-number{font-weight:800}.order-date{color:var(--muted);font-size:13px}.order-total{font-size:20px;font-weight:800}.order-status{display:inline-block;padding:6px 10px;border-radius:999px;background:#dbeafe;color:#1e40af;font-size:12px;font-weight:800}.order-items{margin:12px 0 0;padding-left:20px;color:#4b5563}.orders-loading,.orders-empty{padding:32px;text-align:center;color:var(--muted)}
 </style>
 </head>
 <body>
-<header><div class="nav"><div class="brand">GANS MERCHANDISE</div><small>WHOLESALE SUPPLY</small><div class="nav-actions"><span id="userEmail" class="user-email"></span><button class="btn btn-light" onclick="openCart()">Cart <span id="cartCount" class="cart-count">0</span></button><button id="signInButton" class="btn btn-light" onclick="openAuth('signin')">Sign In</button><button id="signUpButton" class="btn btn-outline" onclick="openAuth('signup')">Sign Up</button><button id="emailCompanyButton" class="btn btn-outline" style="display:none" onclick="emailCompany()">Email Company</button><button id="signOutButton" class="btn btn-light" style="display:none" onclick="signOut()">Sign Out</button><button style="display:none" class="btn btn-light" onclick="showAdmin()">Manage Products</button></div></div></header>
+<header><div class="nav"><div class="brand">GANS MERCHANDISE</div><small>WHOLESALE SUPPLY</small><div class="nav-actions"><span id="userEmail" class="user-email"></span><button class="btn btn-light" onclick="openCart()">Cart <span id="cartCount" class="cart-count">0</span></button><button id="ordersButton" class="btn btn-light" style="display:none" onclick="openOrders()">My Orders</button><button id="signInButton" class="btn btn-light" onclick="openAuth('signin')">Sign In</button><button id="signUpButton" class="btn btn-outline" onclick="openAuth('signup')">Sign Up</button><button id="emailCompanyButton" class="btn btn-outline" style="display:none" onclick="emailCompany()">Email Company</button><button id="signOutButton" class="btn btn-light" style="display:none" onclick="signOut()">Sign Out</button><button style="display:none" class="btn btn-light" onclick="showAdmin()">Manage Products</button></div></div></header>
 
 <div id="authModal" class="modal" onclick="closeAuthFromBackdrop(event)">
 <div class="auth-box">
@@ -79,6 +80,14 @@ footer{background:#111827;color:#fff;padding:35px 22px}.foot{max-width:1180px;ma
 <div id="minimumMessage" class="minimum-message">Add $100.00 more to reach the minimum order.</div>
 <button id="checkoutButton" class="btn btn-dark checkout-button" onclick="checkoutCart()" disabled>Checkout — $100 Minimum</button>
 </div>
+</section>
+</div>
+
+<div id="ordersModal" class="modal" onclick="closeOrdersFromBackdrop(event)">
+<section class="orders-box">
+<button class="auth-close" aria-label="Close order history" onclick="closeOrders()">&times;</button>
+<h2>My Order History</h2>
+<div id="ordersList" class="orders-loading">Loading your orders…</div>
 </section>
 </div>
 
@@ -225,14 +234,40 @@ function renderCart(){
 function openCart(){renderCart();document.getElementById("cartModal").classList.add("open")}
 function closeCart(){document.getElementById("cartModal").classList.remove("open")}
 function closeCartFromBackdrop(event){if(event.target.id==="cartModal")closeCart()}
-function checkoutCart(){
+async function checkoutCart(){
  const total=cartTotal();
  if(total<100){alert("The minimum wholesale order is $100 USD.");return}
+ const {data:{session}}=await authClient.auth.getSession();
+ if(!session){closeCart();openAuth("signin");document.getElementById("authMessage").textContent="Please sign in before checkout so your order can be saved.";return}
+ const checkoutButton=document.getElementById("checkoutButton");
+ checkoutButton.disabled=true;
+ checkoutButton.textContent="Saving order…";
+ const {data:order,error:orderError}=await authClient.from("orders").insert({user_id:session.user.id,total,status:"Pending"}).select("id").single();
+ if(orderError){checkoutButton.disabled=false;checkoutButton.textContent="Checkout — $100 Minimum";alert("Order could not be saved: "+orderError.message);return}
+ const items=cart.map(item=>({order_id:order.id,product_name:item.name,quantity:item.qty,unit_price:item.price}));
+ const {error:itemsError}=await authClient.from("order_items").insert(items);
+ if(itemsError){checkoutButton.disabled=false;checkoutButton.textContent="Checkout — $100 Minimum";alert("Order items could not be saved: "+itemsError.message);return}
  const lines=cart.map(item=>`${item.name} — ${item.qty} ${item.qty===1?"box":"boxes"} × $${item.price.toFixed(2)} = $${(item.qty*item.price).toFixed(2)}`).join("\n");
  const subject=encodeURIComponent("Wholesale order request — $"+total.toFixed(2));
  const body=encodeURIComponent(`Hello Gans Merchandise,\n\nI would like to place this wholesale order:\n\n${lines}\n\nTotal: $${total.toFixed(2)}\n\nPlease contact me to confirm availability and payment.`);
+ cart=[];
+ saveCart();
+ closeCart();
  location.href=`mailto:gansmerchandise2002@gmail.com?subject=${subject}&body=${body}`;
 }
+async function openOrders(){
+ document.getElementById("ordersModal").classList.add("open");
+ const list=document.getElementById("ordersList");
+ list.className="orders-loading";
+ list.textContent="Loading your orders…";
+ const {data,error}=await authClient.from("orders").select("id,total,status,created_at,order_items(product_name,quantity,unit_price)").order("created_at",{ascending:false});
+ if(error){list.className="orders-empty";list.textContent="Could not load orders: "+error.message;return}
+ if(!data.length){list.className="orders-empty";list.textContent="You have not placed any orders yet.";return}
+ list.className="";
+ list.innerHTML=data.map(order=>`<article class="order-card"><div class="order-head"><div><div class="order-number">Order #${escapeHtml(order.id.slice(0,8).toUpperCase())}</div><div class="order-date">${new Date(order.created_at).toLocaleString()}</div></div><div><span class="order-status">${escapeHtml(order.status||"Pending")}</span> <span class="order-total">$${Number(order.total).toFixed(2)}</span></div></div><ul class="order-items">${(order.order_items||[]).map(item=>`<li>${escapeHtml(item.product_name)} — ${item.quantity} ${item.quantity===1?"box":"boxes"} × $${Number(item.unit_price).toFixed(2)}</li>`).join("")}</ul></article>`).join("");
+}
+function closeOrders(){document.getElementById("ordersModal").classList.remove("open")}
+function closeOrdersFromBackdrop(event){if(event.target.id==="ordersModal")closeOrders()}
 function persist(){localStorage.setItem("gans_products",JSON.stringify(products));render()}
 function saveProduct(e){
  e.preventDefault();
@@ -337,6 +372,7 @@ function updateAccountUI(session) {
   document.getElementById("signInButton").style.display = signedIn ? "none" : "inline-block";
   document.getElementById("signUpButton").style.display = signedIn ? "none" : "inline-block";
   document.getElementById("emailCompanyButton").style.display = signedIn ? "inline-block" : "none";
+  document.getElementById("ordersButton").style.display = signedIn ? "inline-block" : "none";
   document.getElementById("signOutButton").style.display = signedIn ? "inline-block" : "none";
 }
 
