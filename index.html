@@ -11,7 +11,7 @@
 header{background:#111827;color:#fff;position:sticky;top:0;z-index:10}.nav{max-width:1180px;margin:auto;padding:18px 22px;display:flex;align-items:center;justify-content:space-between;gap:16px}.brand{font-weight:800;font-size:21px}.nav small{opacity:.7}.nav-actions{display:flex;align-items:center;gap:8px}.user-email{font-size:13px;color:#d1d5db}
 .minimum-order{background:#fbbf24;color:#111827;text-align:center;padding:11px 18px;font-size:16px;font-weight:800;letter-spacing:.2px}
 .order-callout{display:inline-block;background:#fbbf24;color:#111827!important;padding:10px 16px;border-radius:8px;font-size:17px!important;font-weight:800;margin:8px 0 22px!important}
-.phone-link{display:inline-block;margin-left:10px;text-decoration:none}
+.hero-actions{display:flex;align-items:center;gap:12px;flex-wrap:wrap;margin-top:2px}.phone-link{display:inline-flex;align-items:center;justify-content:center;text-decoration:none;text-align:center}
 .hero{background:#111827;color:#fff;padding:70px 22px 78px}.hero-in{max-width:1180px;margin:auto}.eyebrow{text-transform:uppercase;letter-spacing:2px;font-size:12px;opacity:.65}.hero h1{font-size:clamp(38px,6vw,68px);line-height:1;margin:12px 0 18px;max-width:800px}.hero p{font-size:18px;color:#d1d5db;max-width:650px}.btn{border:0;border-radius:10px;padding:12px 17px;font-weight:700;cursor:pointer}.btn-light{background:#fff;color:#111827}.btn-dark{background:#111827;color:#fff}.btn-outline{background:#fff;border:1px solid var(--line)}
 .wrap{max-width:1180px;margin:auto;padding:34px 22px}.toolbar{display:flex;gap:12px;flex-wrap:wrap;align-items:center;margin-bottom:22px}.search{flex:1;min-width:220px;padding:13px 14px;border:1px solid var(--line);border-radius:10px}.cats{display:flex;gap:8px;flex-wrap:wrap}.cat{padding:9px 12px;border:1px solid var(--line);background:#fff;border-radius:999px;cursor:pointer}.cat.active{background:#111827;color:#fff}
 .grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(235px,1fr));gap:18px}.card{background:var(--card);border:1px solid var(--line);border-radius:16px;overflow:hidden}.photo{height:185px;background:#eceff1;display:flex;align-items:center;justify-content:center;color:#9ca3af;font-weight:700}.photo img{width:100%;height:100%;object-fit:cover}.body{padding:17px}.tag{font-size:11px;text-transform:uppercase;letter-spacing:1px;color:var(--muted)}.body h3{margin:6px 0}.price{font-size:18px;font-weight:800}.desc{color:var(--muted);font-size:13px;min-height:34px}.stock{font-size:12px;color:#166534;margin:8px 0 14px}
@@ -24,6 +24,7 @@ footer{background:#111827;color:#fff;padding:35px 22px}.foot{max-width:1180px;ma
 .card{cursor:pointer;transition:transform .2s,box-shadow .2s}.card:hover,.card:focus{transform:translateY(-4px);box-shadow:0 10px 24px rgba(17,24,39,.14);outline:2px solid #2563eb;outline-offset:2px}.product-detail{position:relative;background:#fff;color:var(--ink);width:min(760px,100%);max-height:90vh;overflow:auto;border-radius:16px;box-shadow:0 20px 60px rgba(0,0,0,.35)}.detail-grid{display:grid;grid-template-columns:1fr 1fr}.detail-photo{min-height:330px;background:#eceff1;display:flex;align-items:center;justify-content:center;color:#9ca3af;font-weight:700}.detail-photo img{width:100%;height:100%;max-height:440px;object-fit:cover}.detail-body{padding:32px}.detail-body h2{margin:7px 0 12px}.detail-price{font-size:26px;font-weight:800;margin-bottom:14px}.detail-description{color:var(--muted);line-height:1.6}.detail-close{position:absolute;right:14px;top:10px;z-index:2;border:0;background:#fff;border-radius:50%;width:38px;height:38px;font-size:25px;cursor:pointer}.detail-body .btn{margin-top:18px}
 @media(max-width:700px){.info-grid,.formgrid{grid-template-columns:1fr}.hero{padding-top:50px}.nav small{display:none}}
 @media(max-width:650px){.detail-grid{grid-template-columns:1fr}.detail-photo{min-height:220px}.detail-body{padding:24px}}
+@media(max-width:560px){.hero-actions{align-items:stretch;flex-direction:column}.hero-actions .btn{width:100%;margin:0}.phone-link{line-height:1.35}}
 </style>
 </head>
 <body>
@@ -68,9 +69,10 @@ footer{background:#111827;color:#fff;padding:35px 22px}.foot{max-width:1180px;ma
 <h1>Wholesale Essentials for Every Retail Shelf</h1>
 <p>Browse our wholesale catalog and contact us for business pricing, availability and ordering information.</p>
 <p class="order-callout">Minimum wholesale order: $100 USD</p>
-<br>
+<div class="hero-actions">
 <button class="btn btn-light" onclick="document.getElementById('catalog').scrollIntoView({behavior:'smooth'})">View Catalog</button>
-<a class="btn btn-light phone-link" href="tel:+15188797114">Call for Business Pricing: +1 (518) 879-7114</a>
+<a class="btn btn-light phone-link" href="tel:+15188797114" aria-label="Call Gans Merchandise for business pricing at 518-879-7114">Call for Business Pricing&nbsp; · &nbsp;+1 (518) 879-7114</a>
+</div>
 </div></section>
 
 <main class="wrap" id="catalog">
