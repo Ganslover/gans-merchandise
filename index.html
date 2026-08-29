@@ -27,6 +27,7 @@ footer{background:#111827;color:#fff;padding:35px 22px}.foot{max-width:1180px;ma
 @media(max-width:560px){.hero-actions{align-items:stretch;flex-direction:column}.hero-actions .btn{width:100%;margin:0}.phone-link{line-height:1.35}}
 .cart-box{position:relative;background:#fff;color:var(--ink);width:min(720px,100%);max-height:90vh;overflow:auto;padding:28px;border-radius:16px;box-shadow:0 20px 60px rgba(0,0,0,.35)}.cart-box h2{margin-top:0}.cart-row{display:grid;grid-template-columns:1fr auto auto auto;gap:12px;align-items:center;padding:14px 0;border-bottom:1px solid var(--line)}.cart-name{font-weight:800}.cart-price{color:var(--muted);font-size:13px}.quantity{display:flex;align-items:center;gap:8px}.quantity button{width:32px;height:32px;border:1px solid var(--line);background:#fff;border-radius:7px;cursor:pointer;font-weight:800}.remove-item{border:0;background:none;color:#b91c1c;cursor:pointer}.cart-summary{margin-top:20px;padding-top:8px}.cart-total{display:flex;justify-content:space-between;font-size:22px;font-weight:800;margin-bottom:10px}.minimum-message{padding:10px;border-radius:8px;background:#fff8e1;color:#6b5500;margin-bottom:12px}.minimum-message.ready{background:#dcfce7;color:#166534}.checkout-button{width:100%}.checkout-button:disabled{opacity:.45;cursor:not-allowed}.cart-empty{text-align:center;color:var(--muted);padding:30px 10px}.product-actions{display:flex;gap:8px;flex-wrap:wrap}.product-actions .btn{flex:1}.cart-count{display:inline-grid;place-items:center;min-width:22px;height:22px;padding:0 6px;margin-left:5px;border-radius:999px;background:#fbbf24;color:#111827;font-size:12px}
 @media(max-width:600px){.cart-row{grid-template-columns:1fr auto}.cart-row .quantity{grid-column:1/2}.cart-row .remove-item{grid-column:2/3}.product-actions{flex-direction:column}}
+.whatsapp-button{position:fixed;right:20px;bottom:20px;z-index:90;display:flex;align-items:center;gap:9px;background:#25d366;color:#fff;text-decoration:none;font-weight:800;padding:14px 18px;border-radius:999px;box-shadow:0 8px 24px rgba(0,0,0,.25);transition:transform .2s,background .2s}.whatsapp-button:hover,.whatsapp-button:focus{background:#1fb858;transform:translateY(-2px);outline:3px solid rgba(37,211,102,.3);outline-offset:3px}.whatsapp-icon{font-size:21px}@media(max-width:560px){.whatsapp-button{right:14px;bottom:14px;padding:13px 16px}.whatsapp-label{font-size:14px}}
 </style>
 </head>
 <body>
@@ -131,6 +132,10 @@ footer{background:#111827;color:#fff;padding:35px 22px}.foot{max-width:1180px;ma
 </div>
 
 <footer><div class="foot"><div><strong>Gans Merchandise Entreprises LLC</strong><p>Wholesale merchandise supplier</p></div><div><p>14 N Manning Blvd, Albany, NY 12206<br><a href="tel:+15188797114" style="color:#fff">+1 (518) 879-7114</a><br>gansmerchandise2002@gmail.com</p></div></div></footer>
+
+<a class="whatsapp-button" href="https://wa.me/15188797114?text=Hello%20Gans%20Merchandise%2C%20I%20would%20like%20information%20about%20your%20wholesale%20products." target="_blank" rel="noopener noreferrer" aria-label="Contact Gans Merchandise on WhatsApp">
+<span class="whatsapp-icon" aria-hidden="true">💬</span><span class="whatsapp-label">Chat on WhatsApp</span>
+</a>
 
 <script>
 const defaultProducts=[
