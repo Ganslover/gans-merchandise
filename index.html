@@ -5,976 +5,238 @@
 <meta name="viewport" content="width=device-width,initial-scale=1">
 <title>Gans Merchandise | Wholesale</title>
 <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
-
 <style>
-:root {
-  --ink:#111827;
-  --muted:#6b7280;
-  --line:#e5e7eb;
-  --bg:#f7f7f8;
-  --card:#fff;
-}
-
-* { box-sizing:border-box; }
-
-body {
-  margin:0;
-  font-family:Inter,Arial,sans-serif;
-  color:var(--ink);
-  background:var(--bg);
-}
-
-header {
-  background:#111827;
-  color:#fff;
-  position:sticky;
-  top:0;
-  z-index:10;
-}
-
-.nav {
-  max-width:1180px;
-  margin:auto;
-  padding:18px 22px;
-  display:flex;
-  align-items:center;
-  justify-content:space-between;
-  gap:16px;
-}
-
-.brand {
-  font-weight:800;
-  font-size:21px;
-}
-
-.nav small { opacity:.7; }
-
-.nav-actions {
-  display:flex;
-  align-items:center;
-  gap:8px;
-  flex-wrap:wrap;
-}
-
-.user-email {
-  font-size:13px;
-  color:#d1d5db;
-}
-
-.hero {
-  background:#111827;
-  color:#fff;
-  padding:70px 22px 78px;
-}
-
-.hero-in {
-  max-width:1180px;
-  margin:auto;
-}
-
-.eyebrow {
-  text-transform:uppercase;
-  letter-spacing:2px;
-  font-size:12px;
-  opacity:.65;
-}
-
-.hero h1 {
-  font-size:clamp(38px,6vw,68px);
-  line-height:1;
-  margin:12px 0 18px;
-  max-width:800px;
-}
-
-.hero p {
-  font-size:18px;
-  color:#d1d5db;
-  max-width:650px;
-}
-
-.btn {
-  border:0;
-  border-radius:10px;
-  padding:12px 17px;
-  font-weight:700;
-  cursor:pointer;
-}
-
-.btn-light {
-  background:#fff;
-  color:#111827;
-}
-
-.btn-dark {
-  background:#111827;
-  color:#fff;
-}
-
-.btn-outline {
-  background:#fff;
-  border:1px solid var(--line);
-}
-
-.wrap {
-  max-width:1180px;
-  margin:auto;
-  padding:34px 22px;
-}
-
-.toolbar {
-  display:flex;
-  gap:12px;
-  flex-wrap:wrap;
-  align-items:center;
-  margin-bottom:22px;
-}
-
-.search {
-  flex:1;
-  min-width:220px;
-  padding:13px 14px;
-  border:1px solid var(--line);
-  border-radius:10px;
-}
-
-.cats {
-  display:flex;
-  gap:8px;
-  flex-wrap:wrap;
-}
-
-.cat {
-  padding:9px 12px;
-  border:1px solid var(--line);
-  background:#fff;
-  border-radius:999px;
-  cursor:pointer;
-}
-
-.cat.active {
-  background:#111827;
-  color:#fff;
-}
-
-.grid {
-  display:grid;
-  grid-template-columns:repeat(auto-fill,minmax(235px,1fr));
-  gap:18px;
-}
-
-.card {
-  background:var(--card);
-  border:1px solid var(--line);
-  border-radius:16px;
-  overflow:hidden;
-  cursor:pointer;
-  transition:transform .2s,box-shadow .2s;
-}
-
-.card:hover,
-.card:focus {
-  transform:translateY(-4px);
-  box-shadow:0 10px 24px rgba(17,24,39,.14);
-  outline:2px solid #2563eb;
-  outline-offset:2px;
-}
-
-.photo {
-  height:185px;
-  background:#eceff1;
-  display:flex;
-  align-items:center;
-  justify-content:center;
-  color:#9ca3af;
-  font-weight:700;
-}
-
-.photo img {
-  width:100%;
-  height:100%;
-  object-fit:cover;
-}
-
-.body { padding:17px; }
-
-.tag {
-  font-size:11px;
-  text-transform:uppercase;
-  letter-spacing:1px;
-  color:var(--muted);
-}
-
-.body h3 { margin:6px 0; }
-
-.price {
-  font-size:18px;
-  font-weight:800;
-}
-
-.desc {
-  color:var(--muted);
-  font-size:13px;
-  min-height:34px;
-}
-
-.stock {
-  font-size:12px;
-  color:#166534;
-  margin:8px 0 14px;
-}
-
-section.info {
-  background:#fff;
-  border-top:1px solid var(--line);
-  border-bottom:1px solid var(--line);
-}
-
-.info-grid {
-  display:grid;
-  grid-template-columns:repeat(3,1fr);
-  gap:25px;
-}
-
-.info h3 { margin-bottom:7px; }
-
-.info p {
-  color:var(--muted);
-  font-size:14px;
-  line-height:1.6;
-}
-
-footer {
-  background:#111827;
-  color:#fff;
-  padding:35px 22px;
-}
-
-.foot {
-  max-width:1180px;
-  margin:auto;
-  display:flex;
-  justify-content:space-between;
-  gap:20px;
-  flex-wrap:wrap;
-}
-
-.foot p { color:#9ca3af; }
-
-#admin { display:none; }
-
-.panel {
-  background:#fff;
-  border:1px solid var(--line);
-  border-radius:16px;
-  padding:22px;
-  margin-bottom:18px;
-}
-
-.formgrid {
-  display:grid;
-  grid-template-columns:repeat(2,1fr);
-  gap:12px;
-}
-
-.formgrid .full { grid-column:1/-1; }
-
-label {
-  font-size:12px;
-  font-weight:700;
-  display:block;
-  margin-bottom:5px;
-}
-
-input,
-select,
-textarea {
-  width:100%;
-  padding:11px;
-  border:1px solid var(--line);
-  border-radius:9px;
-  font:inherit;
-}
-
-textarea { min-height:90px; }
-
-.admin-list {
-  width:100%;
-  border-collapse:collapse;
-}
-
-.admin-list th,
-.admin-list td {
-  text-align:left;
-  padding:10px;
-  border-bottom:1px solid var(--line);
-  font-size:13px;
-}
-
-.note {
-  background:#fff8e1;
-  border:1px solid #f1df9c;
-  border-radius:10px;
-  padding:12px;
-  color:#6b5500;
-  font-size:13px;
-  margin-bottom:16px;
-}
-
-.modal {
-  display:none;
-  position:fixed;
-  inset:0;
-  background:rgba(0,0,0,.65);
-  z-index:100;
-  align-items:center;
-  justify-content:center;
-  padding:20px;
-}
-
-.modal.open { display:flex; }
-
-.auth-box {
-  position:relative;
-  background:#fff;
-  color:var(--ink);
-  width:min(420px,100%);
-  padding:28px;
-  border-radius:16px;
-  box-shadow:0 20px 60px rgba(0,0,0,.35);
-}
-
-.auth-box h2 { margin-top:0; }
-
-.auth-box input { margin:6px 0 14px; }
-
-.auth-close {
-  position:absolute;
-  right:14px;
-  top:12px;
-  border:0;
-  background:transparent;
-  font-size:26px;
-  cursor:pointer;
-}
-
-.auth-switch {
-  margin:18px 0 0;
-  color:var(--muted);
-  font-size:14px;
-}
-
-.auth-switch button {
-  border:0;
-  background:none;
-  color:#1d4ed8;
-  font-weight:700;
-  cursor:pointer;
-}
-
-.auth-message {
-  min-height:22px;
-  margin-top:12px;
-  font-size:14px;
-  color:#b91c1c;
-}
-
-.auth-message.success { color:#166534; }
-
-.product-detail {
-  position:relative;
-  background:#fff;
-  color:var(--ink);
-  width:min(760px,100%);
-  max-height:90vh;
-  overflow:auto;
-  border-radius:16px;
-  box-shadow:0 20px 60px rgba(0,0,0,.35);
-}
-
-.detail-grid {
-  display:grid;
-  grid-template-columns:1fr 1fr;
-}
-
-.detail-photo {
-  min-height:330px;
-  background:#eceff1;
-  display:flex;
-  align-items:center;
-  justify-content:center;
-  color:#9ca3af;
-  font-weight:700;
-}
-
-.detail-photo img {
-  width:100%;
-  height:100%;
-  max-height:440px;
-  object-fit:cover;
-}
-
-.detail-body { padding:32px; }
-
-.detail-body h2 {
-  margin:7px 0 12px;
-}
-
-.detail-price {
-  font-size:26px;
-  font-weight:800;
-  margin-bottom:14px;
-}
-
-.detail-description {
-  color:var(--muted);
-  line-height:1.6;
-}
-
-.detail-close {
-  position:absolute;
-  right:14px;
-  top:10px;
-  z-index:2;
-  border:0;
-  background:#fff;
-  border-radius:50%;
-  width:38px;
-  height:38px;
-  font-size:25px;
-  cursor:pointer;
-}
-
-.detail-body .btn { margin-top:18px; }
-
-@media(max-width:700px) {
-  .info-grid,
-  .formgrid {
-    grid-template-columns:1fr;
-  }
-
-  .hero { padding-top:50px; }
-
-  .nav small { display:none; }
-}
-
-@media(max-width:650px) {
-  .detail-grid {
-    grid-template-columns:1fr;
-  }
-
-  .detail-photo { min-height:220px; }
-
-  .detail-body { padding:24px; }
-}
+:root{--ink:#111827;--muted:#6b7280;--line:#e5e7eb;--bg:#f7f7f8;--card:#fff;--accent:#111827}
+*{box-sizing:border-box}body{margin:0;font-family:Inter,Arial,sans-serif;color:var(--ink);background:var(--bg)}
+header{background:#111827;color:#fff;position:sticky;top:0;z-index:10}.nav{max-width:1180px;margin:auto;padding:18px 22px;display:flex;align-items:center;justify-content:space-between;gap:16px}.brand{font-weight:800;font-size:21px}.nav small{opacity:.7}.nav-actions{display:flex;align-items:center;gap:8px}.user-email{font-size:13px;color:#d1d5db}
+.minimum-order{background:#fbbf24;color:#111827;text-align:center;padding:11px 18px;font-size:16px;font-weight:800;letter-spacing:.2px}
+.hero{background:#111827;color:#fff;padding:70px 22px 78px}.hero-in{max-width:1180px;margin:auto}.eyebrow{text-transform:uppercase;letter-spacing:2px;font-size:12px;opacity:.65}.hero h1{font-size:clamp(38px,6vw,68px);line-height:1;margin:12px 0 18px;max-width:800px}.hero p{font-size:18px;color:#d1d5db;max-width:650px}.btn{border:0;border-radius:10px;padding:12px 17px;font-weight:700;cursor:pointer}.btn-light{background:#fff;color:#111827}.btn-dark{background:#111827;color:#fff}.btn-outline{background:#fff;border:1px solid var(--line)}
+.wrap{max-width:1180px;margin:auto;padding:34px 22px}.toolbar{display:flex;gap:12px;flex-wrap:wrap;align-items:center;margin-bottom:22px}.search{flex:1;min-width:220px;padding:13px 14px;border:1px solid var(--line);border-radius:10px}.cats{display:flex;gap:8px;flex-wrap:wrap}.cat{padding:9px 12px;border:1px solid var(--line);background:#fff;border-radius:999px;cursor:pointer}.cat.active{background:#111827;color:#fff}
+.grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(235px,1fr));gap:18px}.card{background:var(--card);border:1px solid var(--line);border-radius:16px;overflow:hidden}.photo{height:185px;background:#eceff1;display:flex;align-items:center;justify-content:center;color:#9ca3af;font-weight:700}.photo img{width:100%;height:100%;object-fit:cover}.body{padding:17px}.tag{font-size:11px;text-transform:uppercase;letter-spacing:1px;color:var(--muted)}.body h3{margin:6px 0}.price{font-size:18px;font-weight:800}.desc{color:var(--muted);font-size:13px;min-height:34px}.stock{font-size:12px;color:#166534;margin:8px 0 14px}
+section.info{background:#fff;border-top:1px solid var(--line);border-bottom:1px solid var(--line)}.info-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:25px}.info h3{margin-bottom:7px}.info p{color:var(--muted);font-size:14px;line-height:1.6}
+footer{background:#111827;color:#fff;padding:35px 22px}.foot{max-width:1180px;margin:auto;display:flex;justify-content:space-between;gap:20px;flex-wrap:wrap}.foot p{color:#9ca3af}
+#admin{display:none}.panel{background:#fff;border:1px solid var(--line);border-radius:16px;padding:22px;margin-bottom:18px}.formgrid{display:grid;grid-template-columns:repeat(2,1fr);gap:12px}.formgrid .full{grid-column:1/-1}label{font-size:12px;font-weight:700;display:block;margin-bottom:5px}input,select,textarea{width:100%;padding:11px;border:1px solid var(--line);border-radius:9px;font:inherit}textarea{min-height:90px}
+.admin-list{width:100%;border-collapse:collapse}.admin-list th,.admin-list td{text-align:left;padding:10px;border-bottom:1px solid var(--line);font-size:13px}
+.note{background:#fff8e1;border:1px solid #f1df9c;border-radius:10px;padding:12px;color:#6b5500;font-size:13px;margin-bottom:16px}
+.modal{display:none;position:fixed;inset:0;background:rgba(0,0,0,.65);z-index:100;align-items:center;justify-content:center;padding:20px}.modal.open{display:flex}.auth-box{position:relative;background:#fff;color:var(--ink);width:min(420px,100%);padding:28px;border-radius:16px;box-shadow:0 20px 60px rgba(0,0,0,.35)}.auth-box h2{margin-top:0}.auth-box input{margin:6px 0 14px}.auth-close{position:absolute;right:14px;top:12px;border:0;background:transparent;font-size:26px;cursor:pointer}.auth-switch{margin:18px 0 0;color:var(--muted);font-size:14px}.auth-switch button{border:0;background:none;color:#1d4ed8;font-weight:700;cursor:pointer}.auth-message{min-height:22px;margin-top:12px;font-size:14px;color:#b91c1c}.auth-message.success{color:#166534}
+.card{cursor:pointer;transition:transform .2s,box-shadow .2s}.card:hover,.card:focus{transform:translateY(-4px);box-shadow:0 10px 24px rgba(17,24,39,.14);outline:2px solid #2563eb;outline-offset:2px}.product-detail{position:relative;background:#fff;color:var(--ink);width:min(760px,100%);max-height:90vh;overflow:auto;border-radius:16px;box-shadow:0 20px 60px rgba(0,0,0,.35)}.detail-grid{display:grid;grid-template-columns:1fr 1fr}.detail-photo{min-height:330px;background:#eceff1;display:flex;align-items:center;justify-content:center;color:#9ca3af;font-weight:700}.detail-photo img{width:100%;height:100%;max-height:440px;object-fit:cover}.detail-body{padding:32px}.detail-body h2{margin:7px 0 12px}.detail-price{font-size:26px;font-weight:800;margin-bottom:14px}.detail-description{color:var(--muted);line-height:1.6}.detail-close{position:absolute;right:14px;top:10px;z-index:2;border:0;background:#fff;border-radius:50%;width:38px;height:38px;font-size:25px;cursor:pointer}.detail-body .btn{margin-top:18px}
+@media(max-width:700px){.info-grid,.formgrid{grid-template-columns:1fr}.hero{padding-top:50px}.nav small{display:none}}
+@media(max-width:650px){.detail-grid{grid-template-columns:1fr}.detail-photo{min-height:220px}.detail-body{padding:24px}}
 </style>
 </head>
-
 <body>
+<header><div class="nav"><div class="brand">GANS MERCHANDISE</div><small>WHOLESALE SUPPLY</small><div class="nav-actions"><span id="userEmail" class="user-email"></span><button id="signInButton" class="btn btn-light" onclick="openAuth('signin')">Sign In</button><button id="signUpButton" class="btn btn-outline" onclick="openAuth('signup')">Sign Up</button><button id="emailCompanyButton" class="btn btn-outline" style="display:none" onclick="emailCompany()">Email Company</button><button id="signOutButton" class="btn btn-light" style="display:none" onclick="signOut()">Sign Out</button><button style="display:none" class="btn btn-light" onclick="showAdmin()">Manage Products</button></div></div></header>
 
-<header>
-  <div class="nav">
-    <div class="brand">GANS MERCHANDISE</div>
-    <small>WHOLESALE SUPPLY</small>
-
-    <div class="nav-actions">
-      <span id="userEmail" class="user-email"></span>
-
-      <button id="signInButton" class="btn btn-light"
-        onclick="openAuth('signin')">
-        Sign In
-      </button>
-
-      <button id="signUpButton" class="btn btn-outline"
-        onclick="openAuth('signup')">
-        Sign Up
-      </button>
-
-      <button id="emailCompanyButton" class="btn btn-outline"
-        style="display:none" onclick="emailCompany()">
-        Email Company
-      </button>
-
-      <button id="signOutButton" class="btn btn-light"
-        style="display:none" onclick="signOut()">
-        Sign Out
-      </button>
-    </div>
-  </div>
-</header>
-
-<!-- SIGN IN / SIGN UP WINDOW -->
-<div id="authModal" class="modal"
-  onclick="closeAuthFromBackdrop(event)">
-
-  <div class="auth-box">
-    <button class="auth-close" aria-label="Close"
-      onclick="closeAuth()">&times;</button>
-
-    <h2 id="authTitle">Sign In</h2>
-
-    <form id="authForm" onsubmit="submitAuth(event)">
-      <label>Email</label>
-      <input id="authEmail" type="email"
-        autocomplete="email" required>
-
-      <label>Password</label>
-      <input id="authPassword" type="password"
-        minlength="6" autocomplete="current-password" required>
-
-      <button id="authSubmit" class="btn btn-dark" type="submit">
-        Sign In
-      </button>
-    </form>
-
-    <div id="authMessage" class="auth-message"></div>
-
-    <p class="auth-switch">
-      <span id="authSwitchText">New customer?</span>
-      <button id="authSwitchButton" type="button"
-        onclick="toggleAuthMode()">
-        Create an account
-      </button>
-    </p>
-  </div>
+<div id="authModal" class="modal" onclick="closeAuthFromBackdrop(event)">
+<div class="auth-box">
+<button class="auth-close" aria-label="Close" onclick="closeAuth()">&times;</button>
+<h2 id="authTitle">Sign In</h2>
+<form id="authForm" onsubmit="submitAuth(event)">
+<label>Email</label><input id="authEmail" type="email" autocomplete="email" required>
+<label>Password</label><input id="authPassword" type="password" minlength="6" autocomplete="current-password" required>
+<button id="authSubmit" class="btn btn-dark" type="submit">Sign In</button>
+</form>
+<div id="authMessage" class="auth-message"></div>
+<p class="auth-switch"><span id="authSwitchText">New customer?</span> <button id="authSwitchButton" type="button" onclick="toggleAuthMode()">Create an account</button></p>
+</div>
 </div>
 
-<!-- PRODUCT DETAILS WINDOW -->
-<div id="productModal" class="modal"
-  onclick="closeProductFromBackdrop(event)">
+<div class="minimum-order">Minimum wholesale order: $100 USD</div>
 
-  <article class="product-detail">
-    <button class="detail-close"
-      aria-label="Close product details"
-      onclick="closeProduct()">&times;</button>
-
-    <div class="detail-grid">
-      <div id="detailPhoto" class="detail-photo">
-        PRODUCT PHOTO
-      </div>
-
-      <div class="detail-body">
-        <div id="detailCategory" class="tag"></div>
-        <h2 id="detailName"></h2>
-        <div id="detailPrice" class="detail-price"></div>
-        <p id="detailDescription" class="detail-description"></p>
-        <div id="detailStock" class="stock"></div>
-
-        <button id="detailContact" class="btn btn-dark">
-          Request Pricing
-        </button>
-      </div>
-    </div>
-  </article>
+<div id="productModal" class="modal" onclick="closeProductFromBackdrop(event)">
+<article class="product-detail">
+<button class="detail-close" aria-label="Close product details" onclick="closeProduct()">&times;</button>
+<div class="detail-grid">
+<div id="detailPhoto" class="detail-photo">PRODUCT PHOTO</div>
+<div class="detail-body">
+<div id="detailCategory" class="tag"></div>
+<h2 id="detailName"></h2>
+<div id="detailPrice" class="detail-price"></div>
+<p id="detailDescription" class="detail-description"></p>
+<div id="detailStock" class="stock"></div>
+<button id="detailContact" class="btn btn-dark">Request Pricing</button>
+</div>
+</div>
+</article>
 </div>
 
 <div id="store">
-  <section class="hero">
-    <div class="hero-in">
-      <div class="eyebrow">Wholesale • Albany, New York</div>
-      <h1>Wholesale Essentials for Every Retail Shelf</h1>
+<section class="hero"><div class="hero-in">
+<div class="eyebrow">Wholesale • Albany, New York</div>
+<h1>Wholesale Essentials for Every Retail Shelf</h1>
+<p>Browse our wholesale catalog and contact us for business pricing, availability and ordering information.</p>
+<button class="btn btn-light" onclick="document.getElementById('catalog').scrollIntoView({behavior:'smooth'})">View Catalog</button>
+</div></section>
 
-      <p>
-        Browse our wholesale catalog and contact us for business
-        pricing, availability and ordering information.
-      </p>
+<main class="wrap" id="catalog">
+<div class="toolbar">
+<input id="search" class="search" placeholder="Search products…" oninput="render()">
+<div id="cats" class="cats"></div>
+</div>
+<div id="products" class="grid"></div>
+</main>
 
-      <button class="btn btn-light"
-        onclick="document.getElementById('catalog').scrollIntoView({behavior:'smooth'})">
-        View Catalog
-      </button>
-    </div>
-  </section>
-
-  <main class="wrap" id="catalog">
-    <div class="toolbar">
-      <input id="search" class="search"
-        placeholder="Search products…"
-        oninput="render()">
-
-      <div id="cats" class="cats"></div>
-    </div>
-
-    <div id="products" class="grid"></div>
-  </main>
-
-  <section class="info">
-    <div class="wrap info-grid">
-      <div>
-        <h3>Wholesale focused</h3>
-        <p>Catalog-style browsing for retailers and business customers.</p>
-      </div>
-
-      <div>
-        <h3>Easy product management</h3>
-        <p>Add products, prices, categories, descriptions and photos.</p>
-      </div>
-
-      <div>
-        <h3>Contact to order</h3>
-        <p>Request availability and wholesale ordering information.</p>
-      </div>
-    </div>
-  </section>
+<section class="info"><div class="wrap info-grid">
+<div><h3>Wholesale focused</h3><p>Catalog-style browsing for retailers and business customers.</p></div>
+<div><h3>Easy product management</h3><p>Add products, prices, categories, descriptions and photos from the built-in manager.</p></div>
+<div><h3>Contact to order</h3><p>Use your business contact details to request availability and wholesale terms.</p></div>
+</div></section>
 </div>
 
-<footer>
-  <div class="foot">
-    <div>
-      <strong>Gans Merchandise Entreprises LLC</strong>
-      <p>Wholesale merchandise supplier</p>
-    </div>
+<div id="admin" class="wrap">
+<div class="panel">
+<h2>Product Manager</h2>
+<p class="note">This starter site stores product changes in this browser using local storage. For a live multi-user store, connect the catalog to a secure database/e-commerce platform.</p>
+<button class="btn btn-outline" onclick="hideAdmin()">← Back to Store</button>
+</div>
+<div class="panel">
+<h3>Add / Update Product</h3>
+<form id="form" onsubmit="saveProduct(event)">
+<div class="formgrid">
+<div><label>Product name</label><input id="name" required></div>
+<div><label>Category</label><input id="category" placeholder="e.g. Apparel, Candy, Smoking Accessories" required></div>
+<div><label>Wholesale price</label><input id="price" type="number" step="0.01" min="0" required></div>
+<div><label>Minimum order</label><input id="moq" placeholder="e.g. 1 case"></div>
+<div class="full"><label>Product photo</label><input id="photo" type="file" accept="image/*"></div>
+<div class="full"><label>Description</label><textarea id="desc"></textarea></div>
+</div><br>
+<button class="btn btn-dark" type="submit">Save Product</button>
+<button class="btn btn-outline" type="button" onclick="resetForm()">Clear</button>
+</form>
+</div>
+<div class="panel"><h3>Current Products</h3><table class="admin-list"><thead><tr><th>Product</th><th>Category</th><th>Price</th><th></th></tr></thead><tbody id="adminRows"></tbody></table></div>
+</div>
 
-    <div>
-      <p>
-        14 N Manning Blvd, Albany, NY 12206<br>
-        518-879-7114<br>
-        gansmerchandise2002@gmail.com
-      </p>
-    </div>
-  </div>
-</footer>
+<footer><div class="foot"><div><strong>Gans Merchandise Entreprises LLC</strong><p>Wholesale merchandise supplier</p></div><div><p>14 N Manning Blvd, Albany, NY 12206<br>518-879-7114<br>gansmerchandise2002@gmail.com</p></div></div></footer>
 
 <script>
-const defaultProducts = [
-  {
-    name:"T-Shirts",
-    category:"Apparel",
-    price:0,
-    moq:"Contact for MOQ",
-    desc:"Wholesale apparel selection.",
-    photo:""
-  },
-  {
-    name:"Rolling Paper",
-    category:"Smoking Accessories",
-    price:0,
-    moq:"Contact for MOQ",
-    desc:"Wholesale rolling paper selection.",
-    photo:""
-  },
-  {
-    name:"Gums",
-    category:"Candy & Snacks",
-    price:0,
-    moq:"Contact for MOQ",
-    desc:"Wholesale gum selection.",
-    photo:""
-  },
-  {
-    name:"Chocolates",
-    category:"Candy & Snacks",
-    price:0,
-    moq:"Contact for MOQ",
-    desc:"Wholesale chocolate selection.",
-    photo:""
-  }
+const defaultProducts=[
+{name:"T-Shirts",category:"Apparel",price:0,moq:"Contact for MOQ",desc:"Wholesale apparel selection.",photo:""},
+{name:"Rolling Paper",category:"Smoking Accessories",price:0,moq:"Contact for MOQ",desc:"Wholesale rolling paper selection.",photo:""},
+{name:"Gums",category:"Candy & Snacks",price:0,moq:"Contact for MOQ",desc:"Wholesale gum selection.",photo:""},
+{name:"Chocolates",category:"Candy & Snacks",price:0,moq:"Contact for MOQ",desc:"Wholesale chocolate selection.",photo:""}
 ];
-
-let products =
-  JSON.parse(localStorage.getItem("gans_products") || "null")
-  || defaultProducts;
-
-let activeCat = "All";
-
-function money(value) {
-  return Number(value) > 0
-    ? "$" + Number(value).toFixed(2)
-    : "Contact";
+let products=JSON.parse(localStorage.getItem("gans_products")||"null")||defaultProducts;
+let editing=-1, activeCat="All";
+function money(v){return Number(v)>0?"$"+Number(v).toFixed(2):"Contact"}
+function render(){
+ const q=document.getElementById("search").value.toLowerCase();
+ const cats=["All",...new Set(products.map(p=>p.category).filter(Boolean))];
+ const catsContainer=document.getElementById("cats");
+ catsContainer.innerHTML="";
+ cats.forEach(category=>{
+   const button=document.createElement("button");
+   button.type="button";
+   button.className="cat"+(category===activeCat?" active":"");
+   button.textContent=category;
+   button.addEventListener("click",()=>{
+     activeCat=category;
+     render();
+   });
+   catsContainer.appendChild(button);
+ });
+ const list=products.filter(p=>(activeCat==="All"||p.category===activeCat)&&(!q||p.name.toLowerCase().includes(q)||p.category.toLowerCase().includes(q)));
+ document.getElementById("products").innerHTML=list.map(p=>{const i=products.indexOf(p);return `<article class="card" tabindex="0" role="button" aria-label="View ${escapeHtml(p.name)}" onclick="openProduct(${i})" onkeydown="if(event.key==='Enter'||event.key===' '){event.preventDefault();openProduct(${i})}"><div class="photo">${p.photo?`<img src="${p.photo}" alt="${escapeHtml(p.name)}">`:"PRODUCT PHOTO"}</div><div class="body"><div class="tag">${p.category}</div><h3>${p.name}</h3><div class="price">${money(p.price)}</div><div class="desc">${p.desc||""}</div><div class="stock">${p.moq||"Wholesale quantities available"}</div><button class="btn btn-dark" onclick="event.stopPropagation();contact('${escapeHtml(p.name)}')">Request Pricing</button></div></article>`}).join("");
+ renderAdmin();
 }
-
-function escapeHtml(value) {
-  return String(value)
-    .replace(/&/g,"&amp;")
-    .replace(/</g,"&lt;")
-    .replace(/>/g,"&gt;")
-    .replace(/'/g,"&#39;")
-    .replace(/"/g,"&quot;");
+function escapeHtml(s){return String(s).replace(/'/g,"&#39;").replace(/"/g,"&quot;")}
+function contact(n){location.href="mailto:gansmerchandise2002@gmail.com?subject=Wholesale inquiry: "+encodeURIComponent(n)}
+function openProduct(i){
+ const p=products[i];
+ if(!p)return;
+ document.getElementById("detailCategory").textContent=p.category||"";
+ document.getElementById("detailName").textContent=p.name||"Product";
+ document.getElementById("detailPrice").textContent=money(p.price);
+ document.getElementById("detailDescription").textContent=p.desc||"Contact us for product details and wholesale availability.";
+ document.getElementById("detailStock").textContent=p.moq||"Wholesale quantities available";
+ document.getElementById("detailPhoto").innerHTML=p.photo?`<img src="${p.photo}" alt="${escapeHtml(p.name)}">`:"PRODUCT PHOTO";
+ document.getElementById("detailContact").onclick=()=>contact(p.name);
+ document.getElementById("productModal").classList.add("open");
 }
-
-function render() {
-  const searchInput = document.getElementById("search");
-  const query = searchInput.value.toLowerCase();
-
-  const categories = [
-    "All",
-    ...new Set(products.map(product => product.category))
-  ];
-
-  document.getElementById("cats").innerHTML =
-    categories.map(category => `
-      <button
-        class="cat ${category === activeCat ? "active" : ""}"
-        onclick='selectCategory(${JSON.stringify(category)})'>
-        ${escapeHtml(category)}
-      </button>
-    `).join("");
-
-  const visibleProducts = products.filter(product => {
-    const matchesCategory =
-      activeCat === "All" || product.category === activeCat;
-
-    const matchesSearch =
-      !query ||
-      product.name.toLowerCase().includes(query) ||
-      product.category.toLowerCase().includes(query);
-
-    return matchesCategory && matchesSearch;
-  });
-
-  document.getElementById("products").innerHTML =
-    visibleProducts.map(product => {
-      const productIndex = products.indexOf(product);
-
-      return `
-        <article
-          class="card"
-          tabindex="0"
-          role="button"
-          aria-label="View ${escapeHtml(product.name)}"
-          onclick="openProduct(${productIndex})"
-          onkeydown="
-            if(event.key === 'Enter' || event.key === ' ') {
-              event.preventDefault();
-              openProduct(${productIndex});
-            }
-          ">
-
-          <div class="photo">
-            ${
-              product.photo
-                ? `<img
-                    src="${escapeHtml(product.photo)}"
-                    alt="${escapeHtml(product.name)}">`
-                : "PRODUCT PHOTO"
-            }
-          </div>
-
-          <div class="body">
-            <div class="tag">
-              ${escapeHtml(product.category)}
-            </div>
-
-            <h3>${escapeHtml(product.name)}</h3>
-
-            <div class="price">
-              ${money(product.price)}
-            </div>
-
-            <div class="desc">
-              ${escapeHtml(product.desc || "")}
-            </div>
-
-            <div class="stock">
-              ${escapeHtml(
-                product.moq || "Wholesale quantities available"
-              )}
-            </div>
-
-            <button
-              class="btn btn-dark"
-              onclick="
-                event.stopPropagation();
-                contact(${JSON.stringify(product.name)});
-              ">
-              Request Pricing
-            </button>
-          </div>
-        </article>
-      `;
-    }).join("");
+function closeProduct(){document.getElementById("productModal").classList.remove("open")}
+function closeProductFromBackdrop(event){if(event.target.id==="productModal")closeProduct()}
+function persist(){localStorage.setItem("gans_products",JSON.stringify(products));render()}
+function saveProduct(e){
+ e.preventDefault();
+ const file=document.getElementById("photo").files[0];
+ const finish=(photo)=>{const p={name:name.value,category:category.value,price:price.value,moq:moq.value,desc:desc.value,photo:photo||""};if(editing<0)products.push(p);else products[editing]=p;editing=-1;form.reset();persist()};
+ if(file){const r=new FileReader();r.onload=()=>finish(r.result);r.readAsDataURL(file)}else finish(editing>=0?products[editing].photo:"");
 }
-
-function selectCategory(category) {
-  activeCat = category;
-  render();
-}
-
-function openProduct(index) {
-  const product = products[index];
-
-  if (!product) return;
-
-  document.getElementById("detailCategory").textContent =
-    product.category || "";
-
-  document.getElementById("detailName").textContent =
-    product.name || "Product";
-
-  document.getElementById("detailPrice").textContent =
-    money(product.price);
-
-  document.getElementById("detailDescription").textContent =
-    product.desc ||
-    "Contact us for product details and wholesale availability.";
-
-  document.getElementById("detailStock").textContent =
-    product.moq || "Wholesale quantities available";
-
-  const detailPhoto =
-    document.getElementById("detailPhoto");
-
-  if (product.photo) {
-    detailPhoto.innerHTML = "";
-
-    const image = document.createElement("img");
-    image.src = product.photo;
-    image.alt = product.name || "Product";
-
-    detailPhoto.appendChild(image);
-  } else {
-    detailPhoto.textContent = "PRODUCT PHOTO";
-  }
-
-  document.getElementById("detailContact").onclick =
-    () => contact(product.name);
-
-  document.getElementById("productModal")
-    .classList.add("open");
-}
-
-function closeProduct() {
-  document.getElementById("productModal")
-    .classList.remove("open");
-}
-
-function closeProductFromBackdrop(event) {
-  if (event.target.id === "productModal") {
-    closeProduct();
-  }
-}
-
-function contact(productName) {
-  const subject =
-    encodeURIComponent("Wholesale inquiry: " + productName);
-
-  window.location.href =
-    "mailto:gansmerchandise2002@gmail.com?subject=" + subject;
-}
-
+function editProduct(i){const p=products[i];editing=i;name.value=p.name;category.value=p.category;price.value=p.price;moq.value=p.moq||"";desc.value=p.desc||"";document.getElementById("form").scrollIntoView({behavior:"smooth"})}
+function deleteProduct(i){if(confirm("Delete this product?")){products.splice(i,1);persist()}}
+function resetForm(){editing=-1;form.reset()}
+function renderAdmin(){document.getElementById("adminRows").innerHTML=products.map((p,i)=>`<tr><td>${p.name}</td><td>${p.category}</td><td>${money(p.price)}</td><td><button class="btn btn-outline" onclick="editProduct(${i})">Edit</button> <button class="btn btn-outline" onclick="deleteProduct(${i})">Delete</button></td></tr>`).join("")}
+function showAdmin(){store.style.display="none";admin.style.display="block";window.scrollTo(0,0)}
+function hideAdmin(){admin.style.display="none";store.style.display="block";window.scrollTo(0,0)}
 render();
 </script>
-
 <script>
-const SUPABASE_URL =
-  "https://elwrivtrnymkxmdvffyd.supabase.co";
-
-const SUPABASE_KEY =
-  "sb_publishable_zLn1w_RtuBH1tQt58kcQlA_I6VFi4jb";
-
-const authClient =
-  supabase.createClient(SUPABASE_URL, SUPABASE_KEY);
-
+const SUPABASE_URL = "https://elwrivtrnymkxmdvffyd.supabase.co";
+const SUPABASE_KEY = "sb_publishable_zLn1w_RtuBH1tQt58kcQlA_I6VFi4jb";
+const authClient = supabase.createClient(SUPABASE_URL, SUPABASE_KEY);
 let authMode = "signin";
 
 function openAuth(mode) {
   authMode = mode;
   updateAuthForm();
-
   document.getElementById("authMessage").textContent = "";
-
-  document.getElementById("authModal")
-    .classList.add("open");
-
+  document.getElementById("authModal").classList.add("open");
   document.getElementById("authEmail").focus();
 }
 
 function closeAuth() {
-  document.getElementById("authModal")
-    .classList.remove("open");
-
+  document.getElementById("authModal").classList.remove("open");
   document.getElementById("authForm").reset();
 }
 
 function closeAuthFromBackdrop(event) {
-  if (event.target.id === "authModal") {
-    closeAuth();
-  }
+  if (event.target.id === "authModal") closeAuth();
 }
 
 function toggleAuthMode() {
-  authMode =
-    authMode === "signin" ? "signup" : "signin";
-
+  authMode = authMode === "signin" ? "signup" : "signin";
   updateAuthForm();
-
   document.getElementById("authMessage").textContent = "";
 }
 
 function updateAuthForm() {
   const signingUp = authMode === "signup";
-
-  document.getElementById("authTitle").textContent =
-    signingUp ? "Create Account" : "Sign In";
-
-  document.getElementById("authSubmit").textContent =
-    signingUp ? "Sign Up" : "Sign In";
-
-  document.getElementById("authSwitchText").textContent =
-    signingUp ? "Already registered?" : "New customer?";
-
-  document.getElementById("authSwitchButton").textContent =
-    signingUp ? "Sign in" : "Create an account";
-
-  document.getElementById("authPassword").autocomplete =
-    signingUp ? "new-password" : "current-password";
+  document.getElementById("authTitle").textContent = signingUp ? "Create Account" : "Sign In";
+  document.getElementById("authSubmit").textContent = signingUp ? "Sign Up" : "Sign In";
+  document.getElementById("authSwitchText").textContent = signingUp ? "Already registered?" : "New customer?";
+  document.getElementById("authSwitchButton").textContent = signingUp ? "Sign in" : "Create an account";
+  document.getElementById("authPassword").autocomplete = signingUp ? "new-password" : "current-password";
 }
 
 async function submitAuth(event) {
   event.preventDefault();
-
-  const email =
-    document.getElementById("authEmail").value.trim();
-
-  const password =
-    document.getElementById("authPassword").value;
-
-  const message =
-    document.getElementById("authMessage");
-
-  const submit =
-    document.getElementById("authSubmit");
-
+  const email = document.getElementById("authEmail").value.trim();
+  const password = document.getElementById("authPassword").value;
+  const message = document.getElementById("authMessage");
+  const submit = document.getElementById("authSubmit");
   submit.disabled = true;
   message.className = "auth-message";
+  message.textContent = authMode === "signup" ? "Creating account…" : "Signing in…";
 
-  message.textContent =
-    authMode === "signup"
-      ? "Creating account…"
-      : "Signing in…";
-
-  const result =
-    authMode === "signup"
-      ? await authClient.auth.signUp({ email, password })
-      : await authClient.auth.signInWithPassword({
-          email,
-          password
-        });
+  const result = authMode === "signup"
+    ? await authClient.auth.signUp({ email, password })
+    : await authClient.auth.signInWithPassword({ email, password });
 
   submit.disabled = false;
-
   if (result.error) {
     message.textContent = result.error.message;
     return;
   }
-
   if (authMode === "signup" && !result.data.session) {
     message.className = "auth-message success";
-    message.textContent =
-      "Account created. Check your email to confirm your account, then sign in.";
+    message.textContent = "Account created. Check your email to confirm your account, then sign in.";
     return;
   }
-
   if (result.data.session) {
-    authClient.functions
-      .invoke("notify-new-customer")
-      .catch(error => {
-        console.error(
-          "Customer notification error:",
-          error
-        );
-      });
+    authClient.functions.invoke("notify-new-customer").catch((error) => {
+      console.error("Customer notification error:", error);
+    });
   }
-
   closeAuth();
 }
 
@@ -983,65 +245,29 @@ async function signOut() {
 }
 
 async function emailCompany() {
-  const { data } =
-    await authClient.auth.getSession();
-
-  const customerEmail =
-    data.session?.user?.email || "";
-
-  const subject =
-    encodeURIComponent(
-      "Wholesale enquiry from " + customerEmail
-    );
-
-  const body =
-    encodeURIComponent(
-      "Hello Gans Merchandise,\n\n" +
-      "I would like to ask about your wholesale products.\n\n" +
-      "My email: " + customerEmail + "\n\nThank you."
-    );
-
-  window.location.href =
-    "mailto:gansmerchandise2002@gmail.com" +
-    "?subject=" + subject +
-    "&body=" + body;
+  const { data } = await authClient.auth.getSession();
+  const customerEmail = data.session?.user?.email || "";
+  const subject = encodeURIComponent("Wholesale enquiry from " + customerEmail);
+  const body = encodeURIComponent("Hello Gans Merchandise,\n\nI would like to ask about your wholesale products.\n\nMy email: " + customerEmail + "\n\nThank you.");
+  window.location.href = "mailto:gansmerchandise2002@gmail.com?subject=" + subject + "&body=" + body;
 }
 
 function updateAccountUI(session) {
   const signedIn = Boolean(session);
-
-  document.getElementById("userEmail").textContent =
-    signedIn ? session.user.email : "";
-
-  document.getElementById("signInButton").style.display =
-    signedIn ? "none" : "inline-block";
-
-  document.getElementById("signUpButton").style.display =
-    signedIn ? "none" : "inline-block";
-
-  document.getElementById("emailCompanyButton").style.display =
-    signedIn ? "inline-block" : "none";
-
-  document.getElementById("signOutButton").style.display =
-    signedIn ? "inline-block" : "none";
+  document.getElementById("userEmail").textContent = signedIn ? session.user.email : "";
+  document.getElementById("signInButton").style.display = signedIn ? "none" : "inline-block";
+  document.getElementById("signUpButton").style.display = signedIn ? "none" : "inline-block";
+  document.getElementById("emailCompanyButton").style.display = signedIn ? "inline-block" : "none";
+  document.getElementById("signOutButton").style.display = signedIn ? "inline-block" : "none";
 }
 
-authClient.auth.getSession()
-  .then(({ data }) => {
-    updateAccountUI(data.session);
-  });
-
-authClient.auth.onAuthStateChange(
-  (_event, session) => {
-    updateAccountUI(session);
-  }
-);
+authClient.auth.getSession().then(({ data }) => updateAccountUI(data.session));
+authClient.auth.onAuthStateChange((_event, session) => updateAccountUI(session));
 
 async function loadSupabaseProducts() {
   try {
     const response = await fetch(
-      SUPABASE_URL +
-      "/rest/v1/products?select=*&order=created_at.desc",
+      SUPABASE_URL + "/rest/v1/products?select=*&order=created_at.desc",
       {
         headers: {
           apikey: SUPABASE_KEY
@@ -1055,13 +281,13 @@ async function loadSupabaseProducts() {
 
     const data = await response.json();
 
-    products = data.map(product => ({
-      name:product.name || "",
-      category:product.category || "",
-      price:product.price || 0,
-      desc:product.description || "",
-      photo:product.image_url || "",
-      moq:"Wholesale quantities available"
+    products = data.map(p => ({
+      name: p.name || "",
+      category: p.category || "",
+      price: p.price || 0,
+      desc: p.description || "",
+      photo: p.image_url || "",
+      moq: "Wholesale quantities available"
     }));
 
     render();
@@ -1072,7 +298,5 @@ async function loadSupabaseProducts() {
 
 loadSupabaseProducts();
 </script>
-
 </body>
 </html>
-
