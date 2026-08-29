@@ -28,6 +28,7 @@ footer{background:#111827;color:#fff;padding:35px 22px}.foot{max-width:1180px;ma
 .cart-box{position:relative;background:#fff;color:var(--ink);width:min(720px,100%);max-height:90vh;overflow:auto;padding:28px;border-radius:16px;box-shadow:0 20px 60px rgba(0,0,0,.35)}.cart-box h2{margin-top:0}.cart-row{display:grid;grid-template-columns:1fr auto auto auto;gap:12px;align-items:center;padding:14px 0;border-bottom:1px solid var(--line)}.cart-name{font-weight:800}.cart-price{color:var(--muted);font-size:13px}.quantity{display:flex;align-items:center;gap:8px}.quantity button{width:32px;height:32px;border:1px solid var(--line);background:#fff;border-radius:7px;cursor:pointer;font-weight:800}.remove-item{border:0;background:none;color:#b91c1c;cursor:pointer}.cart-summary{margin-top:20px;padding-top:8px}.cart-total{display:flex;justify-content:space-between;font-size:22px;font-weight:800;margin-bottom:10px}.minimum-message{padding:10px;border-radius:8px;background:#fff8e1;color:#6b5500;margin-bottom:12px}.minimum-message.ready{background:#dcfce7;color:#166534}.checkout-button{width:100%}.checkout-button:disabled{opacity:.45;cursor:not-allowed}.cart-empty{text-align:center;color:var(--muted);padding:30px 10px}.product-actions{display:flex;gap:8px;flex-wrap:wrap}.product-actions .btn{flex:1}.cart-count{display:inline-grid;place-items:center;min-width:22px;height:22px;padding:0 6px;margin-left:5px;border-radius:999px;background:#fbbf24;color:#111827;font-size:12px}
 @media(max-width:600px){.cart-row{grid-template-columns:1fr auto}.cart-row .quantity{grid-column:1/2}.cart-row .remove-item{grid-column:2/3}.product-actions{flex-direction:column}}
 .whatsapp-button{position:fixed;right:20px;bottom:20px;z-index:90;display:flex;align-items:center;gap:9px;background:#25d366;color:#fff;text-decoration:none;font-weight:800;padding:14px 18px;border-radius:999px;box-shadow:0 8px 24px rgba(0,0,0,.25);transition:transform .2s,background .2s}.whatsapp-button:hover,.whatsapp-button:focus{background:#1fb858;transform:translateY(-2px);outline:3px solid rgba(37,211,102,.3);outline-offset:3px}.whatsapp-icon{font-size:21px}@media(max-width:560px){.whatsapp-button{right:14px;bottom:14px;padding:13px 16px}.whatsapp-label{font-size:14px}}
+.stock-badge{display:inline-block;margin:8px 0;padding:6px 10px;border-radius:999px;font-size:12px;font-weight:800}.stock-in{background:#dcfce7;color:#166534}.stock-low{background:#fef3c7;color:#92400e}.stock-out{background:#fee2e2;color:#991b1b}.btn[disabled]{opacity:.45;cursor:not-allowed}
 </style>
 </head>
 <body>
@@ -58,6 +59,7 @@ footer{background:#111827;color:#fff;padding:35px 22px}.foot{max-width:1180px;ma
 <div id="detailCategory" class="tag"></div>
 <h2 id="detailName"></h2>
 <div id="detailPrice" class="detail-price"></div>
+<div id="detailAvailability" class="stock-badge stock-in">In Stock</div>
 <p id="detailDescription" class="detail-description"></p>
 <div id="detailStock" class="stock"></div>
 <button id="detailContact" class="btn btn-dark">Request Pricing</button>
@@ -139,10 +141,10 @@ footer{background:#111827;color:#fff;padding:35px 22px}.foot{max-width:1180px;ma
 
 <script>
 const defaultProducts=[
-{name:"T-Shirts",category:"Apparel",price:0,moq:"Minimum quantity: 1 box",desc:"Wholesale apparel selection.",photo:""},
-{name:"Rolling Paper",category:"Smoking Accessories",price:0,moq:"Minimum quantity: 1 box",desc:"Wholesale rolling paper selection.",photo:""},
-{name:"Gums",category:"Candy & Snacks",price:0,moq:"Minimum quantity: 1 box",desc:"Wholesale gum selection.",photo:""},
-{name:"Chocolates",category:"Candy & Snacks",price:0,moq:"Minimum quantity: 1 box",desc:"Wholesale chocolate selection.",photo:""}
+{name:"T-Shirts",category:"Apparel",price:0,moq:"Minimum quantity: 1 box",desc:"Wholesale apparel selection.",photo:"",stock_status:"In Stock"},
+{name:"Rolling Paper",category:"Smoking Accessories",price:0,moq:"Minimum quantity: 1 box",desc:"Wholesale rolling paper selection.",photo:"",stock_status:"In Stock"},
+{name:"Gums",category:"Candy & Snacks",price:0,moq:"Minimum quantity: 1 box",desc:"Wholesale gum selection.",photo:"",stock_status:"Low Stock"},
+{name:"Chocolates",category:"Candy & Snacks",price:0,moq:"Minimum quantity: 1 box",desc:"Wholesale chocolate selection.",photo:"",stock_status:"Out of Stock"}
 ];
 let products=JSON.parse(localStorage.getItem("gans_products")||"null")||defaultProducts;
 let editing=-1, activeCat="All";
@@ -165,7 +167,7 @@ function render(){
    catsContainer.appendChild(button);
  });
  const list=products.filter(p=>(activeCat==="All"||p.category===activeCat)&&(!q||p.name.toLowerCase().includes(q)||p.category.toLowerCase().includes(q)));
- document.getElementById("products").innerHTML=list.map(p=>{const i=products.indexOf(p);return `<article class="card" tabindex="0" role="button" aria-label="View ${escapeHtml(p.name)}" onclick="openProduct(${i})" onkeydown="if(event.key==='Enter'||event.key===' '){event.preventDefault();openProduct(${i})}"><div class="photo">${p.photo?`<img src="${p.photo}" alt="${escapeHtml(p.name)}">`:"PRODUCT PHOTO"}</div><div class="body"><div class="tag">${p.category}</div><h3>${p.name}</h3><div class="price">${money(p.price)} per box</div><div class="desc">${p.desc||""}</div><div class="stock">${p.moq||"Minimum quantity: 1 box"}</div><div class="product-actions"><button class="btn btn-dark" onclick="event.stopPropagation();addToCart(${i})">Add 1 Box to Cart</button><button class="btn btn-outline" onclick="event.stopPropagation();contact('${escapeHtml(p.name)}')">Request Pricing</button></div></div></article>`}).join("");
+ document.getElementById("products").innerHTML=list.map(p=>{const i=products.indexOf(p);const status=p.stock_status||"In Stock";const statusClass=status==="Out of Stock"?"stock-out":status==="Low Stock"?"stock-low":"stock-in";return `<article class="card" tabindex="0" role="button" aria-label="View ${escapeHtml(p.name)}" onclick="openProduct(${i})" onkeydown="if(event.key==='Enter'||event.key===' '){event.preventDefault();openProduct(${i})}"><div class="photo">${p.photo?`<img src="${p.photo}" alt="${escapeHtml(p.name)}">`:"PRODUCT PHOTO"}</div><div class="body"><div class="tag">${p.category}</div><h3>${p.name}</h3><div class="price">${money(p.price)} per box</div><div class="stock-badge ${statusClass}">${status}</div><div class="desc">${p.desc||""}</div><div class="stock">${p.moq||"Minimum quantity: 1 box"}</div><div class="product-actions"><button class="btn btn-dark" onclick="event.stopPropagation();addToCart(${i})" ${status==="Out of Stock"?"disabled":""}>${status==="Out of Stock"?"Out of Stock":"Add 1 Box to Cart"}</button><button class="btn btn-outline" onclick="event.stopPropagation();contact('${escapeHtml(p.name)}')">Request Pricing</button></div></div></article>`}).join("");
  renderAdmin();
 }
 function escapeHtml(s){return String(s).replace(/'/g,"&#39;").replace(/"/g,"&quot;")}
@@ -176,10 +178,16 @@ function openProduct(i){
  document.getElementById("detailCategory").textContent=p.category||"";
  document.getElementById("detailName").textContent=p.name||"Product";
  document.getElementById("detailPrice").textContent=money(p.price)+" per box";
+ const status=p.stock_status||"In Stock";
+ const availability=document.getElementById("detailAvailability");
+ availability.textContent=status;
+ availability.className="stock-badge "+(status==="Out of Stock"?"stock-out":status==="Low Stock"?"stock-low":"stock-in");
  document.getElementById("detailDescription").textContent=p.desc||"Contact us for product details and wholesale availability.";
  document.getElementById("detailStock").textContent=p.moq||"Minimum quantity: 1 box";
  document.getElementById("detailPhoto").innerHTML=p.photo?`<img src="${p.photo}" alt="${escapeHtml(p.name)}">`:"PRODUCT PHOTO";
  document.getElementById("detailContact").onclick=()=>contact(p.name);
+ document.getElementById("detailAdd").disabled=status==="Out of Stock";
+ document.getElementById("detailAdd").textContent=status==="Out of Stock"?"Out of Stock":"Add 1 Box to Cart";
  document.getElementById("detailAdd").onclick=()=>addToCart(i);
  document.getElementById("productModal").classList.add("open");
 }
@@ -188,6 +196,7 @@ function closeProductFromBackdrop(event){if(event.target.id==="productModal")clo
 function saveCart(){localStorage.setItem("gans_cart",JSON.stringify(cart));renderCart()}
 function addToCart(i){
  const p=products[i];
+ if((p?.stock_status||"In Stock")==="Out of Stock"){alert("This product is currently out of stock.");return}
  if(!p||Number(p.price)<=0){alert("Please request pricing for this product before adding it to the cart.");return}
  const key=(p.name||"")+"|"+(p.category||"");
  const existing=cart.find(item=>item.key===key);
@@ -356,7 +365,8 @@ async function loadSupabaseProducts() {
       price: p.price || 0,
       desc: p.description || "",
       photo: p.image_url || "",
-      moq: "Minimum quantity: 1 box"
+      moq: "Minimum quantity: 1 box",
+      stock_status: p.stock_status || "In Stock"
     }));
 
     render();
