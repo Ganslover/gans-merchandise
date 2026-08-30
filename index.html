@@ -31,9 +31,11 @@ footer{background:#111827;color:#fff;padding:35px 22px}.foot{max-width:1180px;ma
 .stock-badge{display:inline-block;margin:8px 0;padding:6px 10px;border-radius:999px;font-size:12px;font-weight:800}.stock-in{background:#dcfce7;color:#166534}.stock-low{background:#fef3c7;color:#92400e}.stock-out{background:#fee2e2;color:#991b1b}.btn[disabled]{opacity:.45;cursor:not-allowed}
 .orders-box{position:relative;background:#fff;color:var(--ink);width:min(820px,100%);max-height:90vh;overflow:auto;padding:28px;border-radius:16px;box-shadow:0 20px 60px rgba(0,0,0,.35)}.orders-box h2{margin-top:0}.order-card{border:1px solid var(--line);border-radius:12px;padding:16px;margin:12px 0}.order-head{display:flex;justify-content:space-between;gap:14px;align-items:flex-start;flex-wrap:wrap}.order-number{font-weight:800}.order-date{color:var(--muted);font-size:13px}.order-total{font-size:20px;font-weight:800}.order-status{display:inline-block;padding:6px 10px;border-radius:999px;background:#dbeafe;color:#1e40af;font-size:12px;font-weight:800}.order-items{margin:12px 0 0;padding-left:20px;color:#4b5563}.orders-loading,.orders-empty{padding:32px;text-align:center;color:var(--muted)}
 .orders-button{background:#2563eb!important;color:#fff!important;border-color:#2563eb!important}
+.checkout-box{position:relative;background:#fff;color:var(--ink);width:min(820px,100%);max-height:94vh;overflow:auto;padding:30px;border-radius:16px;box-shadow:0 20px 60px rgba(0,0,0,.35)}.checkout-box h2{margin:0 0 6px}.checkout-intro{color:var(--muted);margin:0 0 22px}.checkout-section{border:1px solid var(--line);border-radius:12px;padding:18px;margin:16px 0}.checkout-section h3{margin:0 0 14px;font-size:17px}.checkout-grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:13px}.checkout-grid .full{grid-column:1/-1}.required{color:#b91c1c}.field-help{display:block;color:var(--muted);font-size:12px;line-height:1.4;margin-top:5px}.checkout-actions{display:flex;gap:10px;justify-content:flex-end;margin-top:20px}.checkout-actions .btn{min-width:150px}.checkout-error{display:none;background:#fee2e2;color:#991b1b;border:1px solid #fecaca;border-radius:9px;padding:11px;margin-top:14px}.checkout-error.show{display:block}.confirm-total{display:flex;justify-content:space-between;font-size:20px;font-weight:800;padding:14px 0;border-top:1px solid var(--line)}
 .nav-actions{gap:10px}.nav-actions .btn{width:184px;height:50px;padding:0 12px;text-align:center;white-space:nowrap;line-height:1.2;align-items:center;justify-content:center}.nav-actions .cart-button{display:flex;gap:8px}.cart-count{display:inline-flex;align-items:center;justify-content:center;line-height:22px;margin:0}
 @media(max-width:760px){header{position:relative}.nav{padding:14px 16px;display:grid;grid-template-columns:1fr auto;gap:8px 12px}.brand{font-size:19px}.nav small{display:block;text-align:right}.nav-actions{grid-column:1/-1;width:100%;display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:8px}.nav-actions .btn{width:100%;padding:11px 8px;font-size:14px}.user-email{grid-column:1/-1;text-align:center;background:#1f2937;border-radius:8px;padding:8px;overflow-wrap:anywhere}.user-email:empty{display:none}.orders-box,.cart-box{width:100%;max-height:94vh;border-radius:14px;padding:22px 16px}.order-head{display:block}.order-status{margin:8px 0}.order-total{display:block;margin-top:6px}.order-items{padding-left:18px}.minimum-order{font-size:14px}}
 @media(max-width:420px){.nav-actions{grid-template-columns:1fr 1fr}.nav-actions .btn{font-size:13px}.orders-box h2{font-size:23px}.order-card{padding:14px}}
+@media(max-width:650px){.checkout-box{width:100%;padding:24px 16px;border-radius:14px}.checkout-grid{grid-template-columns:1fr}.checkout-grid .full{grid-column:auto}.checkout-actions{flex-direction:column-reverse}.checkout-actions .btn{width:100%}}
 </style>
 </head>
 <body>
@@ -92,6 +94,39 @@ footer{background:#111827;color:#fff;padding:35px 22px}.foot{max-width:1180px;ma
 <button class="auth-close" aria-label="Close order history" onclick="closeOrders()">&times;</button>
 <h2>My Order History</h2>
 <div id="ordersList" class="orders-loading">Loading your orders…</div>
+</section>
+</div>
+
+<div id="businessCheckoutModal" class="modal" onclick="closeBusinessCheckoutFromBackdrop(event)">
+<section class="checkout-box" aria-labelledby="businessCheckoutTitle">
+<button class="auth-close" type="button" aria-label="Close business checkout" onclick="closeBusinessCheckout()">&times;</button>
+<h2 id="businessCheckoutTitle">Business checkout</h2>
+<p class="checkout-intro">Enter your business contact and U.S. delivery address. Gans Merchandise will review the request and contact you with payment details.</p>
+<form id="businessCheckoutForm" onsubmit="confirmBusinessOrder(event)">
+<div class="checkout-section">
+<h3>Business contact</h3>
+<div class="checkout-grid">
+<div><label for="checkoutCompany">Legal company name <span class="required">*</span></label><input id="checkoutCompany" autocomplete="organization" required></div>
+<div><label for="checkoutCustomer">Contact name <span class="required">*</span></label><input id="checkoutCustomer" autocomplete="name" required></div>
+<div><label for="checkoutPhone">Business phone <span class="required">*</span></label><input id="checkoutPhone" type="tel" autocomplete="tel" placeholder="(518) 555-0123" required></div>
+<div><label for="checkoutEmail">Order email <span class="required">*</span></label><input id="checkoutEmail" type="email" autocomplete="email" required></div>
+</div>
+</div>
+<div class="checkout-section">
+<h3>U.S. delivery address</h3>
+<div class="checkout-grid">
+<div class="full"><label for="checkoutAddress1">Street address <span class="required">*</span></label><input id="checkoutAddress1" autocomplete="address-line1" required></div>
+<div class="full"><label for="checkoutAddress2">Suite, unit, floor (optional)</label><input id="checkoutAddress2" autocomplete="address-line2"></div>
+<div><label for="checkoutCity">City <span class="required">*</span></label><input id="checkoutCity" autocomplete="address-level2" required></div>
+<div><label for="checkoutState">State <span class="required">*</span></label><select id="checkoutState" autocomplete="address-level1" required><option value="">Select state</option></select></div>
+<div><label for="checkoutZip">ZIP code <span class="required">*</span></label><input id="checkoutZip" inputmode="numeric" autocomplete="postal-code" pattern="[0-9]{5}(-[0-9]{4})?" placeholder="12345" required></div>
+</div>
+</div>
+<p class="note">Submitting this form sends an order request only. No payment is collected now. We will contact you manually by phone, WhatsApp, or email with availability, shipping, and payment details.</p>
+<div class="confirm-total"><span>Order total</span><span id="businessCheckoutTotal">$0.00</span></div>
+<div id="checkoutFormError" class="checkout-error" role="alert"></div>
+<div class="checkout-actions"><button class="btn btn-outline" type="button" onclick="backToCart()">Back to cart</button><button id="confirmOrderButton" class="btn btn-dark" type="submit">Confirm order</button></div>
+</form>
 </section>
 </div>
 
@@ -243,21 +278,51 @@ async function checkoutCart(){
  if(total<100){alert("The minimum wholesale order is $100 USD.");return}
  const {data:{session}}=await authClient.auth.getSession();
  if(!session){closeCart();openAuth("signin");document.getElementById("authMessage").textContent="Please sign in before checkout so your order can be saved.";return}
- const checkoutButton=document.getElementById("checkoutButton");
- checkoutButton.disabled=true;
- checkoutButton.textContent="Saving order…";
- const {data:order,error:orderError}=await authClient.from("orders").insert({user_id:session.user.id,total,status:"Pending"}).select("id").single();
- if(orderError){checkoutButton.disabled=false;checkoutButton.textContent="Checkout — $100 Minimum";alert("Order could not be saved: "+orderError.message);return}
+ closeCart();
+ document.getElementById("checkoutEmail").value=session.user.email||"";
+ document.getElementById("businessCheckoutTotal").textContent="$"+total.toFixed(2);
+ document.getElementById("checkoutFormError").classList.remove("show");
+ document.getElementById("businessCheckoutModal").classList.add("open");
+ document.getElementById("checkoutCompany").focus();
+}
+const usStates={AL:"Alabama",AK:"Alaska",AZ:"Arizona",AR:"Arkansas",CA:"California",CO:"Colorado",CT:"Connecticut",DE:"Delaware",FL:"Florida",GA:"Georgia",HI:"Hawaii",ID:"Idaho",IL:"Illinois",IN:"Indiana",IA:"Iowa",KS:"Kansas",KY:"Kentucky",LA:"Louisiana",ME:"Maine",MD:"Maryland",MA:"Massachusetts",MI:"Michigan",MN:"Minnesota",MS:"Mississippi",MO:"Missouri",MT:"Montana",NE:"Nebraska",NV:"Nevada",NH:"New Hampshire",NJ:"New Jersey",NM:"New Mexico",NY:"New York",NC:"North Carolina",ND:"North Dakota",OH:"Ohio",OK:"Oklahoma",OR:"Oregon",PA:"Pennsylvania",RI:"Rhode Island",SC:"South Carolina",SD:"South Dakota",TN:"Tennessee",TX:"Texas",UT:"Utah",VT:"Vermont",VA:"Virginia",WA:"Washington",WV:"West Virginia",WI:"Wisconsin",WY:"Wyoming",DC:"District of Columbia"};
+document.getElementById("checkoutState").insertAdjacentHTML("beforeend",Object.entries(usStates).map(([code,name])=>`<option value="${code}">${name}</option>`).join(""));
+function closeBusinessCheckout(){document.getElementById("businessCheckoutModal").classList.remove("open")}
+function closeBusinessCheckoutFromBackdrop(event){if(event.target.id==="businessCheckoutModal")closeBusinessCheckout()}
+function backToCart(){closeBusinessCheckout();openCart()}
+async function confirmBusinessOrder(event){
+ event.preventDefault();
+ const total=cartTotal();
+ const errorBox=document.getElementById("checkoutFormError");
+ const button=document.getElementById("confirmOrderButton");
+ errorBox.classList.remove("show");
+ if(total<100){errorBox.textContent="Your order no longer meets the $100 wholesale minimum.";errorBox.classList.add("show");return}
+ const {data:{session}}=await authClient.auth.getSession();
+ if(!session){closeBusinessCheckout();openAuth("signin");return}
+ const details={
+   user_id:session.user.id,total,status:"Pending",
+   company_name:document.getElementById("checkoutCompany").value.trim(),
+   customer_name:document.getElementById("checkoutCustomer").value.trim(),
+   phone:document.getElementById("checkoutPhone").value.trim(),
+   order_email:document.getElementById("checkoutEmail").value.trim(),
+   address_line1:document.getElementById("checkoutAddress1").value.trim(),
+   address_line2:document.getElementById("checkoutAddress2").value.trim(),
+   city:document.getElementById("checkoutCity").value.trim(),
+   state:document.getElementById("checkoutState").value,
+   zip_code:document.getElementById("checkoutZip").value.trim()
+ };
+ button.disabled=true;button.textContent="Confirming order…";
+ const {data:order,error:orderError}=await authClient.from("orders").insert(details).select("id").single();
+ if(orderError){button.disabled=false;button.textContent="Confirm order";errorBox.textContent="Order could not be saved: "+orderError.message;errorBox.classList.add("show");return}
  const items=cart.map(item=>({order_id:order.id,product_name:item.name,quantity:item.qty,unit_price:item.price}));
  const {error:itemsError}=await authClient.from("order_items").insert(items);
- if(itemsError){checkoutButton.disabled=false;checkoutButton.textContent="Checkout — $100 Minimum";alert("Order items could not be saved: "+itemsError.message);return}
- const lines=cart.map(item=>`${item.name} — ${item.qty} ${item.qty===1?"box":"boxes"} × $${item.price.toFixed(2)} = $${(item.qty*item.price).toFixed(2)}`).join("\n");
- const subject=encodeURIComponent("Wholesale order request — $"+total.toFixed(2));
- const body=encodeURIComponent(`Hello Gans Merchandise,\n\nI would like to place this wholesale order:\n\n${lines}\n\nTotal: $${total.toFixed(2)}\n\nPlease contact me to confirm availability and payment.`);
+ if(itemsError){button.disabled=false;button.textContent="Confirm order";errorBox.textContent="The order was created, but its items could not be saved: "+itemsError.message;errorBox.classList.add("show");return}
  cart=[];
  saveCart();
- closeCart();
- location.href=`mailto:gansmerchandise2002@gmail.com?subject=${subject}&body=${body}`;
+ closeBusinessCheckout();
+ document.getElementById("businessCheckoutForm").reset();
+ button.disabled=false;button.textContent="Confirm order";
+ alert("Order request "+order.id.slice(0,8).toUpperCase()+" was received. Gans Merchandise will contact you manually by phone, WhatsApp, or email with availability and payment details.");
 }
 async function openOrders(){
  document.getElementById("ordersModal").classList.add("open");
