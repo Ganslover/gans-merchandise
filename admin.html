@@ -143,6 +143,11 @@
     .order-items th:last-child, .order-items td:last-child { text-align: right; }
     .empty { text-align: center; color: #aaa; padding: 25px 0; }
     .error { color: #ff8a80; }
+    .dashboard-nav { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; margin-bottom: 20px; }
+    .dashboard-tab { background: #222; color: white; border: 1px solid #555; min-height: 58px; font-weight: bold; }
+    .dashboard-tab.active { background: #f1c232; color: #000; border-color: #f1c232; }
+    .dashboard-section { display: none; }
+    .dashboard-section.active { display: block; }
     @media (max-width: 620px) {
       .customer-profile { grid-template-columns: 1fr; }
       .detail.full { grid-column: auto; }
@@ -176,6 +181,7 @@
       <button class="primary" onclick="login()">Login</button>
 
       <div id="loginMessage"></div>
+      <small>Corrected admin login version</small>
     </div>
 
     <!-- ADMIN -->
@@ -183,6 +189,27 @@
 
       <div class="card">
         <button class="logout" onclick="logout()">Logout</button>
+        <h2>Dashboard</h2>
+        <p><small>Choose what you want to manage.</small></p>
+        <div class="dashboard-nav">
+          <button id="ordersTab" class="dashboard-tab active" type="button" onclick="showAdminSection('orders')">Customer Orders</button>
+          <button id="productsTab" class="dashboard-tab" type="button" onclick="showAdminSection('products')">Products</button>
+        </div>
+      </div>
+
+      <section id="ordersSection" class="dashboard-section active">
+      <div class="card">
+        <h2>Customer Order History</h2>
+        <div class="orders-toolbar">
+          <input type="text" id="orderSearch" placeholder="Search customer, company, email, phone, product or order number..." oninput="searchOrders()">
+          <button type="button" onclick="loadOrders()">Refresh</button>
+        </div>
+        <div id="orders"><div class="empty">Loading orders...</div></div>
+      </div>
+      </section>
+
+      <section id="productsSection" class="dashboard-section">
+      <div class="card">
 
         <h2>Add Product</h2>
 
@@ -217,15 +244,7 @@
         <input type="text" id="productSearch" placeholder="Search products..." oninput="searchProducts()">
         <div id="products"></div>
       </div>
-
-      <div class="card">
-        <h2>Customer Order History</h2>
-        <div class="orders-toolbar">
-          <input type="text" id="orderSearch" placeholder="Search customer, company, email, phone, product or order number..." oninput="searchOrders()">
-          <button type="button" onclick="loadOrders()">Refresh</button>
-        </div>
-        <div id="orders"><div class="empty">Loading orders...</div></div>
-      </div>
+      </section>
 
     </div>
 
@@ -310,6 +329,16 @@ function showAdmin() {
 
   loadProducts();
   loadOrders();
+  showAdminSection("orders");
+}
+
+function showAdminSection(section) {
+  const showOrders = section === "orders";
+  document.getElementById("ordersSection").classList.toggle("active", showOrders);
+  document.getElementById("productsSection").classList.toggle("active", !showOrders);
+  document.getElementById("ordersTab").classList.toggle("active", showOrders);
+  document.getElementById("productsTab").classList.toggle("active", !showOrders);
+  window.scrollTo({ top: 0, behavior: "smooth" });
 }
 
 function escapeHtml(value) {
