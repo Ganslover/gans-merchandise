@@ -16,13 +16,14 @@ header{background:#111827;color:#fff;position:sticky;top:0;z-index:10}.nav{max-w
 .wrap{max-width:1180px;margin:auto;padding:34px 22px}.toolbar{display:flex;gap:12px;flex-wrap:wrap;align-items:center;margin-bottom:22px}.search{flex:1;min-width:220px;padding:13px 14px;border:1px solid var(--line);border-radius:10px}.cats{display:flex;gap:8px;flex-wrap:wrap}.cat{padding:9px 12px;border:1px solid var(--line);background:#fff;border-radius:999px;cursor:pointer}.cat.active{background:#111827;color:#fff}
 .grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(235px,1fr));gap:18px}.card{background:var(--card);border:1px solid var(--line);border-radius:16px;overflow:hidden}.photo{height:185px;background:#eceff1;display:flex;align-items:center;justify-content:center;color:#9ca3af;font-weight:700}.photo img{width:100%;height:100%;object-fit:cover}.body{padding:17px}.tag{font-size:11px;text-transform:uppercase;letter-spacing:1px;color:var(--muted)}.body h3{margin:6px 0}.price{font-size:18px;font-weight:800}.desc{color:var(--muted);font-size:13px;min-height:34px}.stock{font-size:12px;color:#166534;margin:8px 0 14px}
 section.info{background:#fff;border-top:1px solid var(--line);border-bottom:1px solid var(--line)}.info-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:25px}.info h3{margin-bottom:7px}.info p{color:var(--muted);font-size:14px;line-height:1.6}
+.about-section{background:#fff;border-top:1px solid var(--line)}.section-heading{max-width:760px;margin-bottom:28px}.section-kicker{text-transform:uppercase;letter-spacing:1.8px;font-size:12px;font-weight:800;color:#92400e}.section-heading h2{font-size:clamp(30px,4vw,44px);line-height:1.1;margin:8px 0 12px}.section-heading p{color:var(--muted);font-size:17px;line-height:1.7;margin:0}.about-grid{display:grid;grid-template-columns:1.1fr .9fr;gap:22px}.about-card,.order-notice{border:1px solid var(--line);border-radius:16px;padding:24px}.about-card h3,.order-notice h3{margin:0 0 10px}.about-card p,.order-notice p{color:var(--muted);line-height:1.7;margin:0}.order-notice{background:#fff8e1;border-color:#f1df9c}.order-notice h3{color:#6b5500}.order-notice p{color:#6b5500;font-weight:700}.how-section{background:#f3f4f6}.steps{display:grid;grid-template-columns:repeat(3,1fr);gap:18px;counter-reset:steps}.step{background:#fff;border:1px solid var(--line);border-radius:16px;padding:24px;counter-increment:steps}.step-number{display:grid;place-items:center;width:42px;height:42px;border-radius:50%;background:#111827;color:#fff;font-weight:800;margin-bottom:18px}.step-number:before{content:counter(steps)}.step h3{margin:0 0 8px}.step p{color:var(--muted);line-height:1.65;margin:0}.process-summary{margin:22px 0 0;padding:18px 20px;border-left:5px solid #fbbf24;background:#fff;font-weight:800;line-height:1.6}
 footer{background:#111827;color:#fff;padding:35px 22px}.foot{max-width:1180px;margin:auto;display:flex;justify-content:space-between;gap:20px;flex-wrap:wrap}.foot p{color:#9ca3af}
 #admin{display:none}.panel{background:#fff;border:1px solid var(--line);border-radius:16px;padding:22px;margin-bottom:18px}.formgrid{display:grid;grid-template-columns:repeat(2,1fr);gap:12px}.formgrid .full{grid-column:1/-1}label{font-size:12px;font-weight:700;display:block;margin-bottom:5px}input,select,textarea{width:100%;padding:11px;border:1px solid var(--line);border-radius:9px;font:inherit}textarea{min-height:90px}
 .admin-list{width:100%;border-collapse:collapse}.admin-list th,.admin-list td{text-align:left;padding:10px;border-bottom:1px solid var(--line);font-size:13px}
 .note{background:#fff8e1;border:1px solid #f1df9c;border-radius:10px;padding:12px;color:#6b5500;font-size:13px;margin-bottom:16px}
 .modal{display:none;position:fixed;inset:0;background:rgba(0,0,0,.65);z-index:100;align-items:center;justify-content:center;padding:20px}.modal.open{display:flex}.auth-box{position:relative;background:#fff;color:var(--ink);width:min(420px,100%);padding:28px;border-radius:16px;box-shadow:0 20px 60px rgba(0,0,0,.35)}.auth-box h2{margin-top:0}.auth-box input{margin:6px 0 14px}.auth-close{position:absolute;right:14px;top:12px;border:0;background:transparent;font-size:26px;cursor:pointer}.auth-switch{margin:18px 0 0;color:var(--muted);font-size:14px}.auth-switch button{border:0;background:none;color:#1d4ed8;font-weight:700;cursor:pointer}.auth-message{min-height:22px;margin-top:12px;font-size:14px;color:#b91c1c}.auth-message.success{color:#166534}
 .card{cursor:pointer;transition:transform .2s,box-shadow .2s}.card:hover,.card:focus{transform:translateY(-4px);box-shadow:0 10px 24px rgba(17,24,39,.14);outline:2px solid #2563eb;outline-offset:2px}.product-detail{position:relative;background:#fff;color:var(--ink);width:min(760px,100%);max-height:90vh;overflow:auto;border-radius:16px;box-shadow:0 20px 60px rgba(0,0,0,.35)}.detail-grid{display:grid;grid-template-columns:1fr 1fr}.detail-photo{min-height:330px;background:#eceff1;display:flex;align-items:center;justify-content:center;color:#9ca3af;font-weight:700}.detail-photo img{width:100%;height:100%;max-height:440px;object-fit:cover}.detail-body{padding:32px}.detail-body h2{margin:7px 0 12px}.detail-price{font-size:26px;font-weight:800;margin-bottom:14px}.detail-description{color:var(--muted);line-height:1.6}.detail-close{position:absolute;right:14px;top:10px;z-index:2;border:0;background:#fff;border-radius:50%;width:38px;height:38px;font-size:25px;cursor:pointer}.detail-body .btn{margin-top:18px}
-@media(max-width:700px){.info-grid,.formgrid{grid-template-columns:1fr}.hero{padding-top:50px}.nav small{display:none}}
+@media(max-width:700px){.info-grid,.formgrid,.about-grid,.steps{grid-template-columns:1fr}.hero{padding-top:50px}.nav small{display:none}}
 @media(max-width:650px){.detail-grid{grid-template-columns:1fr}.detail-photo{min-height:220px}.detail-body{padding:24px}}
 @media(max-width:560px){.hero-in{text-align:center}.order-callout{display:flex;width:100%;min-height:92px;align-items:center;justify-content:center;text-align:center;margin:8px 0 18px!important;padding:14px 20px}.hero-actions{align-items:stretch;flex-direction:column;gap:12px}.hero-actions .btn{display:flex;width:100%;min-height:76px;height:auto;margin:0;padding:14px 18px;align-items:center;justify-content:center;text-align:center;line-height:1.3}.phone-link{flex-direction:column;gap:4px}}
 .cart-box{position:relative;background:#fff;color:var(--ink);width:min(720px,100%);max-height:90vh;overflow:auto;padding:28px;border-radius:16px;box-shadow:0 20px 60px rgba(0,0,0,.35)}.cart-box h2{margin-top:0}.cart-row{display:grid;grid-template-columns:1fr auto auto auto;gap:12px;align-items:center;padding:14px 0;border-bottom:1px solid var(--line)}.cart-name{font-weight:800}.cart-price{color:var(--muted);font-size:13px}.quantity{display:flex;align-items:center;gap:8px}.quantity button{width:32px;height:32px;border:1px solid var(--line);background:#fff;border-radius:7px;cursor:pointer;font-weight:800}.remove-item{border:0;background:none;color:#b91c1c;cursor:pointer}.cart-summary{margin-top:20px;padding-top:8px}.cart-total{display:flex;justify-content:space-between;font-size:22px;font-weight:800;margin-bottom:10px}.minimum-message{padding:10px;border-radius:8px;background:#fff8e1;color:#6b5500;margin-bottom:12px}.minimum-message.ready{background:#dcfce7;color:#166534}.checkout-button{width:100%}.checkout-button:disabled{opacity:.45;cursor:not-allowed}.cart-empty{text-align:center;color:var(--muted);padding:30px 10px}.product-actions{display:flex;gap:8px;flex-wrap:wrap}.product-actions .btn{flex:1}.cart-count{display:inline-grid;place-items:center;min-width:22px;height:22px;padding:0 6px;margin-left:5px;border-radius:999px;background:#fbbf24;color:#111827;font-size:12px}
@@ -101,7 +102,7 @@ footer{background:#111827;color:#fff;padding:35px 22px}.foot{max-width:1180px;ma
 <section class="checkout-box" aria-labelledby="businessCheckoutTitle">
 <button class="auth-close" type="button" aria-label="Close business checkout" onclick="closeBusinessCheckout()">&times;</button>
 <h2 id="businessCheckoutTitle">Business checkout</h2>
-<p class="checkout-intro">Enter your business contact and U.S. delivery address. Gans Merchandise will review the request and contact you with payment details.</p>
+<p class="checkout-intro">Enter your business contact and U.S. delivery address to submit an order request. No payment is collected here. Gans Merchandise will contact you manually within 24 hours.</p>
 <form id="businessCheckoutForm" onsubmit="confirmBusinessOrder(event)">
 <div class="checkout-section">
 <h3>Business contact</h3>
@@ -122,10 +123,10 @@ footer{background:#111827;color:#fff;padding:35px 22px}.foot{max-width:1180px;ma
 <div><label for="checkoutZip">ZIP code <span class="required">*</span></label><input id="checkoutZip" inputmode="numeric" autocomplete="postal-code" pattern="[0-9]{5}(-[0-9]{4})?" placeholder="12345" required></div>
 </div>
 </div>
-<p class="note">Submitting this form sends an order request only. No payment is collected now. We will contact you manually by phone, WhatsApp, or email with availability, shipping, and payment details.</p>
+<p class="note">Submitting this form sends an order request only—it is not a confirmed purchase. No payment is collected now. We will contact you manually within 24 hours by phone, WhatsApp, or email with availability, shipping, and payment details.</p>
 <div class="confirm-total"><span>Order total</span><span id="businessCheckoutTotal">$0.00</span></div>
 <div id="checkoutFormError" class="checkout-error" role="alert"></div>
-<div class="checkout-actions"><button class="btn btn-outline" type="button" onclick="backToCart()">Back to cart</button><button id="confirmOrderButton" class="btn btn-dark" type="submit">Confirm order</button></div>
+<div class="checkout-actions"><button class="btn btn-outline" type="button" onclick="backToCart()">Back to cart</button><button id="confirmOrderButton" class="btn btn-dark" type="submit">Submit order request</button></div>
 </form>
 </section>
 </div>
@@ -134,7 +135,8 @@ footer{background:#111827;color:#fff;padding:35px 22px}.foot{max-width:1180px;ma
 <section class="hero"><div class="hero-in">
 <div class="eyebrow">Wholesale • Albany, New York</div>
 <h1>Wholesale Essentials for Every Retail Shelf</h1>
-<p>Browse our wholesale catalog and contact us for business pricing, availability and ordering information.</p>
+<p>Browse our wholesale catalog and submit an order request for your business. This website only collects your order request—no payment is taken online and your order is not final at checkout.</p>
+<p class="order-callout">After we receive your request, our team will contact you manually within 24 hours to confirm availability, shipping and payment details.</p>
 <p class="order-callout">Minimum wholesale order: $200 USD</p>
 <div class="hero-actions">
 <button class="btn btn-light" onclick="document.getElementById('catalog').scrollIntoView({behavior:'smooth'})">View Catalog</button>
@@ -150,10 +152,31 @@ footer{background:#111827;color:#fff;padding:35px 22px}.foot{max-width:1180px;ma
 <div id="products" class="grid"></div>
 </main>
 
+<section id="about" class="about-section"><div class="wrap">
+<div class="section-heading"><div class="section-kicker">About Us</div><h2>Your wholesale supply partner in Albany, New York</h2><p>Gans Merchandise Enterprises LLC helps retailers and business customers source everyday merchandise for their shelves. We offer a practical wholesale catalog, straightforward ordering and personal service from our team.</p></div>
+<div class="about-grid">
+<article class="about-card"><h3>Built for business customers</h3><p>Our catalog is designed for wholesale buyers. Browse available products, select the boxes you need and send us your business and delivery information through the website.</p></article>
+<aside class="order-notice"><h3>Important: this is an order-request website</h3><p>We only receive your order request through this website. We do not collect payment or automatically approve the order online. A member of our team will personally contact you within 24 hours after your request is received.</p></aside>
+</div>
+</div></section>
+
+<section id="how-it-works" class="how-section"><div class="wrap">
+<div class="section-heading"><div class="section-kicker">How Our Website Works</div><h2>Place your order request in six simple steps</h2><p>Create an account, choose your wholesale products and send us your business details. Our team will then contact you personally to complete the order.</p></div>
+<div class="steps">
+<article class="step"><span class="step-number" aria-hidden="true"></span><h3>Create an account</h3><p>Select “Create Account,” enter your email address and choose a secure password.</p></article>
+<article class="step"><span class="step-number" aria-hidden="true"></span><h3>Sign in</h3><p>Sign in to your account so your order request can be saved and shown in your order history.</p></article>
+<article class="step"><span class="step-number" aria-hidden="true"></span><h3>Browse the catalog</h3><p>Explore our wholesale catalog, search by product or category and check product availability.</p></article>
+<article class="step"><span class="step-number" aria-hidden="true"></span><h3>Add at least $200 to your cart</h3><p>Add the products and box quantities you need. Continue shopping until your cart reaches the $200 USD wholesale minimum.</p></article>
+<article class="step"><span class="step-number" aria-hidden="true"></span><h3>Enter your details and place the request</h3><p>At checkout, enter your name, legal business name, phone number, email address and U.S. delivery address. Review your cart and submit your order request.</p></article>
+<article class="step"><span class="step-number" aria-hidden="true"></span><h3>We contact you within 24 hours</h3><p>After your request is placed, our team will manually contact you within 24 hours by phone, WhatsApp or email to confirm stock, shipping, payment options and the final order.</p></article>
+</div>
+<p class="process-summary">Important: this website only receives your order request. No payment is collected online, and submitting the form does not create a confirmed purchase. Your order becomes final only after our team contacts you and confirms all details.</p>
+</div></section>
+
 <section class="info"><div class="wrap info-grid">
 <div><h3>Wholesale focused</h3><p>Catalog-style browsing for retailers and business customers.</p></div>
 <div><h3>Easy product management</h3><p>Add products, prices, categories, descriptions and photos from the built-in manager.</p></div>
-<div><h3>Contact to order</h3><p>Use your business contact details to request availability and wholesale terms.</p></div>
+<div><h3>Personal order follow-up</h3><p>We receive your order request online, then manually contact you within 24 hours to complete the order.</p></div>
 </div></section>
 </div>
 
@@ -312,18 +335,18 @@ async function confirmBusinessOrder(event){
    state:document.getElementById("checkoutState").value,
    zip_code:document.getElementById("checkoutZip").value.trim()
  };
- button.disabled=true;button.textContent="Confirming order…";
+ button.disabled=true;button.textContent="Submitting request…";
  const {data:order,error:orderError}=await authClient.from("orders").insert(details).select("id").single();
- if(orderError){button.disabled=false;button.textContent="Confirm order";errorBox.textContent="Order could not be saved: "+orderError.message;errorBox.classList.add("show");return}
+ if(orderError){button.disabled=false;button.textContent="Submit order request";errorBox.textContent="Order could not be saved: "+orderError.message;errorBox.classList.add("show");return}
  const items=cart.map(item=>({order_id:order.id,product_name:item.name,quantity:item.qty,unit_price:item.price}));
  const {error:itemsError}=await authClient.from("order_items").insert(items);
- if(itemsError){button.disabled=false;button.textContent="Confirm order";errorBox.textContent="The order was created, but its items could not be saved: "+itemsError.message;errorBox.classList.add("show");return}
+ if(itemsError){button.disabled=false;button.textContent="Submit order request";errorBox.textContent="The order was created, but its items could not be saved: "+itemsError.message;errorBox.classList.add("show");return}
  cart=[];
  saveCart();
  closeBusinessCheckout();
  document.getElementById("businessCheckoutForm").reset();
- button.disabled=false;button.textContent="Confirm order";
- alert("Order request "+order.id.slice(0,8).toUpperCase()+" was received. Gans Merchandise will contact you manually by phone, WhatsApp, or email with availability and payment details.");
+ button.disabled=false;button.textContent="Submit order request";
+ alert("Order request "+order.id.slice(0,8).toUpperCase()+" was received. This is not yet a confirmed purchase. Gans Merchandise will contact you manually within 24 hours by phone, WhatsApp, or email with availability, shipping and payment details.");
 }
 async function openOrders(){
  document.getElementById("ordersModal").classList.add("open");
@@ -486,4 +509,3 @@ loadSupabaseProducts();
 </script>
 </body>
 </html>
-
