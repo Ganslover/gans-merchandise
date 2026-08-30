@@ -55,7 +55,7 @@ footer{background:#111827;color:#fff;padding:35px 22px}.foot{max-width:1180px;ma
 </div>
 </div>
 
-<div class="minimum-order">Minimum wholesale order: $100 USD</div>
+<div class="minimum-order">Minimum wholesale order: $200 USD</div>
 
 <div id="productModal" class="modal" onclick="closeProductFromBackdrop(event)">
 <article class="product-detail">
@@ -83,8 +83,8 @@ footer{background:#111827;color:#fff;padding:35px 22px}.foot{max-width:1180px;ma
 <div id="cartItems"></div>
 <div class="cart-summary">
 <div class="cart-total"><span>Total</span><span id="cartTotal">$0.00</span></div>
-<div id="minimumMessage" class="minimum-message">Add $100.00 more to reach the minimum order.</div>
-<button id="checkoutButton" class="btn btn-dark checkout-button" onclick="checkoutCart()" disabled>Checkout — $100 Minimum</button>
+<div id="minimumMessage" class="minimum-message">Add $200.00 more to reach the minimum order.</div>
+<button id="checkoutButton" class="btn btn-dark checkout-button" onclick="checkoutCart()" disabled>Checkout — $200 Minimum</button>
 </div>
 </section>
 </div>
@@ -135,7 +135,7 @@ footer{background:#111827;color:#fff;padding:35px 22px}.foot{max-width:1180px;ma
 <div class="eyebrow">Wholesale • Albany, New York</div>
 <h1>Wholesale Essentials for Every Retail Shelf</h1>
 <p>Browse our wholesale catalog and contact us for business pricing, availability and ordering information.</p>
-<p class="order-callout">Minimum wholesale order: $100 USD</p>
+<p class="order-callout">Minimum wholesale order: $200 USD</p>
 <div class="hero-actions">
 <button class="btn btn-light" onclick="document.getElementById('catalog').scrollIntoView({behavior:'smooth'})">View Catalog</button>
 <a class="btn btn-light phone-link" href="tel:+15188797114" aria-label="Call Gans Merchandise for business pricing at 518-879-7114"><span>Call for Business Pricing</span><span>+1 (518) 879-7114</span></a>
@@ -264,18 +264,18 @@ function renderCart(){
  document.getElementById("cartCount").textContent=count;
  container.innerHTML=cart.length?cart.map(item=>`<div class="cart-row"><div><div class="cart-name">${escapeHtml(item.name)}</div><div class="cart-price">$${Number(item.price).toFixed(2)} per box · Minimum 1 box</div></div><div class="quantity"><button onclick='changeQuantity(${JSON.stringify(item.key)},-1)' aria-label="Decrease box quantity">−</button><strong>${item.qty} ${item.qty===1?"box":"boxes"}</strong><button onclick='changeQuantity(${JSON.stringify(item.key)},1)' aria-label="Increase box quantity">+</button></div><strong>$${(item.price*item.qty).toFixed(2)}</strong><button class="remove-item" onclick='removeFromCart(${JSON.stringify(item.key)})'>Remove</button></div>`).join(""):`<div class="cart-empty">Your cart is empty.</div>`;
  document.getElementById("cartTotal").textContent="$"+total.toFixed(2);
- const remaining=Math.max(0,100-total);
+ const remaining=Math.max(0,200-total);
  const message=document.getElementById("minimumMessage");
- message.textContent=remaining>0?`Add $${remaining.toFixed(2)} more to reach the $100 minimum order.`:"Minimum order reached — ready to checkout.";
+ message.textContent=remaining>0?`Add $${remaining.toFixed(2)} more to reach the $200 minimum order.`:"Minimum order reached — ready to checkout.";
  message.className="minimum-message"+(remaining===0?" ready":"");
- document.getElementById("checkoutButton").disabled=total<100;
+ document.getElementById("checkoutButton").disabled=total<200;
 }
 function openCart(){renderCart();document.getElementById("cartModal").classList.add("open")}
 function closeCart(){document.getElementById("cartModal").classList.remove("open")}
 function closeCartFromBackdrop(event){if(event.target.id==="cartModal")closeCart()}
 async function checkoutCart(){
  const total=cartTotal();
- if(total<100){alert("The minimum wholesale order is $100 USD.");return}
+ if(total<200){alert("The minimum wholesale order is $200 USD.");return}
  const {data:{session}}=await authClient.auth.getSession();
  if(!session){closeCart();openAuth("signin");document.getElementById("authMessage").textContent="Please sign in before checkout so your order can be saved.";return}
  closeCart();
@@ -296,7 +296,7 @@ async function confirmBusinessOrder(event){
  const errorBox=document.getElementById("checkoutFormError");
  const button=document.getElementById("confirmOrderButton");
  errorBox.classList.remove("show");
- if(total<100){errorBox.textContent="Your order no longer meets the $100 wholesale minimum.";errorBox.classList.add("show");return}
+ if(total<200){errorBox.textContent="Your order no longer meets the $200 wholesale minimum.";errorBox.classList.add("show");return}
  const {data:{session}}=await authClient.auth.getSession();
  if(!session){closeBusinessCheckout();openAuth("signin");return}
  const details={
