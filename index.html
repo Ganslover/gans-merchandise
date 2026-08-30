@@ -16,12 +16,15 @@ header{background:#111827;color:#fff;position:sticky;top:0;z-index:10}.nav{max-w
 .wrap{max-width:1180px;margin:auto;padding:34px 22px}.toolbar{display:flex;gap:12px;flex-wrap:wrap;align-items:center;margin-bottom:22px}.search{flex:1;min-width:220px;padding:13px 14px;border:1px solid var(--line);border-radius:10px}.cats{display:flex;gap:8px;flex-wrap:wrap}.cat{padding:9px 12px;border:1px solid var(--line);background:#fff;border-radius:999px;cursor:pointer}.cat.active{background:#111827;color:#fff}
 .grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(235px,1fr));gap:18px}.card{background:var(--card);border:1px solid var(--line);border-radius:16px;overflow:hidden}.photo{height:185px;background:#eceff1;display:flex;align-items:center;justify-content:center;color:#9ca3af;font-weight:700}.photo img{width:100%;height:100%;object-fit:cover}.body{padding:17px}.tag{font-size:11px;text-transform:uppercase;letter-spacing:1px;color:var(--muted)}.body h3{margin:6px 0}.price{font-size:18px;font-weight:800}.desc{color:var(--muted);font-size:13px;min-height:34px}.stock{font-size:12px;color:#166534;margin:8px 0 14px}
 section.info{background:#fff;border-top:1px solid var(--line);border-bottom:1px solid var(--line)}.info-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:25px}.info h3{margin-bottom:7px}.info p{color:var(--muted);font-size:14px;line-height:1.6}
+section.info{background:#fff;border-top:1px solid var(--line);border-bottom:1px solid var(--line)}.info-toggle{background:#fff;border:1px solid var(--line);border-radius:16px;margin:16px 0;overflow:hidden;box-shadow:0 4px 14px rgba(17,24,39,.06)}.info-toggle summary{list-style:none;display:flex;align-items:center;justify-content:space-between;gap:18px;padding:22px 24px;font-size:22px;font-weight:800;cursor:pointer;background:#f9fafb}.info-toggle summary::-webkit-details-marker{display:none}.info-toggle summary::after{content:"+";display:grid;place-items:center;flex:0 0 38px;width:38px;height:38px;border-radius:50%;background:#111827;color:#fff;font-size:25px;line-height:1}.info-toggle[open] summary::after{content:"−"}.info-toggle summary:hover,.info-toggle summary:focus{background:#eff6ff;outline:none}.info-content{padding:24px;border-top:1px solid var(--line)}.about-copy{max-width:820px;color:var(--muted);font-size:17px;line-height:1.75}.info-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:16px}.info-card{border:1px solid var(--line);border-radius:14px;padding:20px;background:#f9fafb}.step-number{display:grid;place-items:center;width:36px;height:36px;border-radius:50%;background:#111827;color:#fff;font-weight:800;margin-bottom:13px}.info-card h3{margin:0 0 7px}.info-card p{color:var(--muted);font-size:14px;line-height:1.6;margin:0}.about-note{margin-top:22px;padding:15px 18px;border-radius:10px;background:#fff8e1;border:1px solid #f1df9c;color:#6b5500;font-weight:700;line-height:1.5}
 footer{background:#111827;color:#fff;padding:35px 22px}.foot{max-width:1180px;margin:auto;display:flex;justify-content:space-between;gap:20px;flex-wrap:wrap}.foot p{color:#9ca3af}
 #admin{display:none}.panel{background:#fff;border:1px solid var(--line);border-radius:16px;padding:22px;margin-bottom:18px}.formgrid{display:grid;grid-template-columns:repeat(2,1fr);gap:12px}.formgrid .full{grid-column:1/-1}label{font-size:12px;font-weight:700;display:block;margin-bottom:5px}input,select,textarea{width:100%;padding:11px;border:1px solid var(--line);border-radius:9px;font:inherit}textarea{min-height:90px}
 .admin-list{width:100%;border-collapse:collapse}.admin-list th,.admin-list td{text-align:left;padding:10px;border-bottom:1px solid var(--line);font-size:13px}
 .note{background:#fff8e1;border:1px solid #f1df9c;border-radius:10px;padding:12px;color:#6b5500;font-size:13px;margin-bottom:16px}
 .modal{display:none;position:fixed;inset:0;background:rgba(0,0,0,.65);z-index:100;align-items:center;justify-content:center;padding:20px}.modal.open{display:flex}.auth-box{position:relative;background:#fff;color:var(--ink);width:min(420px,100%);padding:28px;border-radius:16px;box-shadow:0 20px 60px rgba(0,0,0,.35)}.auth-box h2{margin-top:0}.auth-box input{margin:6px 0 14px}.auth-close{position:absolute;right:14px;top:12px;border:0;background:transparent;font-size:26px;cursor:pointer}.auth-switch{margin:18px 0 0;color:var(--muted);font-size:14px}.auth-switch button{border:0;background:none;color:#1d4ed8;font-weight:700;cursor:pointer}.auth-message{min-height:22px;margin-top:12px;font-size:14px;color:#b91c1c}.auth-message.success{color:#166534}
 .card{cursor:pointer;transition:transform .2s,box-shadow .2s}.card:hover,.card:focus{transform:translateY(-4px);box-shadow:0 10px 24px rgba(17,24,39,.14);outline:2px solid #2563eb;outline-offset:2px}.product-detail{position:relative;background:#fff;color:var(--ink);width:min(760px,100%);max-height:90vh;overflow:auto;border-radius:16px;box-shadow:0 20px 60px rgba(0,0,0,.35)}.detail-grid{display:grid;grid-template-columns:1fr 1fr}.detail-photo{min-height:330px;background:#eceff1;display:flex;align-items:center;justify-content:center;color:#9ca3af;font-weight:700}.detail-photo img{width:100%;height:100%;max-height:440px;object-fit:cover}.detail-body{padding:32px}.detail-body h2{margin:7px 0 12px}.detail-price{font-size:26px;font-weight:800;margin-bottom:14px}.detail-description{color:var(--muted);line-height:1.6}.detail-close{position:absolute;right:14px;top:10px;z-index:2;border:0;background:#fff;border-radius:50%;width:38px;height:38px;font-size:25px;cursor:pointer}.detail-body .btn{margin-top:18px}
+@media(max-width:900px){.info-grid{grid-template-columns:repeat(2,1fr)}}
+@media(max-width:700px){.info-grid,.formgrid{grid-template-columns:1fr}.hero{padding-top:50px}.nav small{display:none}}
 @media(max-width:700px){.info-grid,.formgrid{grid-template-columns:1fr}.hero{padding-top:50px}.nav small{display:none}}
 @media(max-width:650px){.detail-grid{grid-template-columns:1fr}.detail-photo{min-height:220px}.detail-body{padding:24px}}
 @media(max-width:560px){.hero-in{text-align:center}.order-callout{display:flex;width:100%;min-height:92px;align-items:center;justify-content:center;text-align:center;margin:8px 0 18px!important;padding:14px 20px}.hero-actions{align-items:stretch;flex-direction:column;gap:12px}.hero-actions .btn{display:flex;width:100%;min-height:76px;height:auto;margin:0;padding:14px 18px;align-items:center;justify-content:center;text-align:center;line-height:1.3}.phone-link{flex-direction:column;gap:4px}}
@@ -56,6 +59,7 @@ footer{background:#111827;color:#fff;padding:35px 22px}.foot{max-width:1180px;ma
 </div>
 
 <div class="minimum-order">Minimum wholesale order: $200 USD</div>
+<div class="minimum-order">Minimum wholesale order: $200 USD</div>
 
 <div id="productModal" class="modal" onclick="closeProductFromBackdrop(event)">
 <article class="product-detail">
@@ -83,6 +87,8 @@ footer{background:#111827;color:#fff;padding:35px 22px}.foot{max-width:1180px;ma
 <div id="cartItems"></div>
 <div class="cart-summary">
 <div class="cart-total"><span>Total</span><span id="cartTotal">$0.00</span></div>
+<div id="minimumMessage" class="minimum-message">Add $200.00 more to reach the minimum order.</div>
+<button id="checkoutButton" class="btn btn-dark checkout-button" onclick="checkoutCart()" disabled>Checkout — $200 Minimum</button>
 <div id="minimumMessage" class="minimum-message">Add $200.00 more to reach the minimum order.</div>
 <button id="checkoutButton" class="btn btn-dark checkout-button" onclick="checkoutCart()" disabled>Checkout — $200 Minimum</button>
 </div>
@@ -136,10 +142,41 @@ footer{background:#111827;color:#fff;padding:35px 22px}.foot{max-width:1180px;ma
 <h1>Wholesale Essentials for Every Retail Shelf</h1>
 <p>Browse our wholesale catalog and contact us for business pricing, availability and ordering information.</p>
 <p class="order-callout">Minimum wholesale order: $200 USD</p>
+<p class="order-callout">Minimum wholesale order: $200 USD</p>
 <div class="hero-actions">
 <button class="btn btn-light" onclick="document.getElementById('catalog').scrollIntoView({behavior:'smooth'})">View Catalog</button>
 <a class="btn btn-light phone-link" href="tel:+15188797114" aria-label="Call Gans Merchandise for business pricing at 518-879-7114"><span>Call for Business Pricing</span><span>+1 (518) 879-7114</span></a>
 </div>
+</div></section>
+
+<main class="wrap" id="catalog">
+</div>
+</div></section>
+
+<section class="info" id="about"><div class="wrap">
+<details class="info-toggle">
+<summary>About Gans Merchandise</summary>
+<div class="info-content">
+<h2>Wholesale ordering made simple</h2>
+<p class="about-copy">Gans Merchandise, LLC supplies wholesale products to retailers and business customers. Our website makes it easy to create an account, browse available merchandise, prepare a wholesale order, and securely send us your business and U.S. delivery details.</p>
+<p class="about-copy">We are located in Albany, New York, and focus on helpful, personal service for every wholesale customer.</p>
+<div class="about-note">No payment is collected on this website. Placing an order sends a wholesale order request to Gans Merchandise, LLC for review.</div>
+</div>
+</details>
+<details class="info-toggle">
+<summary>How This Website Works</summary>
+<div class="info-content">
+<div class="info-grid">
+<article class="info-card"><div class="step-number">1</div><h3>Create an account</h3><p>Select “Create Account” and register with your business email address and a secure password.</p></article>
+<article class="info-card"><div class="step-number">2</div><h3>Sign in</h3><p>Sign in so your order is securely connected to your business and saved in your order history.</p></article>
+<article class="info-card"><div class="step-number">3</div><h3>Browse products</h3><p>Search the catalog, view product details, check availability, and choose the products your business needs.</p></article>
+<article class="info-card"><div class="step-number">4</div><h3>Build your order</h3><p>Add boxes to your shopping cart until your order reaches the $200 USD wholesale minimum.</p></article>
+<article class="info-card"><div class="step-number">5</div><h3>Submit your details</h3><p>At checkout, send your contact name, business information, phone number, email, and U.S. delivery address.</p></article>
+<article class="info-card"><div class="step-number">6</div><h3>We contact you</h3><p>Our team reviews your order and contacts you within 24 hours with payment details, shipping information, and your delivery itinerary.</p></article>
+</div>
+<div class="about-note">No payment is collected on this website. Submitting checkout sends your order request to Gans Merchandise, LLC for review.</div>
+</div>
+</details>
 </div></section>
 
 <main class="wrap" id="catalog">
@@ -149,6 +186,10 @@ footer{background:#111827;color:#fff;padding:35px 22px}.foot{max-width:1180px;ma
 </div>
 <div id="products" class="grid"></div>
 </main>
+</div>
+<div id="products" class="grid"></div>
+</main>
+</div>
 
 <section class="info"><div class="wrap info-grid">
 <div><h3>Wholesale focused</h3><p>Catalog-style browsing for retailers and business customers.</p></div>
@@ -265,9 +306,12 @@ function renderCart(){
  container.innerHTML=cart.length?cart.map(item=>`<div class="cart-row"><div><div class="cart-name">${escapeHtml(item.name)}</div><div class="cart-price">$${Number(item.price).toFixed(2)} per box · Minimum 1 box</div></div><div class="quantity"><button onclick='changeQuantity(${JSON.stringify(item.key)},-1)' aria-label="Decrease box quantity">−</button><strong>${item.qty} ${item.qty===1?"box":"boxes"}</strong><button onclick='changeQuantity(${JSON.stringify(item.key)},1)' aria-label="Increase box quantity">+</button></div><strong>$${(item.price*item.qty).toFixed(2)}</strong><button class="remove-item" onclick='removeFromCart(${JSON.stringify(item.key)})'>Remove</button></div>`).join(""):`<div class="cart-empty">Your cart is empty.</div>`;
  document.getElementById("cartTotal").textContent="$"+total.toFixed(2);
  const remaining=Math.max(0,200-total);
+ const remaining=Math.max(0,200-total);
  const message=document.getElementById("minimumMessage");
  message.textContent=remaining>0?`Add $${remaining.toFixed(2)} more to reach the $200 minimum order.`:"Minimum order reached — ready to checkout.";
+ message.textContent=remaining>0?`Add $${remaining.toFixed(2)} more to reach the $200 minimum order.`:"Minimum order reached — ready to checkout.";
  message.className="minimum-message"+(remaining===0?" ready":"");
+ document.getElementById("checkoutButton").disabled=total<200;
  document.getElementById("checkoutButton").disabled=total<200;
 }
 function openCart(){renderCart();document.getElementById("cartModal").classList.add("open")}
@@ -275,6 +319,7 @@ function closeCart(){document.getElementById("cartModal").classList.remove("open
 function closeCartFromBackdrop(event){if(event.target.id==="cartModal")closeCart()}
 async function checkoutCart(){
  const total=cartTotal();
+ if(total<200){alert("The minimum wholesale order is $200 USD.");return}
  if(total<200){alert("The minimum wholesale order is $200 USD.");return}
  const {data:{session}}=await authClient.auth.getSession();
  if(!session){closeCart();openAuth("signin");document.getElementById("authMessage").textContent="Please sign in before checkout so your order can be saved.";return}
@@ -296,6 +341,7 @@ async function confirmBusinessOrder(event){
  const errorBox=document.getElementById("checkoutFormError");
  const button=document.getElementById("confirmOrderButton");
  errorBox.classList.remove("show");
+ if(total<200){errorBox.textContent="Your order no longer meets the $200 wholesale minimum.";errorBox.classList.add("show");return}
  if(total<200){errorBox.textContent="Your order no longer meets the $200 wholesale minimum.";errorBox.classList.add("show");return}
  const {data:{session}}=await authClient.auth.getSession();
  if(!session){closeBusinessCheckout();openAuth("signin");return}
