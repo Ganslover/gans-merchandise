@@ -301,6 +301,7 @@ async function confirmBusinessOrder(event){
  if(!session){closeBusinessCheckout();openAuth("signin");return}
  const details={
    user_id:session.user.id,total,status:"Pending",
+   product_summary:cart.map(item=>`${item.name} (${item.category||"Uncategorized"}) — ${item.qty} ${item.qty===1?"box":"boxes"}`).join(" | "),
    company_name:document.getElementById("checkoutCompany").value.trim(),
    customer_name:document.getElementById("checkoutCustomer").value.trim(),
    phone:document.getElementById("checkoutPhone").value.trim(),
