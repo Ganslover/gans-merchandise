@@ -285,7 +285,24 @@ function render(){
  renderAdmin();
 }
 function escapeHtml(s){return String(s).replace(/'/g,"&#39;").replace(/"/g,"&quot;")}
-function contact(n){location.href="mailto:gansmerchandise2002@gmail.com?subject=Wholesale inquiry: "+encodeURIComponent(n)}
+function contact(n){
+ const product=products.find(p=>p.name===n)||{};
+ const displayedPrice=Number(product.price)>0?"$"+Number(product.price).toFixed(2)+" per box":"Please confirm current pricing";
+ const message=[
+   "Hello Gans Merchandise,",
+   "",
+   "I would like product details and special wholesale pricing for:",
+   "",
+   "Product: "+(product.name||n||"Product inquiry"),
+   "Category: "+(product.category||"Not specified"),
+   "Listed price: "+displayedPrice,
+   "Order quantity: "+(product.moq||"Please advise minimum quantity"),
+   "Availability: "+normalizeStockStatus(product.stock_status),
+   "",
+   "Please send me your best wholesale price and any available bulk discounts. Thank you."
+ ].join("\n");
+ window.location.href="sms:+15188797114?body="+encodeURIComponent(message);
+}
 function openProduct(i){
  const p=products[i];
  if(!p)return;
