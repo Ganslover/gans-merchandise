@@ -66,6 +66,11 @@ header{position:sticky;box-shadow:0 1px 8px rgba(24,24,27,.03)}.brand:before{con
 footer{background:#17231c}.whatsapp-button{background:var(--sage)}.whatsapp-button:hover,.whatsapp-button:focus{background:#234c39}
 @media(max-width:650px){.hero-trust{display:grid;grid-template-columns:repeat(3,1fr);margin-top:36px}.hero-trust>div{padding:15px 10px 0 0;margin-right:10px}.hero-trust strong{font-size:13px}.hero-trust span{font-size:10px}.hero:after{right:-300px}.card:after{display:none}}
 
+/* Visual category navigation */
+.catalog-toolbar{display:block;padding:18px}.catalog-search-row{display:flex;align-items:center;gap:10px}.catalog-search-row .search{flex:1}.category-toggle{display:inline-flex;align-items:center;gap:9px;min-height:46px;padding:0 16px;white-space:nowrap;background:var(--sage);color:#fff;border:1px solid var(--sage);border-radius:7px;font:inherit;font-size:13px;font-weight:700;cursor:pointer}.category-toggle:hover{background:#234c39}.category-toggle:focus-visible,.category-tile:focus-visible{outline:3px solid rgba(47,97,73,.3);outline-offset:2px}.category-toggle-icon{font-size:18px;line-height:1;transition:transform .2s}.category-toggle[aria-expanded="true"] .category-toggle-icon{transform:rotate(45deg)}
+.category-panel{margin-top:14px;padding-top:14px;border-top:1px solid var(--line)}.category-panel[hidden]{display:none}.category-panel-head{display:flex;align-items:center;justify-content:space-between;gap:16px;margin-bottom:12px}.category-panel-head strong{font-size:14px}.category-panel-head span{color:var(--muted);font-size:12px}.cats{display:grid;grid-template-columns:repeat(auto-fit,minmax(126px,1fr));gap:10px}.category-tile{position:relative;min-width:0;height:108px;padding:0;overflow:hidden;border:1px solid var(--line);border-radius:9px;background:#eef3ef;color:#fff;cursor:pointer;text-align:left}.category-tile:hover{border-color:#92b19d;transform:translateY(-1px);box-shadow:0 7px 18px rgba(36,70,50,.12)}.category-tile-media{position:absolute;inset:0;display:grid;place-items:center;background:linear-gradient(145deg,#e5eee8,#bcd0c2);font-size:34px}.category-tile-media img{width:100%;height:100%;object-fit:cover}.category-tile-shade{position:absolute;inset:0;background:linear-gradient(to top,rgba(10,25,16,.82),rgba(10,25,16,.04) 72%)}.category-tile-label{position:absolute;left:11px;right:11px;bottom:10px;z-index:1;font-size:12px;font-weight:800;line-height:1.25;text-shadow:0 1px 3px rgba(0,0,0,.4)}.category-tile.active{border-color:#fff;box-shadow:0 0 0 3px var(--sage)}.category-tile.active:after{content:"\2713";position:absolute;z-index:2;right:8px;top:8px;display:grid;place-items:center;width:22px;height:22px;border-radius:50%;background:var(--sage);font-size:12px;font-weight:900}.results-note{margin:16px 2px 0;color:var(--muted);font-size:13px}.results-note strong{color:var(--ink)}
+@media(max-width:650px){.catalog-search-row{align-items:stretch;flex-direction:column}.category-toggle{justify-content:center}.cats{display:flex;overflow-x:auto;scroll-snap-type:x mandatory;padding:3px 3px 10px}.category-tile{flex:0 0 142px;scroll-snap-align:start}.category-panel-head span{display:none}}
+
 </style>
 </head>
 <body>
@@ -179,11 +184,18 @@ footer{background:#17231c}.whatsapp-button{background:var(--sage)}.whatsapp-butt
 </div></section>
 
 <main class="wrap" id="catalog">
-<div class="toolbar">
-<input id="search" class="search" placeholder="Search products…" oninput="render()">
+<div class="toolbar catalog-toolbar">
+<div class="catalog-search-row">
+<input id="search" class="search" type="search" placeholder="Search this category…" aria-label="Search products in selected category" oninput="render()" hidden>
+<button id="categoryToggle" class="category-toggle" type="button" aria-expanded="true" aria-controls="categoryPanel" onclick="toggleCategories()"><span aria-hidden="true">▦</span><span>Hide categories</span><span class="category-toggle-icon" aria-hidden="true">+</span></button>
+</div>
+<div id="categoryPanel" class="category-panel">
+<div class="category-panel-head"><strong>Choose a category first</strong><span>Select a category to browse its products</span></div>
 <div id="cats" class="cats"></div>
 </div>
-<div id="products" class="grid"></div>
+<div id="resultsNote" class="results-note" aria-live="polite"></div>
+</div>
+<div id="products" class="grid" hidden></div>
 </main>
 
 <section class="collapsible-section"><div class="wrap">
@@ -260,10 +272,13 @@ const defaultProducts=[
 {name:"Chocolates",category:"Candy & Snacks",price:0,moq:"Minimum quantity: 1 box",desc:"Wholesale chocolate selection.",photo:"",stock_status:"Out of Stock"}
 ];
 let products=JSON.parse(localStorage.getItem("gans_products")||"null")||defaultProducts;
-let editing=-1, activeCat="All";
+let editing=-1, activeCat="";
+let categoriesOpen=true;
 let cart=JSON.parse(localStorage.getItem("gans_cart")||"[]");
 function money(v){return Number(v)>0?"$"+Number(v).toFixed(2):"Contact"}
 function normalizeStockStatus(value){const status=String(value||"In Stock").trim().toLowerCase();if(status==="out of stock")return "Out of Stock";if(status==="low stock"||status==="low in stock")return "Low in Stock";return "In Stock"}
+function categoryIcon(category){const c=String(category).toLowerCase();if(c.includes("deodor"))return "✦";if(c.includes("incense")||c.includes("spray"))return "✨";if(c.includes("condom"))return "♡";if(c.includes("car")||c.includes("fresh"))return "🚗";if(c.includes("energy"))return "⚡";if(c.includes("batter"))return "🔋";if(c.includes("paper")||c.includes("smoking"))return "📜";if(c.includes("lighter"))return "🔥";if(c.includes("apparel"))return "👕";if(c.includes("candy")||c.includes("snack"))return "🍬";return "◇"}
+function toggleCategories(force){categoriesOpen=typeof force==="boolean"?force:!categoriesOpen;const panel=document.getElementById("categoryPanel");const toggle=document.getElementById("categoryToggle");panel.hidden=!categoriesOpen;toggle.setAttribute("aria-expanded",String(categoriesOpen));toggle.querySelector("span:nth-child(2)").textContent=categoriesOpen?"Hide categories":"Browse all categories"}
 function render(){
  const q=document.getElementById("search").value.toLowerCase();
  const cats=["All",...new Set(products.map(p=>p.category).filter(Boolean))];
@@ -272,15 +287,23 @@ function render(){
  cats.forEach(category=>{
    const button=document.createElement("button");
    button.type="button";
-   button.className="cat"+(category===activeCat?" active":"");
-   button.textContent=category;
+   button.className="category-tile"+(category===activeCat?" active":"");
+   button.setAttribute("aria-pressed",String(category===activeCat));
+   const sample=category==="All"?products.find(p=>p.photo):products.find(p=>p.category===category&&p.photo);
+   const image=sample&&sample.photo?`<img src="${sample.photo}" alt="">`:`<span aria-hidden="true">${category==="All"?"▦":categoryIcon(category)}</span>`;
+   button.innerHTML=`<span class="category-tile-media">${image}</span><span class="category-tile-shade"></span><span class="category-tile-label">${category==="All"?"All products":category}</span>`;
    button.addEventListener("click",()=>{
      activeCat=category;
+     document.getElementById("search").hidden=false;
+     document.getElementById("products").hidden=false;
+     toggleCategories(false);
      render();
+     document.getElementById("products").scrollIntoView({behavior:"smooth",block:"start"});
    });
    catsContainer.appendChild(button);
  });
- const list=products.filter(p=>(activeCat==="All"||p.category===activeCat)&&(!q||p.name.toLowerCase().includes(q)||p.category.toLowerCase().includes(q)));
+ const list=activeCat?products.filter(p=>(activeCat==="All"||p.category===activeCat)&&(!q||p.name.toLowerCase().includes(q)||p.category.toLowerCase().includes(q))):[];
+ document.getElementById("resultsNote").innerHTML=activeCat?`Showing <strong>${list.length}</strong> ${list.length===1?"product":"products"}${activeCat==="All"?"":` in <strong>${activeCat}</strong>`}`:"Select a category above to browse products.";
  document.getElementById("products").innerHTML=list.map(p=>{const i=products.indexOf(p);const status=normalizeStockStatus(p.stock_status);const statusClass=status==="Out of Stock"?"stock-out":status==="Low in Stock"?"stock-low":"stock-in";return `<article class="card" tabindex="0" role="button" aria-label="View ${escapeHtml(p.name)}" onclick="openProduct(${i})" onkeydown="if(event.key==='Enter'||event.key===' '){event.preventDefault();openProduct(${i})}"><div class="photo">${p.photo?`<img src="${p.photo}" alt="${escapeHtml(p.name)}">`:"PRODUCT PHOTO"}</div><div class="body"><div class="tag">${p.category}</div><h3>${p.name}</h3><div class="price">${money(p.price)} per box</div><div class="stock-badge ${statusClass}">${status}</div><div class="desc">${p.desc||""}</div><div class="stock">${p.moq||"Minimum quantity: 1 box"}</div><div class="product-actions"><button class="btn btn-dark" onclick="event.stopPropagation();addToCart(${i})" ${status==="Out of Stock"?"disabled":""}>${status==="Out of Stock"?"Out of Stock":"Add 1 Box to Cart"}</button><button class="btn btn-outline" onclick="event.stopPropagation();contact('${escapeHtml(p.name)}')">Request Pricing</button></div></div></article>`}).join("");
  renderAdmin();
 }
