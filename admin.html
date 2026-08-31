@@ -102,12 +102,15 @@
       display: none;
     }
 
-    #message {
+    #message,
+    #loginMessage {
       padding: 10px 0;
       color: #f1c232;
     }
 
     small {
+      display: block;
+      margin: -7px 0 15px;
       color: #aaa;
     }
 
@@ -343,7 +346,11 @@
         placeholder="Password"
       >
 
-      <button class="primary" type="button" onclick="login()">
+      <button
+        class="primary"
+        type="button"
+        onclick="login()"
+      >
         Login
       </button>
 
@@ -352,15 +359,16 @@
 
     <div id="adminArea">
       <section class="card">
-        <button class="logout" type="button" onclick="logout()">
+        <button
+          class="logout"
+          type="button"
+          onclick="logout()"
+        >
           Logout
         </button>
 
         <h2>Dashboard</h2>
-
-        <p>
-          <small>Choose what you want to manage.</small>
-        </p>
+        <p>Choose what you want to manage.</p>
 
         <div class="dashboard-nav">
           <button
@@ -416,7 +424,7 @@
         class="dashboard-section"
       >
         <div class="card">
-          <h2>Add Product</h2>
+          <h2 id="productFormTitle">Add Product</h2>
 
           <input type="hidden" id="productId">
 
@@ -427,13 +435,18 @@
             placeholder="Product name"
           >
 
-          <label for="price">Price</label>
+          <label for="price">Price (optional)</label>
           <input
             type="number"
             id="price"
             step="0.01"
-            placeholder="0.00"
+            min="0"
+            placeholder="Leave blank to add later"
           >
+
+          <small>
+            The product can be saved without a price. A price can be added later by editing the product.
+          </small>
 
           <label for="category">Category</label>
           <input
@@ -608,11 +621,6 @@
     async function fetchAllOrders() {
       const allOrders = [];
 
-      /*
-       * Each request asks for exactly one row.
-       * This continues until Supabase returns no row.
-       * It therefore works even if the API row limit is set to 1.
-       */
       for (let offset = 0; offset < 5000; offset += 1) {
         const { data, error } = await supabaseClient
           .from("orders")
@@ -659,10 +667,6 @@
         return allItems;
       }
 
-      /*
-       * Item rows are also retrieved one at a time so a low
-       * Supabase API row limit cannot hide later items.
-       */
       for (let offset = 0; offset < 10000; offset += 1) {
         const { data, error } = await supabaseClient
           .from("order_items")
@@ -972,6 +976,13 @@
           `
           : "";
 
+        const displayedPrice =
+          product.price === null ||
+          product.price === undefined ||
+          product.price === ""
+            ? '<span class="status">Price pending</span>'
+            : formatMoney(product.price);
+
         item.innerHTML = `
           ${image}
 
@@ -981,7 +992,7 @@
 
           <br>
 
-          ${formatMoney(product.price)}
+          ${displayedPrice}
 
           <br>
 
@@ -1061,7 +1072,7 @@
         document.getElementById("name").value.trim();
 
       const price =
-        document.getElementById("price").value;
+        document.getElementById("price").value.trim();
 
       const category =
         document.getElementById("category").value.trim();
@@ -1075,9 +1086,18 @@
       const photo =
         document.getElementById("photo").files[0];
 
-      if (!name || !price) {
+      if (!name) {
         message.textContent =
-          "Please enter product name and price.";
+          "Please enter a product name.";
+        return;
+      }
+
+      if (
+        price !== "" &&
+        (!Number.isFinite(Number(price)) || Number(price) < 0)
+      ) {
+        message.textContent =
+          "Please enter a valid price or leave it blank.";
         return;
       }
 
@@ -1113,7 +1133,7 @@
 
       const productData = {
         name,
-        price: Number(price),
+        price: price === "" ? null : Number(price),
         category,
         description
       };
@@ -1138,7 +1158,9 @@
       }
 
       message.textContent =
-        "Product saved successfully!";
+        id
+          ? "Product updated successfully!"
+          : "Product added successfully!";
 
       clearForm();
       await loadProducts();
@@ -1152,13 +1174,19 @@
         product.name || "";
 
       document.getElementById("price").value =
-        product.price || "";
+        product.price ?? "";
 
       document.getElementById("category").value =
         product.category || "";
 
       document.getElementById("description").value =
         product.description || "";
+
+      document.getElementById("productFormTitle").textContent =
+        "Edit Product";
+
+      document.getElementById("message").textContent =
+        "Editing " + (product.name || "product");
 
       showAdminSection("products");
 
@@ -1196,6 +1224,9 @@
       document.getElementById("category").value = "";
       document.getElementById("description").value = "";
       document.getElementById("photo").value = "";
+
+      document.getElementById("productFormTitle").textContent =
+        "Add Product";
     }
 
     async function checkLogin() {
