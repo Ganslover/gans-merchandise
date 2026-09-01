@@ -68,35 +68,34 @@ footer{background:#17231c}.whatsapp-button{background:var(--sage)}.whatsapp-butt
 @media(max-width:650px){.hero-trust{display:grid;grid-template-columns:repeat(3,1fr);margin-top:36px}.hero-trust>div{padding:15px 10px 0 0;margin-right:10px}.hero-trust strong{font-size:13px}.hero-trust span{font-size:10px}.hero:after{right:-300px}.card:after{display:none}}
 
 /* Visual category navigation */
-.catalog-toolbar{display:block;padding:18px}.catalog-search-row{display:flex;align-items:center;gap:10px}.catalog-search-row .search{flex:1}.category-tile:focus-visible{outline:3px solid rgba(47,97,73,.3);outline-offset:2px}
+.catalog-toolbar{display:block;padding:18px}.category-tile:focus-visible{outline:3px solid rgba(47,97,73,.3);outline-offset:2px}
 .category-panel{margin-top:14px;padding-top:14px;border-top:1px solid var(--line)}.category-panel-head{display:flex;align-items:center;justify-content:space-between;gap:16px;margin-bottom:12px}.category-panel-head strong{font-size:14px}.category-panel-head span{color:var(--muted);font-size:12px}.cats{display:grid;grid-template-columns:repeat(auto-fit,minmax(126px,1fr));gap:10px}.category-tile{position:relative;min-width:0;height:108px;padding:0;overflow:hidden;border:1px solid var(--line);border-radius:9px;background:#eef3ef;color:#fff;cursor:pointer;text-align:left}.category-tile:hover{border-color:#92b19d;transform:translateY(-1px);box-shadow:0 7px 18px rgba(36,70,50,.12)}.category-tile-media{position:absolute;inset:0;display:grid;place-items:center;background:linear-gradient(145deg,#e5eee8,#bcd0c2);font-size:34px}.category-tile-media img{width:100%;height:100%;object-fit:cover}.category-tile-shade{position:absolute;inset:0;background:linear-gradient(to top,rgba(10,25,16,.82),rgba(10,25,16,.04) 72%)}.category-tile-label{position:absolute;left:11px;right:11px;bottom:10px;z-index:1;font-size:12px;font-weight:800;line-height:1.25;text-shadow:0 1px 3px rgba(0,0,0,.4)}.category-tile.active{border-color:#fff;box-shadow:0 0 0 3px var(--sage)}.category-tile.active:after{content:"\2713";position:absolute;z-index:2;right:8px;top:8px;display:grid;place-items:center;width:22px;height:22px;border-radius:50%;background:var(--sage);font-size:12px;font-weight:900}.results-note{margin:16px 2px 0;color:var(--muted);font-size:13px}.results-note strong{color:var(--ink)}
-@media(max-width:650px){.catalog-search-row{align-items:stretch;flex-direction:column}.cats{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:6px;padding:3px 0 8px}.category-tile{width:100%;height:76px;border-radius:7px}.category-tile-media{font-size:24px}.category-tile-label{left:6px;right:6px;bottom:6px;font-size:9px;line-height:1.15;overflow-wrap:anywhere}.category-tile.active:after{right:5px;top:5px;width:17px;height:17px;font-size:9px}.category-panel-head span{display:none}}
+@media(max-width:650px){.cats{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:6px;padding:3px 0 8px}.category-tile{width:100%;height:76px;border-radius:7px}.category-tile-media{font-size:24px}.category-tile-label{left:6px;right:6px;bottom:6px;font-size:9px;line-height:1.15;overflow-wrap:anywhere}.category-tile.active:after{right:5px;top:5px;width:17px;height:17px;font-size:9px}.category-panel-head span{display:none}}
 
 /* Final mobile layout overrides */
+.mobile-category-select,.mobile-category-toggle{display:none}
 @media screen and (max-width:650px){
-  #cats.cats{
-    display:grid!important;
-    grid-template-columns:repeat(4,minmax(0,1fr))!important;
-    gap:6px!important;
-    overflow:visible!important;
-    padding:3px 0 8px!important;
-  }
-  #cats .category-tile{
-    width:100%!important;
-    min-width:0!important;
-    height:72px!important;
-    flex:none!important;
-    border-radius:7px!important;
-  }
-  #cats .category-tile-media{font-size:22px!important}
-  #cats .category-tile-label{
-    left:5px!important;
-    right:5px!important;
-    bottom:5px!important;
-    font-size:9px!important;
-    line-height:1.1!important;
-    overflow-wrap:anywhere;
-  }
+  header{position:relative}
+  .catalog-toolbar{position:sticky;top:0;z-index:9;margin:0 -12px 14px;padding:10px 12px;background:rgba(250,250,250,.97);border-bottom:1px solid var(--line);box-shadow:0 5px 14px rgba(24,24,27,.08);backdrop-filter:blur(10px)}
+  .category-panel{position:relative;margin:0;padding:0;border:0}
+  .category-panel-head,.mobile-category-select{display:none!important}
+  #cats.cats{display:grid!important;grid-template-columns:repeat(4,minmax(0,1fr))!important;gap:6px!important;padding:3px 0 8px!important;overflow:visible!important}
+  #cats .category-tile{width:100%!important;min-width:0!important;height:76px!important;flex:none!important;border-radius:7px!important}
+  #cats .category-tile-media{font-size:24px!important}
+  #cats .category-tile-label{left:6px!important;right:6px!important;bottom:6px!important;font-size:9px!important;line-height:1.15!important;overflow-wrap:anywhere}
+  .category-panel.has-selection .mobile-category-toggle{display:flex;width:100%;min-height:62px;padding:7px 12px 7px 8px;align-items:center;justify-content:space-between;gap:12px;border:1px solid rgba(47,97,73,.28);border-radius:14px;background:linear-gradient(135deg,#fff 0%,#f1f7f3 100%);color:var(--ink);font:inherit;text-align:left;box-shadow:0 7px 20px rgba(36,70,50,.14),inset 0 1px 0 #fff;cursor:pointer;transition:transform .18s,box-shadow .18s,border-color .18s}
+  .category-panel.has-selection .mobile-category-toggle:active{transform:scale(.985)}
+  .mobile-category-summary{display:flex;align-items:center;gap:10px;min-width:0}
+  .mobile-category-thumb{display:grid;place-items:center;flex:0 0 46px;width:46px;height:46px;overflow:hidden;border-radius:10px;background:linear-gradient(145deg,#dfece3,#a9c6b2);color:#244632;font-size:21px;box-shadow:inset 0 0 0 1px rgba(47,97,73,.12)}
+  .mobile-category-thumb img{width:100%;height:100%;object-fit:cover}
+  .mobile-category-copy{display:flex;min-width:0;flex-direction:column;gap:2px}
+  .mobile-category-copy small{color:#637269;font-size:9px;font-weight:800;letter-spacing:.12em;text-transform:uppercase}
+  #mobileCategoryLabel{overflow:hidden;color:#183d29;font-size:15px;font-weight:850;line-height:1.15;text-overflow:ellipsis;white-space:nowrap}
+  .mobile-category-toggle:after{content:"⌄";display:grid;place-items:center;flex:0 0 32px;width:32px;height:32px;border-radius:50%;background:#2f6149;color:#fff;font-size:20px;line-height:1;box-shadow:0 3px 8px rgba(47,97,73,.25);transition:transform .18s,background .18s}
+  .category-panel.has-selection:not(.categories-open) #cats.cats{display:none!important}
+  .category-panel.has-selection.categories-open .mobile-category-toggle:after{transform:rotate(180deg)}
+  .category-panel.has-selection.categories-open #cats.cats{position:absolute;top:70px;left:0;right:0;z-index:12;padding:9px!important;border:1px solid rgba(47,97,73,.2);border-radius:14px;background:#fff;box-shadow:0 18px 42px rgba(24,24,27,.22);max-height:65vh;overflow-y:auto!important}
+  .results-note{margin:8px 2px 0;font-size:11px}
   #products.grid{
     grid-template-columns:repeat(2,minmax(0,1fr))!important;
     gap:10px!important;
@@ -216,11 +215,9 @@ footer{background:#17231c}.whatsapp-button{background:var(--sage)}.whatsapp-butt
 
 <main class="wrap" id="catalog">
 <div class="toolbar catalog-toolbar">
-<div class="catalog-search-row">
-<input id="search" class="search" type="search" placeholder="Search this category…" aria-label="Search products in selected category" oninput="render()" hidden>
-</div>
 <div id="categoryPanel" class="category-panel">
 <div class="category-panel-head"><strong>Choose a category first</strong><span>Select a category to browse its products</span></div>
+<button id="mobileCategoryToggle" class="mobile-category-toggle" type="button" aria-expanded="false" aria-controls="cats" onclick="toggleMobileCategories()"><span class="mobile-category-summary"><span id="mobileCategoryThumb" class="mobile-category-thumb" aria-hidden="true">◇</span><span class="mobile-category-copy"><small>Browsing category</small><span id="mobileCategoryLabel">Choose a category</span></span></span></button>
 <div id="cats" class="cats"></div>
 </div>
 <div id="resultsNote" class="results-note" aria-live="polite"></div>
@@ -302,15 +299,28 @@ const defaultProducts=[
 {name:"Chocolates",category:"Candy & Snacks",price:0,moq:"",desc:"Wholesale chocolate selection.",photo:"",stock_status:"Out of Stock"}
 ];
 let products=JSON.parse(localStorage.getItem("gans_products")||"null")||defaultProducts;
-let editing=-1, activeCat="";
+let editing=-1, activeCat="", mobileCategoriesOpen=false;
 let cart=JSON.parse(localStorage.getItem("gans_cart")||"[]");
 function money(v){return Number(v)>0?"$"+Number(v).toFixed(2):"Contact"}
 function normalizeStockStatus(value){const status=String(value||"In Stock").trim().toLowerCase();if(status==="out of stock")return "Out of Stock";if(status==="low stock"||status==="low in stock")return "Low in Stock";return "In Stock"}
 function categoryIcon(category){const c=String(category).toLowerCase();if(c.includes("deodor"))return "✦";if(c.includes("incense")||c.includes("spray"))return "✨";if(c.includes("condom"))return "♡";if(c.includes("car")||c.includes("fresh"))return "🚗";if(c.includes("energy"))return "⚡";if(c.includes("batter"))return "🔋";if(c.includes("paper")||c.includes("smoking"))return "📜";if(c.includes("lighter"))return "🔥";if(c.includes("apparel"))return "👕";if(c.includes("candy")||c.includes("snack"))return "🍬";return "◇"}
+function toggleMobileCategories(){
+ mobileCategoriesOpen=!mobileCategoriesOpen;
+ render();
+}
 function render(){
- const q=document.getElementById("search").value.toLowerCase();
  const cats=["All",...new Set(products.map(p=>p.category).filter(Boolean))];
  const catsContainer=document.getElementById("cats");
+ const categoryPanel=document.getElementById("categoryPanel");
+ const mobileToggle=document.getElementById("mobileCategoryToggle");
+ const mobileLabel=document.getElementById("mobileCategoryLabel");
+ const mobileThumb=document.getElementById("mobileCategoryThumb");
+ categoryPanel.classList.toggle("has-selection",Boolean(activeCat));
+ categoryPanel.classList.toggle("categories-open",Boolean(activeCat&&mobileCategoriesOpen));
+ mobileToggle.setAttribute("aria-expanded",String(Boolean(activeCat&&mobileCategoriesOpen)));
+ mobileLabel.textContent=activeCat==="All"?"All products":activeCat||"Choose a category";
+ const selectedSample=activeCat==="All"?products.find(p=>p.photo):products.find(p=>p.category===activeCat&&p.photo);
+ mobileThumb.innerHTML=selectedSample&&selectedSample.photo?`<img src="${selectedSample.photo}" alt="">`:`<span>${activeCat==="All"?"▦":categoryIcon(activeCat)}</span>`;
  catsContainer.innerHTML="";
  cats.forEach(category=>{
    const button=document.createElement("button");
@@ -322,14 +332,14 @@ function render(){
    button.innerHTML=`<span class="category-tile-media">${image}</span><span class="category-tile-shade"></span><span class="category-tile-label">${category==="All"?"All products":category}</span>`;
    button.addEventListener("click",()=>{
      activeCat=category;
-     document.getElementById("search").hidden=false;
+     mobileCategoriesOpen=false;
      document.getElementById("products").hidden=false;
      render();
      document.getElementById("products").scrollIntoView({behavior:"smooth",block:"start"});
    });
    catsContainer.appendChild(button);
  });
- const list=activeCat?products.filter(p=>(activeCat==="All"||p.category===activeCat)&&(!q||p.name.toLowerCase().includes(q)||p.category.toLowerCase().includes(q))):[];
+ const list=activeCat?products.filter(p=>activeCat==="All"||p.category===activeCat):[];
  document.getElementById("resultsNote").innerHTML=activeCat?`Showing <strong>${list.length}</strong> ${list.length===1?"product":"products"}${activeCat==="All"?"":` in <strong>${activeCat}</strong>`}`:"Select a category above to browse products.";
  document.getElementById("products").innerHTML=list.map(p=>{const i=products.indexOf(p);const status=normalizeStockStatus(p.stock_status);const statusClass=status==="Out of Stock"?"stock-out":status==="Low in Stock"?"stock-low":"stock-in";return `<article class="card" tabindex="0" role="button" aria-label="View ${escapeHtml(p.name)}" onclick="openProduct(${i})" onkeydown="if(event.key==='Enter'||event.key===' '){event.preventDefault();openProduct(${i})}"><div class="photo">${p.photo?`<img src="${p.photo}" alt="${escapeHtml(p.name)}">`:"PRODUCT PHOTO"}</div><div class="body"><div class="tag">${p.category}</div><h3>${p.name}</h3><div class="price">${money(p.price)}</div><div class="stock-badge ${statusClass}">${status}</div><div class="desc">${p.desc||""}</div><div class="product-actions"><button class="btn btn-dark" onclick="event.stopPropagation();addToCart(${i})" ${status==="Out of Stock"?"disabled":""}>${status==="Out of Stock"?"Out of Stock":"Add to Cart"}</button><button class="btn btn-outline" onclick="event.stopPropagation();contact('${escapeHtml(p.name)}')">Request Pricing</button></div></div></article>`}).join("");
  renderAdmin();
