@@ -41,6 +41,7 @@ footer{background:#111827;color:#fff;padding:35px 22px}.foot{max-width:1180px;ma
 @media(max-width:760px){header{position:relative}.nav{padding:14px 16px;display:grid;grid-template-columns:1fr auto;gap:8px 12px}.brand{font-size:19px}.nav small{display:block;text-align:right}.nav-actions{grid-column:1/-1;width:100%;display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:8px}.nav-actions .btn{width:100%;padding:11px 8px;font-size:14px}.user-email{grid-column:1/-1;text-align:center;background:#1f2937;border-radius:8px;padding:8px;overflow-wrap:anywhere}.user-email:empty{display:none}.orders-box,.cart-box{width:100%;max-height:94vh;border-radius:14px;padding:22px 16px}.order-head{display:block}.order-status{margin:8px 0}.order-total{display:block;margin-top:6px}.order-items{padding-left:18px}.minimum-order{font-size:14px}}
 @media(max-width:420px){.nav-actions{grid-template-columns:1fr 1fr}.nav-actions .btn{font-size:13px}.orders-box h2{font-size:23px}.order-card{padding:14px}}
 @media(max-width:650px){.checkout-box{width:100%;padding:24px 16px;border-radius:14px}.checkout-grid{grid-template-columns:1fr}.checkout-grid .full{grid-column:auto}.checkout-actions{flex-direction:column-reverse}.checkout-actions .btn{width:100%}}
+
 /* Simple, understated storefront */
 :root{--ink:#18181b;--muted:#71717a;--line:#e4e4e7;--bg:#fafafa;--card:#fff;--accent:#18181b}
 html{scroll-behavior:smooth}body{font-family:"Inter",Arial,sans-serif;background:var(--bg)}
@@ -55,6 +56,7 @@ html{scroll-behavior:smooth}body{font-family:"Inter",Arial,sans-serif;background
 @media(max-width:560px){.hero-in{text-align:left}.order-callout{min-height:auto;text-align:left;justify-content:flex-start}.hero-actions .btn{min-height:52px}.grid{grid-template-columns:repeat(2,minmax(0,1fr));gap:10px}.card{min-width:0}.photo{height:140px}.body{padding:11px}.tag{font-size:8px;letter-spacing:.06em}.body h3{font-size:14px;line-height:1.25;margin:5px 0}.price{font-size:14px}.stock-badge{margin:6px 0;padding:5px 7px;font-size:10px}.desc{font-size:11px;line-height:1.4;min-height:0}.product-actions{gap:6px}.product-actions .btn{min-height:36px;padding:8px 6px;font-size:10px}.whatsapp-label{display:none}.whatsapp-button{width:50px;height:50px;padding:0;justify-content:center}}
 @media(max-width:380px){.wrap{padding-left:12px;padding-right:12px}.grid{gap:8px}.photo{height:120px}.body{padding:9px}.body h3{font-size:13px}.desc{display:none}}
 @media(prefers-reduced-motion:reduce){*{scroll-behavior:auto!important;transition:none!important}}
+
 /* A little more character, while staying simple */
 :root{--sage:#2f6149;--sage-soft:#edf4ef;--warm:#b47b38}
 header{position:sticky;box-shadow:0 1px 8px rgba(24,24,27,.03)}.brand:before{content:"";display:inline-block;width:9px;height:9px;margin-right:10px;border-radius:50%;background:var(--sage);box-shadow:0 0 0 5px var(--sage-soft)}
@@ -64,15 +66,47 @@ header{position:sticky;box-shadow:0 1px 8px rgba(24,24,27,.03)}.brand:before{con
 .toggle-icon{background:var(--sage)}.section-kicker{color:var(--sage)}.toggle-box summary:hover,.toggle-box summary:focus-visible{background:#f8faf8}.process-summary{border-color:var(--sage)}.info h3:before{content:"";display:inline-block;width:7px;height:7px;margin:0 9px 2px 0;border-radius:50%;background:var(--sage)}
 footer{background:#17231c}.whatsapp-button{background:var(--sage)}.whatsapp-button:hover,.whatsapp-button:focus{background:#234c39}
 @media(max-width:650px){.hero-trust{display:grid;grid-template-columns:repeat(3,1fr);margin-top:36px}.hero-trust>div{padding:15px 10px 0 0;margin-right:10px}.hero-trust strong{font-size:13px}.hero-trust span{font-size:10px}.hero:after{right:-300px}.card:after{display:none}}
+
 /* Visual category navigation */
 .catalog-toolbar{display:block;padding:18px}.catalog-search-row{display:flex;align-items:center;gap:10px}.catalog-search-row .search{flex:1}.category-tile:focus-visible{outline:3px solid rgba(47,97,73,.3);outline-offset:2px}
 .category-panel{margin-top:14px;padding-top:14px;border-top:1px solid var(--line)}.category-panel-head{display:flex;align-items:center;justify-content:space-between;gap:16px;margin-bottom:12px}.category-panel-head strong{font-size:14px}.category-panel-head span{color:var(--muted);font-size:12px}.cats{display:grid;grid-template-columns:repeat(auto-fit,minmax(126px,1fr));gap:10px}.category-tile{position:relative;min-width:0;height:108px;padding:0;overflow:hidden;border:1px solid var(--line);border-radius:9px;background:#eef3ef;color:#fff;cursor:pointer;text-align:left}.category-tile:hover{border-color:#92b19d;transform:translateY(-1px);box-shadow:0 7px 18px rgba(36,70,50,.12)}.category-tile-media{position:absolute;inset:0;display:grid;place-items:center;background:linear-gradient(145deg,#e5eee8,#bcd0c2);font-size:34px}.category-tile-media img{width:100%;height:100%;object-fit:cover}.category-tile-shade{position:absolute;inset:0;background:linear-gradient(to top,rgba(10,25,16,.82),rgba(10,25,16,.04) 72%)}.category-tile-label{position:absolute;left:11px;right:11px;bottom:10px;z-index:1;font-size:12px;font-weight:800;line-height:1.25;text-shadow:0 1px 3px rgba(0,0,0,.4)}.category-tile.active{border-color:#fff;box-shadow:0 0 0 3px var(--sage)}.category-tile.active:after{content:"\2713";position:absolute;z-index:2;right:8px;top:8px;display:grid;place-items:center;width:22px;height:22px;border-radius:50%;background:var(--sage);font-size:12px;font-weight:900}.results-note{margin:16px 2px 0;color:var(--muted);font-size:13px}.results-note strong{color:var(--ink)}
-@media(max-width:650px){.catalog-search-row{align-items:stretch;flex-direction:column}.cats{display:flex;overflow-x:auto;scroll-snap-type:x mandatory;padding:3px 3px 10px}.category-tile{flex:0 0 142px;scroll-snap-align:start}.category-panel-head span{display:none}}
 @media(max-width:650px){.catalog-search-row{align-items:stretch;flex-direction:column}.cats{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:6px;padding:3px 0 8px}.category-tile{width:100%;height:76px;border-radius:7px}.category-tile-media{font-size:24px}.category-tile-label{left:6px;right:6px;bottom:6px;font-size:9px;line-height:1.15;overflow-wrap:anywhere}.category-tile.active:after{right:5px;top:5px;width:17px;height:17px;font-size:9px}.category-panel-head span{display:none}}
+
+/* Final mobile layout overrides */
+@media screen and (max-width:650px){
+  #cats.cats{
+    display:grid!important;
+    grid-template-columns:repeat(4,minmax(0,1fr))!important;
+    gap:6px!important;
+    overflow:visible!important;
+    padding:3px 0 8px!important;
+  }
+  #cats .category-tile{
+    width:100%!important;
+    min-width:0!important;
+    height:72px!important;
+    flex:none!important;
+    border-radius:7px!important;
+  }
+  #cats .category-tile-media{font-size:22px!important}
+  #cats .category-tile-label{
+    left:5px!important;
+    right:5px!important;
+    bottom:5px!important;
+    font-size:9px!important;
+    line-height:1.1!important;
+    overflow-wrap:anywhere;
+  }
+  #products.grid{
+    grid-template-columns:repeat(2,minmax(0,1fr))!important;
+    gap:10px!important;
+  }
+}
 </style>
 </head>
 <body>
 <header><div class="nav"><div class="brand">GANS MERCHANDISE</div><small>WHOLESALE SUPPLY</small><div class="nav-actions"><span id="userEmail" class="user-email"></span><button class="btn btn-light cart-button" onclick="openCart()"><span>Shopping Cart</span><span id="cartCount" class="cart-count">0</span></button><button id="ordersButton" class="btn btn-light orders-button" style="display:none" onclick="openOrders()">My Orders</button><button id="signInButton" class="btn btn-light" onclick="openAuth('signin')">Sign In</button><button id="signUpButton" class="btn btn-outline" onclick="openAuth('signup')">Create Account</button><button id="emailCompanyButton" class="btn btn-outline" style="display:none" onclick="emailCompany()">Email Company</button><button id="signOutButton" class="btn btn-light" style="display:none" onclick="signOut()">Sign Out</button><button style="display:none" class="btn btn-light" onclick="showAdmin()">Manage Products</button></div></div></header>
+
 <div id="authModal" class="modal" onclick="closeAuthFromBackdrop(event)">
 <div class="auth-box">
 <button class="auth-close" aria-label="Close" onclick="closeAuth()">&times;</button>
@@ -86,7 +120,9 @@ footer{background:#17231c}.whatsapp-button{background:var(--sage)}.whatsapp-butt
 <p class="auth-switch"><span id="authSwitchText">New customer?</span> <button id="authSwitchButton" type="button" onclick="toggleAuthMode()">Create an account</button></p>
 </div>
 </div>
+
 <div class="minimum-order">Minimum wholesale order: $200 USD</div>
+
 <div id="productModal" class="modal" onclick="closeProductFromBackdrop(event)">
 <article class="product-detail">
 <button class="detail-close" aria-label="Close product details" onclick="closeProduct()">&times;</button>
@@ -105,6 +141,7 @@ footer{background:#17231c}.whatsapp-button{background:var(--sage)}.whatsapp-butt
 </div>
 </article>
 </div>
+
 <div id="cartModal" class="modal" onclick="closeCartFromBackdrop(event)">
 <section class="cart-box">
 <button class="auth-close" aria-label="Close cart" onclick="closeCart()">&times;</button>
@@ -117,6 +154,7 @@ footer{background:#17231c}.whatsapp-button{background:var(--sage)}.whatsapp-butt
 </div>
 </section>
 </div>
+
 <div id="ordersModal" class="modal" onclick="closeOrdersFromBackdrop(event)">
 <section class="orders-box">
 <button class="auth-close" aria-label="Close order history" onclick="closeOrders()">&times;</button>
@@ -124,6 +162,7 @@ footer{background:#17231c}.whatsapp-button{background:var(--sage)}.whatsapp-butt
 <div id="ordersList" class="orders-loading">Loading your orders…</div>
 </section>
 </div>
+
 <div id="businessCheckoutModal" class="modal" onclick="closeBusinessCheckoutFromBackdrop(event)">
 <section class="checkout-box" aria-labelledby="businessCheckoutTitle">
 <button class="auth-close" type="button" aria-label="Close business checkout" onclick="closeBusinessCheckout()">&times;</button>
@@ -156,6 +195,7 @@ footer{background:#17231c}.whatsapp-button{background:var(--sage)}.whatsapp-butt
 </form>
 </section>
 </div>
+
 <div id="store">
 <section class="hero"><div class="hero-in">
 <div class="eyebrow">Wholesale • Albany, New York</div>
@@ -173,6 +213,7 @@ footer{background:#17231c}.whatsapp-button{background:var(--sage)}.whatsapp-butt
 <div><strong>$200</strong><span>Minimum order</span></div>
 </div>
 </div></section>
+
 <main class="wrap" id="catalog">
 <div class="toolbar catalog-toolbar">
 <div class="catalog-search-row">
@@ -186,6 +227,7 @@ footer{background:#17231c}.whatsapp-button{background:var(--sage)}.whatsapp-butt
 </div>
 <div id="products" class="grid" hidden></div>
 </main>
+
 <section class="collapsible-section"><div class="wrap">
 <details id="about" class="toggle-box">
 <summary><span class="toggle-title">About Us<small>Click to learn about Gans Merchandise</small></span><span class="toggle-icon" aria-hidden="true">+</span></summary>
@@ -197,6 +239,7 @@ footer{background:#17231c}.whatsapp-button{background:var(--sage)}.whatsapp-butt
 </div>
 </div>
 </details>
+
 <details id="how-it-works" class="toggle-box">
 <summary><span class="toggle-title">How Our Website Works<small>Click to view the complete ordering process</small></span><span class="toggle-icon" aria-hidden="true">+</span></summary>
 <div class="toggle-content">
@@ -213,12 +256,14 @@ footer{background:#17231c}.whatsapp-button{background:var(--sage)}.whatsapp-butt
 </div>
 </details>
 </div></section>
+
 <section class="info"><div class="wrap info-grid">
 <div><h3>Wholesale focused</h3><p>Catalog-style browsing for retailers and business customers.</p></div>
 <div><h3>Easy product management</h3><p>Add products, prices, categories, descriptions and photos from the built-in manager.</p></div>
 <div><h3>Personal order follow-up</h3><p>We receive your order request online, then manually contact you within 24 hours to complete the order.</p></div>
 </div></section>
 </div>
+
 <div id="admin" class="wrap">
 <div class="panel">
 <h2>Product Manager</h2>
@@ -242,10 +287,13 @@ footer{background:#17231c}.whatsapp-button{background:var(--sage)}.whatsapp-butt
 </div>
 <div class="panel"><h3>Current Products</h3><table class="admin-list"><thead><tr><th>Product</th><th>Category</th><th>Price</th><th></th></tr></thead><tbody id="adminRows"></tbody></table></div>
 </div>
+
 <footer><div class="foot"><div><strong>Gans Merchandise Entreprises LLC</strong><p>Wholesale merchandise supplier</p></div><div><p>14 N Manning Blvd, Albany, NY 12206<br><a href="tel:+15188797114" style="color:#fff">+1 (518) 879-7114</a><br>gansmerchandise2002@gmail.com</p></div></div></footer>
+
 <a class="whatsapp-button" href="https://wa.me/15188797114?text=Hello%20Gans%20Merchandise%2C%20I%20would%20like%20information%20about%20your%20wholesale%20products." target="_blank" rel="noopener noreferrer" aria-label="Contact Gans Merchandise on WhatsApp">
 <span class="whatsapp-icon" aria-hidden="true">💬</span><span class="whatsapp-label">Chat on WhatsApp</span>
 </a>
+
 <script>
 const defaultProducts=[
 {name:"T-Shirts",category:"Apparel",price:0,moq:"",desc:"Wholesale apparel selection.",photo:"",stock_status:"In Stock"},
@@ -442,6 +490,7 @@ const SUPABASE_URL = "https://elwrivtrnymkxmdvffyd.supabase.co";
 const SUPABASE_KEY = "sb_publishable_zLn1w_RtuBH1tQt58kcQlA_I6VFi4jb";
 const authClient = supabase.createClient(SUPABASE_URL, SUPABASE_KEY);
 let authMode = "signin";
+
 function openAuth(mode) {
   authMode = mode;
   updateAuthForm();
@@ -449,18 +498,22 @@ function openAuth(mode) {
   document.getElementById("authModal").classList.add("open");
   document.getElementById("authEmail").focus();
 }
+
 function closeAuth() {
   document.getElementById("authModal").classList.remove("open");
   document.getElementById("authForm").reset();
 }
+
 function closeAuthFromBackdrop(event) {
   if (event.target.id === "authModal") closeAuth();
 }
+
 function toggleAuthMode() {
   authMode = authMode === "signin" ? "signup" : "signin";
   updateAuthForm();
   document.getElementById("authMessage").textContent = "";
 }
+
 function updateAuthForm() {
   const signingUp = authMode === "signup";
   document.getElementById("authTitle").textContent = signingUp ? "Create Account" : "Sign In";
@@ -469,6 +522,7 @@ function updateAuthForm() {
   document.getElementById("authSwitchButton").textContent = signingUp ? "Sign in" : "Create an account";
   document.getElementById("authPassword").autocomplete = signingUp ? "new-password" : "current-password";
 }
+
 async function submitAuth(event) {
   event.preventDefault();
   const email = document.getElementById("authEmail").value.trim();
@@ -478,9 +532,11 @@ async function submitAuth(event) {
   submit.disabled = true;
   message.className = "auth-message";
   message.textContent = authMode === "signup" ? "Creating account…" : "Signing in…";
+
   const result = authMode === "signup"
     ? await authClient.auth.signUp({ email, password })
     : await authClient.auth.signInWithPassword({ email, password });
+
   submit.disabled = false;
   if (result.error) {
     message.textContent = result.error.message;
@@ -498,9 +554,11 @@ async function submitAuth(event) {
   }
   closeAuth();
 }
+
 async function signOut() {
   await authClient.auth.signOut();
 }
+
 async function emailCompany() {
   const { data } = await authClient.auth.getSession();
   const customerEmail = data.session?.user?.email || "";
@@ -508,6 +566,7 @@ async function emailCompany() {
   const body = encodeURIComponent("Hello Gans Merchandise,\n\nI would like to ask about your wholesale products.\n\nMy email: " + customerEmail + "\n\nThank you.");
   window.location.href = "mailto:gansmerchandise2002@gmail.com?subject=" + subject + "&body=" + body;
 }
+
 function updateAccountUI(session) {
   const signedIn = Boolean(session);
   document.getElementById("userEmail").textContent = signedIn ? session.user.email : "";
@@ -517,8 +576,10 @@ function updateAccountUI(session) {
   document.getElementById("ordersButton").style.display = signedIn ? "flex" : "none";
   document.getElementById("signOutButton").style.display = signedIn ? "flex" : "none";
 }
+
 authClient.auth.getSession().then(({ data }) => updateAccountUI(data.session));
 authClient.auth.onAuthStateChange((_event, session) => updateAccountUI(session));
+
 async function loadSupabaseProducts() {
   try {
     const response = await fetch(
@@ -529,10 +590,13 @@ async function loadSupabaseProducts() {
         }
       }
     );
+
     if (!response.ok) {
       throw new Error("Could not load products");
     }
+
     const data = await response.json();
+
     products = data.map(p => ({
       name: p.name || "",
       category: p.category || "",
@@ -542,11 +606,13 @@ async function loadSupabaseProducts() {
       moq: "",
       stock_status: p.stock_status || "In Stock"
     }));
+
     render();
   } catch (error) {
     console.error("Supabase error:", error);
   }
 }
+
 loadSupabaseProducts();
 </script>
 </body>
