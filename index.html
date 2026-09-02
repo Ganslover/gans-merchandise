@@ -151,6 +151,70 @@ footer{background:#17231c}.whatsapp-button{background:var(--sage)}.whatsapp-butt
   text-align:center;
   white-space:normal;
 }
+/* Product search appears after a browsing category is selected. */
+.product-search-section{
+  display:flex;
+  align-items:center;
+  gap:10px;
+  width:100%;
+  margin-top:14px;
+}
+.sr-only{
+  position:absolute;
+  width:1px;
+  height:1px;
+  padding:0;
+  margin:-1px;
+  overflow:hidden;
+  clip:rect(0,0,0,0);
+  white-space:nowrap;
+  border:0;
+}
+.product-search-section[hidden]{display:none}
+.product-search-wrap{
+  position:relative;
+  flex:1;
+}
+.product-search-icon{
+  position:absolute;
+  left:14px;
+  top:50%;
+  color:var(--muted);
+  transform:translateY(-50%);
+  pointer-events:none;
+}
+.product-search-input{
+  width:100%;
+  min-height:48px;
+  padding:11px 44px 11px 42px;
+  border:1px solid var(--line);
+  border-radius:10px;
+  background:#fff;
+  color:var(--ink);
+  font:inherit;
+}
+.product-search-input:focus{
+  border-color:var(--sage);
+  outline:3px solid rgba(47,97,73,.16);
+}
+.product-search-clear{
+  position:absolute;
+  right:8px;
+  top:50%;
+  display:grid;
+  place-items:center;
+  width:32px;
+  height:32px;
+  padding:0;
+  border:0;
+  border-radius:50%;
+  background:transparent;
+  color:var(--muted);
+  font-size:20px;
+  cursor:pointer;
+  transform:translateY(-50%);
+}
+.product-search-clear:hover{background:var(--sage-soft);color:var(--sage)}
 @media(max-width:600px){
   .card .product-actions{
     grid-template-columns:1fr;
@@ -159,6 +223,8 @@ footer{background:#17231c}.whatsapp-button{background:var(--sage)}.whatsapp-butt
   .card .product-actions .btn{
     min-height:42px;
   }
+  .product-search-section{margin-top:10px}
+  .product-search-input{min-height:44px;font-size:14px}
 }
 </style>
 </head>
@@ -271,6 +337,14 @@ footer{background:#17231c}.whatsapp-button{background:var(--sage)}.whatsapp-butt
 <button id="mobileCategoryToggle" class="mobile-category-toggle" type="button" aria-expanded="false" aria-controls="cats" onclick="toggleMobileCategories()"><span class="mobile-category-summary"><span id="mobileCategoryThumb" class="mobile-category-thumb" aria-hidden="true">◇</span><span class="mobile-category-copy"><small>Browsing category</small><span id="mobileCategoryLabel">Choose a category</span></span></span></button>
 <div id="cats" class="cats"></div>
 </div>
+<div id="productSearchSection" class="product-search-section" hidden>
+<div class="product-search-wrap">
+<span class="product-search-icon" aria-hidden="true">⌕</span>
+<label for="productSearch" class="sr-only">Search products</label>
+<input id="productSearch" class="product-search-input" type="search" placeholder="Search products in this category…" autocomplete="off" oninput="searchProducts(this.value)">
+<button id="productSearchClear" class="product-search-clear" type="button" aria-label="Clear product search" onclick="clearProductSearch()" hidden>×</button>
+</div>
+</div>
 <div id="resultsNote" class="results-note" aria-live="polite"></div>
 </div>
 <div id="products" class="grid" hidden></div>
@@ -343,7 +417,7 @@ const defaultProducts=[
 {name:"Chocolates",category:"Candy & Snacks",price:0,moq:"",desc:"Wholesale chocolate selection.",photo:"",stock_status:"Out of Stock"}
 ];
 let products=JSON.parse(localStorage.getItem("gans_products")||"null")||defaultProducts;
-let editing=-1, activeCat="", mobileCategoriesOpen=false;
+let editing=-1, activeCat="", mobileCategoriesOpen=false, productSearchQuery="";
 let cart=JSON.parse(localStorage.getItem("gans_cart")||"[]");
 function money(v){return Number(v)>0?"$"+Number(v).toFixed(2):"Contact"}
 function normalizeStockStatus(value){const status=String(value||"In Stock").trim().toLowerCase();if(status==="out of stock")return "Out of Stock";if(status==="low stock"||status==="low in stock")return "Low in Stock";return "In Stock"}
@@ -352,6 +426,17 @@ function toggleMobileCategories(){
  mobileCategoriesOpen=!mobileCategoriesOpen;
  render();
 }
+function searchProducts(value){
+ productSearchQuery=String(value||"").trim().toLowerCase();
+ render();
+}
+function clearProductSearch(){
+ productSearchQuery="";
+ const input=document.getElementById("productSearch");
+ input.value="";
+ render();
+ input.focus();
+}
 function render(){
  const cats=["All",...new Set(products.map(p=>p.category).filter(Boolean))];
  const catsContainer=document.getElementById("cats");
@@ -359,10 +444,16 @@ function render(){
  const mobileToggle=document.getElementById("mobileCategoryToggle");
  const mobileLabel=document.getElementById("mobileCategoryLabel");
  const mobileThumb=document.getElementById("mobileCategoryThumb");
+ const searchSection=document.getElementById("productSearchSection");
+ const searchInput=document.getElementById("productSearch");
+ const searchClear=document.getElementById("productSearchClear");
  categoryPanel.classList.toggle("has-selection",Boolean(activeCat));
  categoryPanel.classList.toggle("categories-open",Boolean(activeCat&&mobileCategoriesOpen));
  mobileToggle.setAttribute("aria-expanded",String(Boolean(activeCat&&mobileCategoriesOpen)));
  mobileLabel.textContent=activeCat==="All"?"All products":activeCat||"Choose a category";
+ searchSection.hidden=!activeCat;
+ searchInput.placeholder=activeCat&&activeCat!=="All"?`Search products in ${activeCat}…`:"Search all products…";
+ searchClear.hidden=!productSearchQuery;
  const selectedSample=activeCat==="All"?products.find(p=>p.photo):products.find(p=>p.category===activeCat&&p.photo);
  mobileThumb.innerHTML=selectedSample&&selectedSample.photo?`<img src="${selectedSample.photo}" alt="">`:`<span>${activeCat==="All"?"▦":categoryIcon(activeCat)}</span>`;
  catsContainer.innerHTML="";
@@ -377,14 +468,17 @@ function render(){
    button.addEventListener("click",()=>{
      activeCat=category;
      mobileCategoriesOpen=false;
+     productSearchQuery="";
+     searchInput.value="";
      document.getElementById("products").hidden=false;
      render();
      document.getElementById("products").scrollIntoView({behavior:"smooth",block:"start"});
    });
    catsContainer.appendChild(button);
  });
- const list=activeCat?products.filter(p=>activeCat==="All"||p.category===activeCat):[];
- document.getElementById("resultsNote").innerHTML=activeCat?`Showing <strong>${list.length}</strong> ${list.length===1?"product":"products"}${activeCat==="All"?"":` in <strong>${activeCat}</strong>`}`:"Select a category above to browse products.";
+ const categoryProducts=activeCat?products.filter(p=>activeCat==="All"||p.category===activeCat):[];
+ const list=productSearchQuery?categoryProducts.filter(p=>[p.name,p.category,p.desc].some(value=>String(value||"").toLowerCase().includes(productSearchQuery))):categoryProducts;
+ document.getElementById("resultsNote").innerHTML=activeCat?`Showing <strong>${list.length}</strong> ${list.length===1?"product":"products"}${activeCat==="All"?"":` in <strong>${activeCat}</strong>`}${productSearchQuery?` matching <strong>“${escapeHtml(productSearchQuery)}”</strong>`:""}`:"Select a category above to browse products.";
  document.getElementById("products").innerHTML=list.map(p=>{const i=products.indexOf(p);const status=normalizeStockStatus(p.stock_status);const statusClass=status==="Out of Stock"?"stock-out":status==="Low in Stock"?"stock-low":"stock-in";return `<article class="card" tabindex="0" role="button" aria-label="View ${escapeHtml(p.name)}" onclick="openProduct(${i})" onkeydown="if(event.key==='Enter'||event.key===' '){event.preventDefault();openProduct(${i})}"><div class="photo">${p.photo?`<img src="${p.photo}" alt="${escapeHtml(p.name)}">`:"PRODUCT PHOTO"}</div><div class="body"><div class="tag">${p.category}</div><h3>${p.name}</h3><div class="price">${money(p.price)}</div><div class="stock-badge ${statusClass}">${status}</div><div class="desc">${p.desc||""}</div><div class="product-actions"><button class="btn btn-dark" onclick="event.stopPropagation();addToCart(${i})" ${status==="Out of Stock"?"disabled":""}>${status==="Out of Stock"?"Out of Stock":"Add to Cart"}</button><button class="btn btn-outline" onclick="event.stopPropagation();contact('${escapeHtml(p.name)}')">Request Pricing</button></div></div></article>`}).join("");
  renderAdmin();
 }
