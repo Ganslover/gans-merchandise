@@ -216,7 +216,7 @@ footer{background:#17231c}.whatsapp-button{background:var(--sage)}.whatsapp-butt
 }
 .product-search-clear:hover{background:var(--sage-soft);color:var(--sage)}
 #products{
-  scroll-margin-top:180px;
+  scroll-margin-top:240px;
 }
 @media(max-width:600px){
   .card .product-actions{
@@ -228,7 +228,7 @@ footer{background:#17231c}.whatsapp-button{background:var(--sage)}.whatsapp-butt
   }
   .product-search-section{margin-top:10px}
   .product-search-input{min-height:44px;font-size:14px}
-  #products{scroll-margin-top:160px}
+  #products{scroll-margin-top:220px}
 }
 </style>
 </head>
@@ -476,7 +476,13 @@ function render(){
      searchInput.value="";
      document.getElementById("products").hidden=false;
      render();
-     document.getElementById("products").scrollIntoView({behavior:"smooth",block:"start"});
+     requestAnimationFrame(()=>{
+       const toolbar=document.querySelector(".catalog-toolbar");
+       const productGrid=document.getElementById("products");
+       const toolbarHeight=toolbar.getBoundingClientRect().height;
+       const targetTop=productGrid.getBoundingClientRect().top+window.scrollY-toolbarHeight-18;
+       window.scrollTo({top:Math.max(0,targetTop),behavior:"smooth"});
+     });
    });
    catsContainer.appendChild(button);
  });
